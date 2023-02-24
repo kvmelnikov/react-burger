@@ -20,6 +20,12 @@
   flex: 1;
 }
 
+.header__link {
+  
+}
+
+
+
 .header__icons_type_user{
   justify-content: flex-end;
 }
