@@ -1,3 +1,29 @@
-.heading {
-  
+.ingridients {
+  display: grid;
+  grid-template-columns: repeat(2, 240px);
+  max-width: 600px;
+  gap: 56px 32px;
+  justify-content: center;
+
 }
+
+.ingridients__icon {
+  display: flex;
+  align-items: center; 
+}
+
+.ingridients__text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.ingridients__ingridient {
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+

@@ -6,6 +6,7 @@ import { render } from '@testing-library/react';
 
 class BurgerConstructor extends React.Component {
   render() {
+   
     return (
        <div>
         right panel
