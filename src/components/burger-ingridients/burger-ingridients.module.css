@@ -4,9 +4,21 @@
   max-width: 600px;
   gap: 56px 32px;
   justify-content: center;
-
+  overflow-y: scroll;
+  height: 80vh;
 }
 
+.ingridients::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* .ingridients::-webkit-scrollbar-track {
+  background-color:  #8585AD;
+} */
+
+.ingridients::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
 .ingridients__icon {
   display: flex;
   align-items: center; 
@@ -26,4 +38,3 @@
   align-items: center;
   position: relative;
 }
-

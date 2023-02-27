@@ -20,11 +20,17 @@ class BurgerIngridients extends React.Component {
 
   }
 
+  getIngridients = () => {
+    const filterIngridient = this.props.data.filter(el => el.type === this.state.current);
+    return filterIngridient;
+  }
  
   setCurrent = (current) =>{
+
     this.setState({
       current: current,
     })
+    this.getIngridient();
   }
 
   render() {
@@ -45,16 +51,14 @@ class BurgerIngridients extends React.Component {
             <Tab value="main" active={this.state.current === 'main'} onClick={() => this.setCurrent('main')}>
               Начинки
             </Tab>
-          </div>
-          { Object.keys(this.state.types).map((t) => {
-            return (
-              <>
+          </div>   
               <h3 className={`text text_type_main-medium mt-10 mb-4`}>
-              {this.state.types[t]}
+                      {this.state.types[this.state.current]}
               </h3>
               <section className={`${burgerIngridientsStyle.ingridients}`}>
-              {this.props.data.map((el)=>{
+              {this.getIngridients().map((el)=>{
                 return (
+                  <>
                     <article className={`${burgerIngridientsStyle.ingridients__ingridient}`}>
                      <Counter count={1} size="default" extraClass="m-1" />
                       <img src={el.image} alt="" />
@@ -63,19 +67,15 @@ class BurgerIngridients extends React.Component {
                           <CurrencyIcon type="primary" />
                         </div> 
                         <p className={`text text_type_main-default ${burgerIngridientsStyle.ingridients__text}`}>
-                          Краторная булка N-200i
+                          {el.name}
                         </p>
                    </article>
+                   </>
                 )
               })}
               </section>
-              </>
-            )
-          })}
-
           </section>
           </>
-
     )
   }
 }
