@@ -10,7 +10,7 @@ function App() {
     <div className={appStyle.body}>
       <AppHeader/>
       <main className={appStyle.container}>
-      <BurgerIngridients data={data} />
+      <BurgerIngridients ingridients ={data} />
       <BurgerConstuctor data={data}/>
       </main>
     </div>

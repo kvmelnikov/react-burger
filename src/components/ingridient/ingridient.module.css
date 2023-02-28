@@ -1,0 +1,19 @@
+.ingridients__ingridient {
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.ingridients__icon {
+  display: flex;
+  align-items: center; 
+}
+
+.ingridients__text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}

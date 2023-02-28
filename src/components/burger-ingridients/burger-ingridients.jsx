@@ -1,7 +1,7 @@
 import React from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css';
-
+import Ingridient from '../ingridient/ingridient.jsx'
 
 
 class BurgerIngridients extends React.Component {
@@ -18,9 +18,10 @@ class BurgerIngridients extends React.Component {
 
   }
 
-  getIngridients = () => {
-    const filterIngridient = this.props.data.filter(el => el.type === this.state.current);
+  getIngridients = (currentType) => {
+    const filterIngridient = this.props.ingridients.filter(el => el.type === currentType);
     return filterIngridient;
+
   }
  
   setCurrent = (current) =>{
@@ -40,38 +41,53 @@ class BurgerIngridients extends React.Component {
             Соберите бургер
           </h2>
           <div style={{ display: 'flex' }}>
-            <Tab value="bun" active={this.state.current === 'bun'} onClick={()=> this.setCurrent('bun')}>
+            <Tab 
+            value="bun"
+            active={this.state.current === 'bun'} 
+            onClick={()=> this.setCurrent('bun')}>
               Булки
             </Tab>
-            <Tab value="sauce" active={this.state.current === 'sauce'} onClick={() => this.setCurrent('sauce')}>
+            <Tab 
+            value="sauce" 
+            active={this.state.current === 'sauce'} 
+            onClick={() => this.setCurrent('sauce')}>
               Соусы
             </Tab>
-            <Tab value="main" active={this.state.current === 'main'} onClick={() => this.setCurrent('main')}>
+            <Tab 
+            value="main" 
+            active={this.state.current === 'main'} 
+            onClick={() => this.setCurrent('main')}>
               Начинки
             </Tab>
           </div>   
-              <h3 className={`text text_type_main-medium mt-10 mb-4`}>
-                      {this.state.types[this.state.current]}
-              </h3>
-              <section className={`${burgerIngridientsStyle.ingridients}`}>
-              {this.getIngridients().map((el)=>{
-                return (
-                  <>
-                    <article key={el._id} className={`${burgerIngridientsStyle.ingridients__ingridient}`}>
-                     <Counter count={1} size="default" extraClass="m-1" />
-                      <img src={el.image} alt="" />
-                        <div className={`${burgerIngridientsStyle.ingridients__icon} mb-2`}>
-                          <span className={`text text_type_main-medium mr-2`}>20</span>
-                          <CurrencyIcon type="primary" />
-                        </div> 
-                        <p className={`text text_type_main-default ${burgerIngridientsStyle.ingridients__text}`}>
-                          {el.name}
-                        </p>
-                   </article>
-                   </>
-                )
-              })}
-              </section>
+              <ul className={`${burgerIngridientsStyle.ingridients}`}>
+
+                {
+
+                  Object.keys(this.state.types).map(type => {
+                    return  (
+                      <>
+                      <h3 className={`text text_type_main-medium mt-10 mb-4`}>
+                      {this.state.types[type]}
+                      </h3>
+
+                      {
+                        this.getIngridients(type).map(el => {
+                          return (
+                              <Ingridient  key={el._id} dataIngridient={{id: el._id, image: el.image, name: el.name }}  />
+                          )
+                        })
+                      } 
+                      </>
+                      )
+                    })  
+                }  
+            
+
+              
+
+              
+              </ul>
           </section>
           </>
     )
