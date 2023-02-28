@@ -1,7 +1,6 @@
 import React from 'react';
 import { Tab, CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css';
-import { render } from '@testing-library/react';
 
 
 
@@ -16,7 +15,6 @@ class BurgerIngridients extends React.Component {
         'sauce': 'Соусы'
       }
     }
-
 
   }
 
@@ -59,7 +57,7 @@ class BurgerIngridients extends React.Component {
               {this.getIngridients().map((el)=>{
                 return (
                   <>
-                    <article className={`${burgerIngridientsStyle.ingridients__ingridient}`}>
+                    <article key={el._id} className={`${burgerIngridientsStyle.ingridients__ingridient}`}>
                      <Counter count={1} size="default" extraClass="m-1" />
                       <img src={el.image} alt="" />
                         <div className={`${burgerIngridientsStyle.ingridients__icon} mb-2`}>

@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import appStyle from './app.module.css';
 import AppHeader from '../app-header/app-header.jsx';
 import BurgerIngridients from '../burger-ingridients/burger-ingridients.jsx';
@@ -12,7 +11,7 @@ function App() {
       <AppHeader/>
       <main className={appStyle.container}>
       <BurgerIngridients data={data} />
-      <BurgerConstuctor/>
+      <BurgerConstuctor data={data}/>
       </main>
     </div>
   );

@@ -1,0 +1,48 @@
+.container {
+  border: 2px solid #4C4CFF;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 60vh;
+  min-height: 568px;
+  box-sizing: border-box;
+}
+
+.toppings {
+  max-height: 400px;
+  overflow-y: scroll;
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bun {
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}  
+
+
+.topping__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.toppings::-webkit-scrollbar {
+  width: 8px;
+}
+
+.toppings::-webkit-scrollbar-thumb {
+  background-color: #8585AD;
+}
