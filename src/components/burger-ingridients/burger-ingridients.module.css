@@ -1,18 +1,24 @@
-.ingridients {
-  display: grid;
-  grid-template-columns: repeat(2, 240px);
-  max-width: 600px;
-  gap: 56px 32px;
-  justify-content: center;
+.ingridients__container{
   overflow-y: scroll;
   height: 80vh;
 }
 
-.ingridients::-webkit-scrollbar {
+
+.ingridients__list {
+  max-width: 600px;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 240px);
+  gap: 56px 32px;
+}
+
+
+
+.ingridients__container::-webkit-scrollbar {
   width: 8px;
 }
 
-.ingridients::-webkit-scrollbar-thumb {
+.ingridients__container::-webkit-scrollbar-thumb {
   background-color: #8585AD;
 }
 

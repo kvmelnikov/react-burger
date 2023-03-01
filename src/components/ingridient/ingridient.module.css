@@ -6,6 +6,15 @@
   position: relative;
 }
 
+.ingridients {
+
+  max-width: 600px;
+
+  justify-content: center;
+  overflow-y: scroll;
+  height: 80vh;
+}
+
 .ingridients__icon {
   display: flex;
   align-items: center; 

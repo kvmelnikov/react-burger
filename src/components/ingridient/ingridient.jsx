@@ -3,12 +3,10 @@ import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-c
 import ingridientStyle from './ingridient.module.css';
 
 export default class Ingridient extends React.Component {
-  constructor(props){
-    super(props)
-  }
+
   render() {
     return (
-      <li key = {this.props.dataIngridient.id} 
+      <li
       className={`${ingridientStyle.ingridients__ingridient}`}>
       <Counter count={1} size="default" extraClass="m-1" />
         <img src={this.props.dataIngridient.image} alt="" />

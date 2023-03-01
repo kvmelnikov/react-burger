@@ -11,8 +11,8 @@ class BurgerIngridients extends React.Component {
       current: 'bun',
       types:{
         'bun': 'Булки',
+        'sauce': 'Соусы',
         'main': 'Начинки',
-        'sauce': 'Соусы'
       }
     }
 
@@ -60,16 +60,15 @@ class BurgerIngridients extends React.Component {
               Начинки
             </Tab>
           </div>   
-              <ul className={`${burgerIngridientsStyle.ingridients}`}>
-
+              <section className={`${burgerIngridientsStyle.ingridients__container}`}>
                 {
-
                   Object.keys(this.state.types).map(type => {
                     return  (
                       <>
                       <h3 className={`text text_type_main-medium mt-10 mb-4`}>
                       {this.state.types[type]}
                       </h3>
+                      <ul className={`${burgerIngridientsStyle.ingridients__list}`}>
 
                       {
                         this.getIngridients(type).map(el => {
@@ -77,17 +76,17 @@ class BurgerIngridients extends React.Component {
                               <Ingridient  key={el._id} dataIngridient={{id: el._id, image: el.image, name: el.name }}  />
                           )
                         })
-                      } 
+                      }
+
+                      </ul>
+
                       </>
                       )
                     })  
-                }  
-            
+                } 
 
-              
-
-              
-              </ul>
+              </section> 
+           
           </section>
           </>
     )
