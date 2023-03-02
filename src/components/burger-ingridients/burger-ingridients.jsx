@@ -4,36 +4,19 @@ import burgerIngridientsStyle from './burger-ingridients.module.css';
 import Ingridient from '../ingridient/ingridient.jsx'
 
 
-class BurgerIngridients extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      current: 'bun',
-      types:{
-        'bun': 'Булки',
-        'sauce': 'Соусы',
-        'main': 'Начинки',
-      }
-    }
+function BurgerIngridients(props) {
 
-  }
+  const [current, setCurrent] = React.useState('bun')
+  const [types, setTypes] = React.useState({'bun': 'Булки', 'sauce': 'Соусы', 'main': 'Начинки'})
 
-  getIngridients = (currentType) => {
-    const filterIngridient = this.props.ingridients.filter(el => el.type === currentType);
+
+
+  const  getIngridients = (currentType) => {
+    const filterIngridient = props.ingridients.filter(el => el.type === currentType);
     return filterIngridient;
 
   }
  
-  setCurrent = (current) =>{
-
-    this.setState({
-      current: current,
-    })
-    this.getIngridient();
-  }
-
-  render() {
-
     return (
         <>
         <section className='mt-10'> 
@@ -43,35 +26,35 @@ class BurgerIngridients extends React.Component {
           <div style={{ display: 'flex' }}>
             <Tab 
             value="bun"
-            active={this.state.current === 'bun'} 
-            onClick={()=> this.setCurrent('bun')}>
+            active={current === 'bun'} 
+            onClick={()=> setCurrent('bun')}>
               Булки
             </Tab>
             <Tab 
             value="sauce" 
-            active={this.state.current === 'sauce'} 
-            onClick={() => this.setCurrent('sauce')}>
+            active={current === 'sauce'} 
+            onClick={() => setCurrent('sauce')}>
               Соусы
             </Tab>
             <Tab 
             value="main" 
-            active={this.state.current === 'main'} 
-            onClick={() => this.setCurrent('main')}>
+            active={current === 'main'} 
+            onClick={() => setCurrent('main')}>
               Начинки
             </Tab>
           </div>   
               <section className={`${burgerIngridientsStyle.ingridients__container}`}>
                 {
-                  Object.keys(this.state.types).map(type => {
+                  Object.keys(types).map(type => {
                     return  (
                       <>
                       <h3 className={`text text_type_main-medium mt-10 mb-4`}>
-                      {this.state.types[type]}
+                      {types[type]}
                       </h3>
                       <ul className={`${burgerIngridientsStyle.ingridients__list}`}>
 
                       {
-                        this.getIngridients(type).map(el => {
+                        getIngridients(type).map(el => {
                           return (
                               <Ingridient  key={el._id} dataIngridient={{id: el._id, image: el.image, name: el.name }}  />
                           )
@@ -90,7 +73,7 @@ class BurgerIngridients extends React.Component {
           </section>
           </>
     )
-  }
+  
 }
       
               

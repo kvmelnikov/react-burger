@@ -4,14 +4,10 @@ import burgerConstructorStyle from './burger-constructor.module.css';
 import { render } from '@testing-library/react';
 
 
-class BurgerConstructor extends React.Component {
+function BurgerConstructor() {
   
-  getBun = () =>{
-      const filterBun = this.props.data.filter(el => el.type === 'bun')
-      console.log(filterBun[0])
-  }
 
-  render() {
+
     return (
       <section>
        <section className={`${burgerConstructorStyle.container} mt-20 p-5`}>
@@ -89,7 +85,7 @@ class BurgerConstructor extends React.Component {
         </section> 
        
     )
-  }
+  
 }
 
 export default BurgerConstructor;
