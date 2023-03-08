@@ -3,6 +3,9 @@
   height: 80vh;
 }
 
+.ingridients__tab {
+  display: flex;
+}
 
 .ingridients__list {
   max-width: 600px;

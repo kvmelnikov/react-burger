@@ -3,6 +3,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css';
 import Ingridient from '../ingridient/ingridient.jsx'
 import propTypes  from 'prop-types';
+const {ingridients__container, ingridients__list, ingridients__tab} = burgerIngridientsStyle
 
 
 function BurgerIngridients(props) {
@@ -27,7 +28,7 @@ function BurgerIngridients(props) {
           <h2 className={`text text_type_main-large`}>
             Соберите бургер
           </h2>
-          <div style={{ display: 'flex' }}>
+          <div className={`${ingridients__tab} mb-10`} style={{ display: 'flex' }}>
             <Tab key={0}
             value="bun"
             active={current === 'bun'} 
@@ -47,15 +48,16 @@ function BurgerIngridients(props) {
               Начинки
             </Tab>
           </div>   
-              <section className={`${burgerIngridientsStyle.ingridients__container}`}>
+              <section className={`${ingridients__container}`}>
                 {
                   Object.keys(types).map((type, index) => {
                     return  (
                       <div key={index}>
+                      
                       <h3  className={`text text_type_main-medium mt-10 mb-4`}>
                       {types[type]}
                       </h3>
-                      <ul className={`${burgerIngridientsStyle.ingridients__list}`}>
+                      <ul className={`${ingridients__list}`}>
                       {
                         getIngridients(type).map(el => {
                           return (
@@ -71,8 +73,7 @@ function BurgerIngridients(props) {
                     })  
                 } 
 
-              </section> 
-           
+              </section>    
           </section>
           </>
     )
