@@ -12,6 +12,7 @@ const dataForConstructor = {
     image:  data[0].image,
     price:  data[0].price
   },
+  
   toppings: 
   [
     {
