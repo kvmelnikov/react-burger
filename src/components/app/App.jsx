@@ -5,37 +5,53 @@ import BurgerIngridients from '../burger-ingridients/burger-ingridients.jsx';
 import BurgerConstuctor from '../burger-constructor/burger-constructor.jsx'
 import {data} from '../utils/utils.js';
 
+const dataForConstructor = {
+  bun: 
+  { 
+    name:  data[0].name,
+    image:  data[0].image,
+    price:  data[0].price
+  },
+  toppings: 
+  [
+    {
+    name:  data[1].name,
+    image:  data[1].image,
+    price:  data[1].price 
+  },
+  {
+    name:  data[2].name,
+    image:  data[2].image,
+    price:  data[2].price 
+  },
+  {
+    name:  data[3].name,
+    image:  data[3].image,
+    price:  data[3].price 
+  },
+  {
+    name:  data[4].name,
+    image:  data[4].image,
+    price:  data[4].price 
+  },
+  {
+    name:  data[3].name,
+    image:  data[3].image,
+    price:  data[3].price 
+  },
+  ]
+}
+
 function App() {  
-  const[items, setCart] = React.useState([]);
-  
 
-
-  function handleAddItem(id_item, index){
-    setCart([...items, data.filter((el) => {return el._id === id_item})[0]].index = index)
-  }
-
-  function handleDeleteItem(index){
-    setCart(
-      items.filter((el)=> {return el.index === index})
-    )
-  }
-
-
+  const [selectedIngtidients, UpdateSelectedIngtidients] = React.useState(dataForConstructor)
 
   return (
     <div className={appStyle.body}>
-      <button onClick={() => handleAddItem('60666c42cc7b410027a1a9b1')}>булка</button>
-      <button onClick={() => handleAddItem('60666c42cc7b410027a1a9b5')}>метеорит</button>
-      
-      {items.map((el, index)=>{
-       return(<div key={index}>{el.name}
-       <button onClick={() => handleDeleteItem(index)}>уалить</button>
-       </div>) 
-      })}
       <AppHeader/>
       <main className={appStyle.container}>
       <BurgerIngridients ingridients ={data} />
-      <BurgerConstuctor data={data}/>
+      <BurgerConstuctor {...selectedIngtidients}/>
       </main>
     </div>
   );

@@ -1,91 +1,77 @@
 import React from 'react';
 import { ConstructorElement, DragIcon, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyle from './burger-constructor.module.css';
-import { render } from '@testing-library/react';
 
+import propTypes  from 'prop-types';
 
-function BurgerConstructor() {
-  
+function BurgerConstructor(props) {
+    const [summBurger, setSummBurger] = React.useState(0);
 
+    function calculateAmount(){
+      const summToppings = props.toppings.reduce((accumulator, next)=>{
+          return accumulator + next.price
+      }, 0)
+      return summToppings + props.bun.price
+    }
+
+    React.useEffect(()=>{
+      setSummBurger(calculateAmount())
+    })
 
     return (
       <section>
        <section className={`${burgerConstructorStyle.container} mt-20 p-5`}>
-          <div className={`${burgerConstructorStyle.bun} ml-8 mr-2`}>
+          <div className={`${burgerConstructorStyle.bun} ml-8 mr-2`}>       
           <ConstructorElement
             type="top"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={"https://code.s3.yandex.net/react/code/bun-02-mobile.png"}
+            text={`${props.bun.name} (верх)`}
+            price={200 / 2}
+            thumbnail={props.bun.image}
           />
           </div >
           <ul className={`${burgerConstructorStyle.toppings}`}>
-            <li className={`${burgerConstructorStyle.topping__item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text="Говяжий Vf (отбивная)"
-            price={50}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-          />
-
-            </li>
-            <li className={`${burgerConstructorStyle.topping__item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text="Говяжий Vf (отбивная)"
-            price={50}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-          />
-            </li>
-            <li className={`${burgerConstructorStyle.topping__item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text="Говяжий Vf (отбивная)"
-            price={50}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-          />
-            </li>
-            <li className={`${burgerConstructorStyle.topping__item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text="Говяжий Vf (отбивная)"
-            price={50}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-          />
-            </li>
-            <li className={`${burgerConstructorStyle.topping__item}`}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-            text="Говяжий Vf (отбивная)"
-            price={50}
-            thumbnail={"https://code.s3.yandex.net/react/code/meat-04.png"}
-          />
-            </li>
-           
+          {
+            props.toppings.map((topping, index) => {
+              return (
+                <li key={index} className={`${burgerConstructorStyle.topping__item}`}>
+                <DragIcon type="primary" />
+                <ConstructorElement
+                text={topping.name}
+                price={topping.price}
+                thumbnail={topping.image}
+               
+              />
+              </li>
+              )
+            })
+          }
           </ul>
           <div className={`${burgerConstructorStyle.bun} ml-8 mr-2`}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
-            price={200}
-            thumbnail={"https://code.s3.yandex.net/react/code/bun-02-mobile.png"}
+            text={`${props.bun.name} (низ)`}
+            price={200 /2 }
+            thumbnail={props.bun.image}
           />
           </div>
         </section>
           <div className={`${burgerConstructorStyle.info} mt-5`}>
-            <p className="text text_type_digits-medium mr-2">610</p>
+            <p className="text text_type_digits-medium mr-2">{summBurger}</p>
             <CurrencyIcon  type="primary" />
             <Button extraClass='ml-10' htmlType="button" type="primary" size="large">
                Оформить заказ
             </Button>
           </div>
-          
-        </section> 
-       
+        </section>        
     )
-  
 }
+
+BurgerConstructor.propTypes = {
+  bun: propTypes.object.isRequired,
+  toppings: propTypes.array
+
+} 
 
 export default BurgerConstructor;
