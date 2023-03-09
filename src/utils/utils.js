@@ -210,3 +210,48 @@ export const mockData = [
    "__v":0
   }
 ] 
+
+
+export const mockDataForConstructor = {
+  bun: 
+  { 
+    _id: mockData[0]._id,
+    name:  mockData[0].name,
+    image:  mockData[0].image,
+    price:  mockData[0].price
+  },
+  
+  toppings: 
+  [
+    {
+    _id: mockData[1]._id,
+    name:  mockData[1].name,
+    image:  mockData[1].image,
+    price:  mockData[1].price 
+  },
+  {
+    _id: mockData[2]._id,
+    name:  mockData[2].name,
+    image:  mockData[2].image,
+    price:  mockData[2].price 
+  },
+  {
+    _id: mockData[3]._id,
+    name:  mockData[3].name,
+    image:  mockData[3].image,
+    price:  mockData[3].price 
+  },
+  {
+    _id: mockData[5]._id,
+    name:  mockData[5].name,
+    image:  mockData[5].image,
+    price:  mockData[5].price 
+  },
+  {
+    _id: mockData[5]._id,
+    name:  mockData[5].name,
+    image:  mockData[5].image,
+    price:  mockData[5].price 
+  },
+  ]
+}

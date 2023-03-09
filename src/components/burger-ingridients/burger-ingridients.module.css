@@ -1,4 +1,4 @@
-.ingridients__container{
+.ingridients__container {
   overflow-y: scroll;
   height: 80vh;
 }
@@ -15,22 +15,20 @@
   gap: 56px 32px;
 }
 
-
-
 .ingridients__container::-webkit-scrollbar {
   width: 8px;
 }
 
 .ingridients__container::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
+  background-color: #8585ad;
 }
 
 .ingridients__icon {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
-.ingridients__text{
+.ingridients__text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

@@ -1,5 +1,4 @@
 .container {
-  border: 2px solid #4C4CFF;
   max-width: 600px;
   width: 100%;
   display: flex;
@@ -29,8 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: end;
-}  
-
+}
 
 .topping__item {
   display: flex;
@@ -44,5 +42,5 @@
 }
 
 .toppings::-webkit-scrollbar-thumb {
-  background-color: #8585AD;
+  background-color: #8585ad;
 }

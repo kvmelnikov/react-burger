@@ -7,7 +7,6 @@
 }
 
 .ingridients {
-
   max-width: 600px;
 
   justify-content: center;
@@ -17,10 +16,10 @@
 
 .ingridients__icon {
   display: flex;
-  align-items: center; 
+  align-items: center;
 }
 
-.ingridients__text{
+.ingridients__text {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
