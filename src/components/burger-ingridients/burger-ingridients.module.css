@@ -1,0 +1,44 @@
+.ingridients__container {
+  overflow-y: scroll;
+  height: 80vh;
+}
+
+.ingridients__tab {
+  display: flex;
+}
+
+.ingridients__list {
+  max-width: 600px;
+  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 240px);
+  gap: 56px 32px;
+}
+
+.ingridients__container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.ingridients__container::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.ingridients__icon {
+  display: flex;
+  align-items: center;
+}
+
+.ingridients__text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 240px;
+}
+
+.ingridients__ingridient {
+  max-width: 240px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}

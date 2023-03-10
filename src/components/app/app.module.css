@@ -1,0 +1,11 @@
+.body {
+  background-color: #131316;
+}
+
+.container {
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
