@@ -83,8 +83,8 @@ function BurgerConstructor(props) {
     {props.showModal && createPortal(
         <>
         <ModalOverlay handleCloseModal={props.handleCloseModal}  body={props.body}/>
-        <Modal handleCloseModal={props.handleCloseModal}> 
-            <OrderDetails  summBurger={summBurger}/>
+        <Modal heading='' handleCloseModal={props.handleCloseModal}> 
+            <OrderDetails />
         </Modal>
         </>
         ,

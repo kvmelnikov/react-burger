@@ -87,8 +87,8 @@ function BurgerIngridients(props) {
       {props.showModal && createPortal(
         <>
         <ModalOverlay handleCloseModal={props.handleCloseModal}  body={props.body}/>
-        <Modal handleCloseModal={props.handleCloseModal}> 
-            <IngridientDetails  {...props.elementModal}/>
+        <Modal heading='Детали ингридиента' handleCloseModal={props.handleCloseModal}> 
+            <IngridientDetails   {...props.elementModal}/>
         </Modal>
         </>
         ,
