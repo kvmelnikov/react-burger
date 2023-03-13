@@ -1,6 +1,8 @@
 import orderDetailsStyles from "./order-details.module.css"
+import propTypes from "prop-types";
 
-function OrderDetails(props) {
+
+function OrderDetails() {
   return (
     <div className={orderDetailsStyles.container}>
       <p className="text text_type_digits-large mt-15">034536</p>
@@ -19,3 +21,4 @@ function OrderDetails(props) {
 }
 
 export default OrderDetails;
+

@@ -86,7 +86,7 @@ function BurgerIngridients(props) {
       {props.showModal && (
         <>
         <Modal heading='Детали ингридиента' modalSelector={props.modalSelector} handleCloseModal={props.handleCloseModal}> 
-            <IngridientDetails   {...props.elementModal}/>
+            <IngridientDetails   {...props.ingredientDataForModal}/>
         </Modal>
         </>
     
@@ -98,6 +98,11 @@ function BurgerIngridients(props) {
 
 BurgerIngridients.propTypes = {
   ingridients: propTypes.array,
+  handleOpenModal: propTypes.func.isRequired,
+  handleCloseModal: propTypes.func.isRequired,
+  showModal: propTypes.bool.isRequired,
+  modalSelector: propTypes.object.isRequired,
+  ingredientDataForModal: propTypes.object.isRequired
 };
 
 export default BurgerIngridients;

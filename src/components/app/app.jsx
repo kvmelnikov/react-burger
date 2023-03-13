@@ -21,10 +21,10 @@ function App() {
     React.useState(false);
   const [showModalOrderDetails, setShowModalOrderDetails] =
     React.useState(false);
-  const [elementModal, setElementModal] = React.useState({});
+  const [ingredientDataForModal, setingredientDataForModal] = React.useState({});
 
-  const hanldleOpenModalIngridientDetails = (el) => {
-    setElementModal(el);
+  const hanldleOpenModalIngridientDetails = (ingredient) => {
+    setingredientDataForModal(ingredient);
     setShowModalIngridientDetails(true);
   };
 
@@ -57,7 +57,7 @@ function App() {
             handleCloseModal={handleCloseModal}
             showModal={showModalIngridientDetails}
             modalSelector={modalSelector}
-            elementModal= {elementModal}
+            ingredientDataForModal= {ingredientDataForModal}
           />
           <BurgerConstuctor
             {...selectedIngtidients}

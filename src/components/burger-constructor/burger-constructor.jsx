@@ -94,6 +94,10 @@ function BurgerConstructor(props) {
 BurgerConstructor.propTypes = {
   bun: propTypes.object.isRequired,
   toppings: propTypes.array.isRequired,
+  handleCloseModal: propTypes.func.isRequired,
+  handleOpenModal: propTypes.func.isRequired,
+  modalSelector:propTypes.object.isRequired,
+  showModal: propTypes.bool.isRequired
 };
 
 export default BurgerConstructor;

@@ -52,3 +52,11 @@ function IngridientDetails(props) {
 }
 
 export default IngridientDetails;
+
+IngridientDetails.propTypes = {
+  calories: propTypes.number.isRequired,
+  fat: propTypes.number.isRequired,
+  proteins:propTypes.number.isRequired,
+  image_large: propTypes.string.isRequired,
+  name: propTypes.string.isRequired,
+}
