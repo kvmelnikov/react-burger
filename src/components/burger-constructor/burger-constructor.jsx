@@ -7,6 +7,10 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyle from "./burger-constructor.module.css";
 import propTypes from "prop-types";
+import { createPortal } from 'react-dom';
+import Modal from "../modal/modal";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import OrderDetails from  "../order-details/order-details"
 
 const { container, bun, toppings, topping__item, info } =
   burgerConstructorStyle;
@@ -26,6 +30,7 @@ function BurgerConstructor(props) {
   }, [props.toppings]);
 
   return (
+    <>
     <section>
       <section className={`${container} mt-20 p-5`}>
         <div className={`${bun} ml-8 mr-2`}>
@@ -65,6 +70,7 @@ function BurgerConstructor(props) {
         <p className="text text_type_digits-medium mr-2">{summBurger}</p>
         <CurrencyIcon type="primary" />
         <Button
+          onClick={props.handleOpenModal}
           extraClass="ml-10"
           htmlType="button"
           type="primary"
@@ -74,12 +80,24 @@ function BurgerConstructor(props) {
         </Button>
       </div>
     </section>
+    {props.showModal && (
+        <>
+        <Modal heading='' modalSelector={props.modalSelector} handleCloseModal={props.handleCloseModal}> 
+            <OrderDetails />
+        </Modal>
+        </>
+      )}
+    </>
   );
 }
 
 BurgerConstructor.propTypes = {
   bun: propTypes.object.isRequired,
   toppings: propTypes.array.isRequired,
+  handleCloseModal: propTypes.func.isRequired,
+  handleOpenModal: propTypes.func.isRequired,
+  modalSelector:propTypes.object.isRequired,
+  showModal: propTypes.bool.isRequired
 };
 
 export default BurgerConstructor;

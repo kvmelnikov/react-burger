@@ -1,0 +1,26 @@
+.details__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+    position: relative;
+}
+
+.nutritionals {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 520px;
+}
+
+.element_nutritional {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.element_nutritional_digits {
+    font-size: 28px;
+}

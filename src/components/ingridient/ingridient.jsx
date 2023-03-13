@@ -6,12 +6,15 @@ import {
 import ingridientStyle from "./ingridient.module.css";
 import propTypes from "prop-types";
 
+
+
 const { ingridients__ingridient, ingridients__icon, ingridients__text } =
   ingridientStyle;
 
 export default function Ingridient(props) {
   return (
-    <li className={`${ingridients__ingridient}`}>
+
+    <li onClick={()=>props.handleOpenModal(props)} className={`${ingridients__ingridient}`}>
       <Counter count={1} size="default" extraClass="m-1" />
       <img src={props.image} alt={props.name} />
       <div className={`${ingridients__icon} mb-2`}>

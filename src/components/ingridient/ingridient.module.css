@@ -6,6 +6,11 @@
   position: relative;
 }
 
+.ingridients__ingridient:hover {
+  opacity: .8;
+  cursor: pointer;
+}
+
 .ingridients {
   max-width: 600px;
 
