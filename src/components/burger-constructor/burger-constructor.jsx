@@ -80,15 +80,12 @@ function BurgerConstructor(props) {
         </Button>
       </div>
     </section>
-    {props.showModal && createPortal(
+    {props.showModal && (
         <>
-        <ModalOverlay handleCloseModal={props.handleCloseModal}  body={props.body}/>
-        <Modal heading='' handleCloseModal={props.handleCloseModal}> 
+        <Modal heading='' modalSelector={props.modalSelector} handleCloseModal={props.handleCloseModal}> 
             <OrderDetails />
         </Modal>
         </>
-        ,
-       props.body
       )}
     </>
   );

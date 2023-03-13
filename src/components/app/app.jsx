@@ -7,7 +7,7 @@ import { mockData, mockDataForConstructor } from "../../utils/utils.js";
 import Api from "../../utils/api/api.js";
 import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
 
-const body = document.querySelector("body");
+const modalSelector = document.querySelector('#modals');
 const api = new Api({
   baseUrl: "https://norma.nomoreparties.space/api/ingredients",
 });
@@ -37,20 +37,6 @@ function App() {
     setShowModalOrderDetails(false);
   };
 
-  const handleEscapeClose = (e) => {
-    if (e.key === "Escape") {
-      handleCloseModal();
-    }
-  };
-
-  React.useEffect(() => {
-    document.addEventListener("keydown", handleEscapeClose);
-
-    return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
-    };
-  }, [showModalIngridientDetails, showModalOrderDetails]);
-
   React.useEffect(() => {
     api
       .getIngridients()
@@ -70,7 +56,7 @@ function App() {
             handleOpenModal={hanldleOpenModalIngridientDetails}
             handleCloseModal={handleCloseModal}
             showModal={showModalIngridientDetails}
-            body={body}
+            modalSelector={modalSelector}
             elementModal= {elementModal}
           />
           <BurgerConstuctor
@@ -78,7 +64,7 @@ function App() {
             handleOpenModal={hanldleOpenModalOrderDetails}
             handleCloseModal={handleCloseModal}
             showModal={showModalOrderDetails}
-            body={body}
+            modalSelector={modalSelector}
           />
         </main>
       </div>

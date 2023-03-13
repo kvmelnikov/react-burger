@@ -39,7 +39,6 @@ function BurgerIngridients(props) {
         <h2 className={`text text_type_main-large`}>Соберите бургер</h2>
         <div
           className={`${ingridients__tab} mb-10`}
-          style={{ display: "flex" }}
         >
           <Tab
             key={0}
@@ -84,15 +83,13 @@ function BurgerIngridients(props) {
           })}
         </section>
       </section>
-      {props.showModal && createPortal(
+      {props.showModal && (
         <>
-        <ModalOverlay handleCloseModal={props.handleCloseModal}  body={props.body}/>
-        <Modal heading='Детали ингридиента' handleCloseModal={props.handleCloseModal}> 
+        <Modal heading='Детали ингридиента' modalSelector={props.modalSelector} handleCloseModal={props.handleCloseModal}> 
             <IngridientDetails   {...props.elementModal}/>
         </Modal>
         </>
-        ,
-       props.body
+    
       )}
 
     </>
