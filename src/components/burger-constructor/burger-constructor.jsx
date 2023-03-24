@@ -11,23 +11,27 @@ import { createPortal } from 'react-dom';
 import Modal from "../modal/modal";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import OrderDetails from  "../order-details/order-details"
+import {DataBurgerContext} from "../../utils/burger-consrtuctor-context.js";
 
 const { container, bun, toppings, topping__item, info } =
   burgerConstructorStyle;
 
+
+
 function BurgerConstructor(props) {
-  const [summBurger, setSummBurger] = React.useState(0);
+  const { consrtuctorIngridients, setConsrtuctorIngridients } = React.useContext(DataBurgerContext);
+  const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0)
 
   function calculateAmount() {
-    const summToppings = props.toppings.reduce((accumulator, next) => {
+    const summToppings = consrtuctorIngridients.toppings.reduce((accumulator, next) => {
       return accumulator + next.price;
     }, 0);
-    return summToppings + props.bun.price;
+    return summToppings + consrtuctorIngridients.bun.price;
   }
 
   React.useEffect(() => {
-    setSummBurger(calculateAmount());
-  }, [props.toppings]);
+    setSummBurger();
+  }, [consrtuctorIngridients.toppings]);
 
   return (
     <>
@@ -37,13 +41,13 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${props.bun.name} (верх)`}
+            text={`${consrtuctorIngridients.bun.name} (верх)`}
             price={200 / 2}
-            thumbnail={props.bun.image}
+            thumbnail={consrtuctorIngridients.bun.image}
           />
         </div>
         <ul className={`${toppings}`}>
-          {props.toppings.map((topping, index) => {
+          {consrtuctorIngridients.toppings.map((topping, index) => {
             return (
               <li key={index} className={`${topping__item}`}>
                 <DragIcon type="primary" />
@@ -60,9 +64,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${props.bun.name} (низ)`}
+            text={`${consrtuctorIngridients.bun.name} (низ)`}
             price={200 / 2}
-            thumbnail={props.bun.image}
+            thumbnail={consrtuctorIngridients.bun.image}
           />
         </div>
       </section>

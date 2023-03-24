@@ -6,16 +6,20 @@ import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
 import { mockData, mockDataForConstructor } from "../../utils/utils.js";
 import Api from "../../utils/api/api.js";
 import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
+import {DataBurgerContext} from "../../utils/burger-consrtuctor-context.js";
 
 const modalSelector = document.querySelector('#modals');
 const api = new Api({
-  baseUrl: "https://norma.nomoreparties.space/api/ingredients",
+  baseUrl: "https://norma.nomoreparties.space/api/",
+ // baseUrl: "https://norma.nomoreparties.space/api/ingredients",
+
 });
 
 function App() {
-  const [selectedIngtidients, updateSelectedIngtidients] = React.useState(
-    mockDataForConstructor
-  );
+
+
+  const [consrtuctorIngridients, setConsrtuctorIngridients] = React.useState(mockDataForConstructor);
+
   const [ingredients, setIngdidients] = React.useState(mockData);
   const [showModalIngridientDetails, setShowModalIngridientDetails] =
     React.useState(false);
@@ -28,7 +32,17 @@ function App() {
     setShowModalIngridientDetails(true);
   };
 
+  const makeCheckout = () =>{
+    const idToppings = consrtuctorIngridients.toppings.map(el =>{
+      return el._id
+    })
+    idToppings.push(consrtuctorIngridients.bun._id)
+    
+    return idToppings
+  }
+
   const hanldleOpenModalOrderDetails = () => {
+    api.getCheckout(makeCheckout())
     setShowModalOrderDetails(true);
   };
 
@@ -43,7 +57,7 @@ function App() {
       .then((data) => {
         setIngdidients(data.data);
       })
-      .catch(() => setIngdidients(mockData));
+      .catch(() => '');
   }, []);
 
   return (
@@ -59,13 +73,15 @@ function App() {
             modalSelector={modalSelector}
             ingredientDataForModal= {ingredientDataForModal}
           />
+          <DataBurgerContext.Provider value={{consrtuctorIngridients, setConsrtuctorIngridients}}>
           <BurgerConstuctor
-            {...selectedIngtidients}
             handleOpenModal={hanldleOpenModalOrderDetails}
             handleCloseModal={handleCloseModal}
             showModal={showModalOrderDetails}
             modalSelector={modalSelector}
           />
+          </DataBurgerContext.Provider>
+
         </main>
       </div>
     </>
