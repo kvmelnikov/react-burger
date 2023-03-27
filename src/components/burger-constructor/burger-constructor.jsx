@@ -19,9 +19,8 @@ const { container, bun, toppings, topping__item, info } =
 
 
 function BurgerConstructor(props) {
-  const { consrtuctorIngridients, setConsrtuctorIngridients } = React.useContext(DataBurgerContext);
+  const { consrtuctorIngridients, numberOrder, setConsrtuctorIngridients } = React.useContext(DataBurgerContext);
   const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0)
-
   function calculateAmount() {
     const summToppings = consrtuctorIngridients.toppings.reduce((accumulator, next) => {
       return accumulator + next.price;
@@ -87,7 +86,7 @@ function BurgerConstructor(props) {
     {props.showModal && (
         <>
         <Modal heading='' modalSelector={props.modalSelector} handleCloseModal={props.handleCloseModal}> 
-            <OrderDetails />
+            <OrderDetails numberOrder={numberOrder} />
         </Modal>
         </>
       )}
@@ -96,8 +95,9 @@ function BurgerConstructor(props) {
 }
 
 BurgerConstructor.propTypes = {
-  bun: propTypes.object.isRequired,
-  toppings: propTypes.array.isRequired,
+  context: propTypes.shape({
+    consrtuctorIngridients: propTypes.object.isRequired
+  }), 
   handleCloseModal: propTypes.func.isRequired,
   handleOpenModal: propTypes.func.isRequired,
   modalSelector:propTypes.object.isRequired,

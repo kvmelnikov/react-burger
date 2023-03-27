@@ -14,8 +14,6 @@ const { ingridients__container, ingridients__list, ingridients__tab } =
 
 function BurgerIngridients(props) {
   const [current, setCurrent] = React.useState("bun");
-
-
   const [types] = React.useState({
     bun: "Булки",
     sauce: "Соусы",
