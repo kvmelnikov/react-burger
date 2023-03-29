@@ -3,10 +3,11 @@ import appStyle from "./app.module.css";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngridients from "../burger-ingridients/burger-ingridients.jsx";
 import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
-import { mockData, mockDataForConstructor } from "../../utils/utils.js";
 import Api from "../../utils/api/api.js";
-import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
-import { DataBurgerContext } from "../../utils/burger-consrtuctor-context.js";
+import {
+  DataBurgerConstructorContext,
+  DataBurgerIngridientsContext,
+} from "../../utils/context.js";
 
 const modalSelector = document.querySelector("#modals");
 const api = new Api({
@@ -18,8 +19,9 @@ function App() {
     bun: {},
     toppings: [],
   });
+
   const [numberOrder, setNumberOrder] = React.useState(0);
-  const [ingredients, setIngdidients] = React.useState(mockData);
+  const [ingredients, setIngdidients] = React.useState();
   const [showModalIngridientDetails, setShowModalIngridientDetails] =
     React.useState(false);
   const [showModalOrderDetails, setShowModalOrderDetails] =
@@ -27,7 +29,6 @@ function App() {
   const [ingredientDataForModal, setingredientDataForModal] = React.useState(
     {}
   );
- 
 
   const hanldleOpenModalIngridientDetails = (ingredient) => {
     setingredientDataForModal(ingredient);
@@ -42,16 +43,35 @@ function App() {
     return idToppings;
   };
 
+  const makeConstructorData = (ingredientsForConstructor) => {
+    const data = {};
+    data.toppings = [];
+    ingredientsForConstructor.forEach((el) => {
+      if (el.type !== "bun") {
+        data.toppings.push(el);
+      } else {
+        data.bun = el;
+      }
+    });
+
+    setConsrtuctorIngridients((prev) => ({
+      ...prev.bun,
+      bun: data.bun,
+      ...prev.toppings,
+      toppings: data.toppings,
+    }));
+  };
+
   const hanldleOpenModalOrderDetails = () => {
+    
     api
-    .getCheckout(makeCheckout())
-    .then((resp) => {
-      console.log(resp)
-      setNumberOrder(resp.order.number)
-      setShowModalOrderDetails(true)
-    })
-    .catch(()=>'')
-  }
+      .getCheckout(makeCheckout())
+      .then((resp) => {
+        setNumberOrder(resp.order.number);
+        setShowModalOrderDetails(true);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleCloseModal = () => {
     setShowModalIngridientDetails(false);
@@ -65,51 +85,42 @@ function App() {
         setIngdidients((prev) => {
           return [...data.data];
         });
+        makeConstructorData(data.data);
       })
       .catch(() => "");
   }, []);
+  
 
-  React.useEffect(() => {
-    const data = {};
-    data.toppings = [];
-    ingredients.forEach((el) => {
-      if (el.type !== "bun") {
-        data.toppings.push(el);
-      } else {
-        data.bun = el;
-      }
-    });
-    setConsrtuctorIngridients((prev) => ({
-      ...prev.bun,
-      bun: data.bun,
-      ...prev.toppings,
-      toppings: data.toppings,
-    }));
-  }, []);
-
+  if (!ingredients) return <AppHeader />;
   return (
     <>
       <div className={appStyle.body}>
         <AppHeader />
         <main className={appStyle.container}>
-          <BurgerIngridients
-            ingredients={ingredients}
-            handleOpenModal={hanldleOpenModalIngridientDetails}
-            handleCloseModal={handleCloseModal}
-            showModal={showModalIngridientDetails}
-            modalSelector={modalSelector}
-            ingredientDataForModal={ingredientDataForModal}
-          />
-          <DataBurgerContext.Provider
-            value={{ numberOrder, consrtuctorIngridients, setConsrtuctorIngridients }}
+          <DataBurgerIngridientsContext.Provider
+            value={{
+              ingredients,
+              ingredientDataForModal,
+              hanldleOpenModalIngridientDetails,
+              handleCloseModal,
+              showModalIngridientDetails,
+              modalSelector,
+            }}
           >
-            <BurgerConstuctor
-              handleOpenModal={hanldleOpenModalOrderDetails}
-              handleCloseModal={handleCloseModal}
-              showModal={showModalOrderDetails}
-              modalSelector={modalSelector}
-            />
-          </DataBurgerContext.Provider>
+            <BurgerIngridients />
+          </DataBurgerIngridientsContext.Provider>
+          <DataBurgerConstructorContext.Provider
+            value={{
+              numberOrder,
+              consrtuctorIngridients,
+              hanldleOpenModalOrderDetails,
+              showModalOrderDetails,
+              modalSelector,
+              handleCloseModal,
+            }}
+          >
+            <BurgerConstuctor />
+          </DataBurgerConstructorContext.Provider>
         </main>
       </div>
     </>

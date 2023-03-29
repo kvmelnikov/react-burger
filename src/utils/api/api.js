@@ -18,6 +18,7 @@ export default class Api {
   }
 
   getCheckout(ingredients) {
+  
     return fetch(`${this._baseUrl + "orders"}`, {
       method: "POST",
       headers: {
@@ -27,6 +28,7 @@ export default class Api {
         ingredients: ingredients
       }),
     }).then((res) => {
+     
       return this._checkResponse(res);
     });
   }
