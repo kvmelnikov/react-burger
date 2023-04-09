@@ -1,12 +1,12 @@
 import {
-  GET_INGRIDIENT_REQUEST,
-  GET_INGRIDIENT_SUCCESS,
-  GET_INGRIDIENT_FAILED,
-  SET_CURRENT_INGRIDIENT,
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED,
+  SET_CURRENT_INGREDIENT,
   SHOW_MODAL_INGRIDIENT_DETAILS,
   CLOSE_MODAL,
   SET_MODAL_SELECTOR,
-  SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR, 
+  SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR, 
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED
@@ -14,9 +14,9 @@ import {
 } from "../actions";
 
 const initialState = {
-  ingridientsRequest: false,
-  ingridientsFailed: false,  
-  ingridients: [],
+  ingredientsRequest: false,
+  ingredientsFailed: false,  
+  ingredients: [],
   orderRequest: false,
   orderRequestFailed: false,
   numberOrder: 0,
@@ -37,7 +37,7 @@ export const burgerReducer = (state = initialState, action) => {
   
   switch (action.type) {
 
-    case SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR: {
+    case SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR: {
         return {
             ...state,
             ingridientsForConstructor: {
@@ -70,26 +70,26 @@ export const burgerReducer = (state = initialState, action) => {
             modalIngridientDetail: true
         }
     }
-    case SET_CURRENT_INGRIDIENT: {
+    case SET_CURRENT_INGREDIENT: {
         return {
             ...state, 
             currentIngridient: action.value
         }
     }
-    case GET_INGRIDIENT_REQUEST: {
+    case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
         ingridientsRequest: true
       }  
     }
-    case GET_INGRIDIENT_FAILED: {
+    case GET_INGREDIENTS_FAILED: {
         return {
             ...state,
             ingridientsFailed: true,
             ingridientsRequest: false
         }
     }
-    case GET_INGRIDIENT_SUCCESS: {
+    case GET_INGREDIENTS_SUCCESS: {
         return {
             ...state,
             ingridientsFailed: false,

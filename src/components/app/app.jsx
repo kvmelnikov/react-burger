@@ -6,10 +6,7 @@ import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
 import Api from "../../utils/api/api.js";
 import {useDispatch, useSelector} from 'react-redux';
 import {SET_MODAL_SELECTOR} from '../../services/actions/index'
-import {
-  DataBurgerConstructorContext,
-  DataBurgerIngridientsContext,
-} from "../../utils/context.js";
+import { getIngredients } from "../../services/actions";
 
 
 const modalSelector = document.querySelector("#modals");
@@ -19,118 +16,32 @@ const api = new Api({
 
 function App() {
 
-  const dispatch = useDispatch();
-  const [consrtuctorIngridients, setConsrtuctorIngridients] = React.useState({
-    bun: {},
-    toppings: [],
-  });
-
-  const [numberOrder, setNumberOrder] = React.useState(0);
-  const [ingredients, setIngdidients] = React.useState();
-  const [showModalIngridientDetails, setShowModalIngridientDetails] =
-    React.useState(false);
-  const [showModalOrderDetails, setShowModalOrderDetails] =
-    React.useState(false);
-  const [ingredientDataForModal, setingredientDataForModal] = React.useState(
-    {}
-  );
-
-  const hanldleOpenModalIngridientDetails = (ingredient) => {
-    setingredientDataForModal(ingredient);
-    setShowModalIngridientDetails(true);
-  };
-
-  const makeCheckout = () => {
-    const idToppings = consrtuctorIngridients.toppings.map((el) => {
-      return el._id;
-    });
-    idToppings.push(consrtuctorIngridients.bun._id);
-    return idToppings;
-  };
-
-  const makeConstructorData = (ingredientsForConstructor) => {
-    const data = {};
-    data.toppings = [];
-    ingredientsForConstructor.forEach((el) => {
-      if (el.type !== "bun") {
-        data.toppings.push(el);
-      } else {
-        data.bun = el;
-      }
-    });
-
-    setConsrtuctorIngridients((prev) => ({
-      ...prev.bun,
-      bun: data.bun,
-      ...prev.toppings,
-      toppings: data.toppings,
-    }));
-  };
-
-  const hanldleOpenModalOrderDetails = () => {
+  React.useEffect(()=>{
+    dispatch(
+    getIngredients())},[])
     
-    api
-      .getCheckout(makeCheckout())
-      .then((resp) => {
-        setNumberOrder(resp.order.number);
-        setShowModalOrderDetails(true);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const handleCloseModal = () => {
-    setShowModalIngridientDetails(false);
-    setShowModalOrderDetails(false);
-  };
-
-
-  React.useEffect(()=> {
-    dispatch({type: SET_MODAL_SELECTOR, value: modalSelector})
-  }, [])
-
-  React.useEffect(() => {
-    api
-      .getIngridients()
-      .then((data) => {
-        setIngdidients((prev) => {
-          return [...data.data];
-        });
-        makeConstructorData(data.data);
-      })
-      .catch(() => "");
-  }, []);
+    React.useEffect(()=> {
+      dispatch({type: SET_MODAL_SELECTOR, value: modalSelector})
+    }, [])
   
 
-  if (!ingredients) return <AppHeader />;
+  const dispatch = useDispatch();
+  const ingridients = useSelector((state)=> state.burger.ingridients)
+
+
+
+
+
+  if (!ingridients) return <AppHeader />;
   return (
     <>
       <div className={appStyle.body}>
         <AppHeader />
         <main className={appStyle.container}>
-          <DataBurgerIngridientsContext.Provider
-            value={{
-              ingredients,
-              ingredientDataForModal,
-              hanldleOpenModalIngridientDetails,
-              handleCloseModal,
-              showModalIngridientDetails,
-              modalSelector,
-            }}
-          >
+  
             <BurgerIngridients />
-          </DataBurgerIngridientsContext.Provider>
-          <DataBurgerConstructorContext.Provider
-            value={{
-              numberOrder,
-              consrtuctorIngridients,
-              hanldleOpenModalOrderDetails,
-              showModalOrderDetails,
-              modalSelector,
-              handleCloseModal,
-            }}
-          >
+  
             <BurgerConstuctor />
-          </DataBurgerConstructorContext.Provider>
         </main>
       </div>
     </>

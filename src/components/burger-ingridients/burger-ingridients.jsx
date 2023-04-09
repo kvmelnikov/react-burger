@@ -6,15 +6,17 @@ import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
 import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import { DataBurgerIngridientsContext } from "../../utils/context.js";
-import { getIngridients } from "../../services/actions";
+
+import { getIngredients } from "../../services/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { SET_CURRENT_INGRIDIENT, SHOW_MODAL_INGRIDIENT_DETAILS, CLOSE_MODAL } from "../../services/actions";
+import { SET_CURRENT_INGREDIENT, SHOW_MODAL_INGRIDIENT_DETAILS, 
+  CLOSE_MODAL } from "../../services/actions";
 
 const { ingridients__container, ingridients__list, ingridients__tab } =
   burgerIngridientsStyle;
 
-function BurgerIngridients(props) {
+function BurgerIngridients() {
   const dispatch = useDispatch()
   const [current, setCurrent] = React.useState("bun");
   const [types] = React.useState({
@@ -23,12 +25,12 @@ function BurgerIngridients(props) {
     main: "Начинки",
   });
 
-  const modalSelector = useSelector((state)=> state.burger.modalSelector)
+
   const ingredients = useSelector((state)=>state.burger.ingridients)
   const ingredientDataForModal = useSelector((state)=> state.burger.currentIngridient)
   const showModalIngridientDetails = useSelector((state)=> state.burger.modalIngridientDetail)
 
-  useEffect(()=>{dispatch(getIngridients())},[])
+
 
   const filterIngridients = (currentType) => {
     const filterIngridient = ingredients.filter(
@@ -38,14 +40,9 @@ function BurgerIngridients(props) {
   };
 
   const hanldleOpenModalIngridientDetails = (ingredient) => {
-      dispatch({type: SET_CURRENT_INGRIDIENT, value:ingredient })
+      dispatch({type: SET_CURRENT_INGREDIENT, value:ingredient })
       dispatch({type: SHOW_MODAL_INGRIDIENT_DETAILS})
   }
-
-  const handleCloseModal = () => {
-    dispatch({type: CLOSE_MODAL})
-  }
-
 
   const content = useMemo(()=>{
     return (       
@@ -109,8 +106,6 @@ function BurgerIngridients(props) {
         <>
           <Modal
             heading="Детали ингридиента"
-            modalSelector={modalSelector}
-            handleCloseModal={handleCloseModal}
           >
             <IngridientDetails {...ingredientDataForModal} />
           </Modal>
@@ -120,16 +115,16 @@ function BurgerIngridients(props) {
   );
 }
 
-BurgerIngridients.propTypes = {
-  constext: propTypes.shape({
-    ingridients: propTypes.array,
-    ingredientDataForModal: propTypes.object.isRequired,
-    handleOpenModal: propTypes.func.isRequired,
-    handleCloseModal: propTypes.func.isRequired,
-    showModal: propTypes.bool.isRequired,
-    modalSelector: propTypes.object.isRequired,
-  })
+// BurgerIngridients.propTypes = {
+//   constext: propTypes.shape({
+//     ingridients: propTypes.array,
+//     ingredientDataForModal: propTypes.object.isRequired,
+//     handleOpenModal: propTypes.func.isRequired,
+//     handleCloseModal: propTypes.func.isRequired,
+//     showModal: propTypes.bool.isRequired,
+//     modalSelector: propTypes.object.isRequired,
+//   })
 
-};
+// };
 
 export default BurgerIngridients;

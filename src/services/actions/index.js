@@ -1,19 +1,18 @@
 import Api from "../../utils/api/api.js";
 
-export const GET_INGRIDIENT_REQUEST = "GET_INGRIDIENT_REQUEST";
-export const GET_INGRIDIENT_SUCCESS = "GET_INGRIDIENT_SUCCESS";
-export const GET_INGRIDIENT_FAILED = "GET_INGRIDIENT_FAILED";
+export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
-
-export const SET_CURRENT_INGRIDIENT = "SET_CURRENT_INGRIDIENT";
+export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const SHOW_MODAL_INGRIDIENT_DETAILS =
   "SET_SHOW_MODAL_INGRIDIENT_DETAILS";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const SET_MODAL_SELECTOR = "SET_MODAL_SELECTOR";
-export const SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR =
-  "SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR";
+export const SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR =
+  "SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR";
 
 const api = new Api({
   baseUrl: "https://norma.nomoreparties.space/api/",
@@ -42,23 +41,22 @@ const makeCheckout = (consrtuctorIngridients) => {
 };
 
 
-export const getIngridients = () => {
-
+export const getIngredients = () => {
     return function (dispatch) {
         dispatch({
-          type: GET_INGRIDIENT_REQUEST,
+          type: GET_INGREDIENTS_REQUEST,
         });
         api
-          .getIngridients()
+          .getIngredients()
           .then((data) => {
-            dispatch({ type: GET_INGRIDIENT_SUCCESS, value: data.data });
+            dispatch({ type: GET_INGREDIENTS_SUCCESS, value: data.data });
             dispatch({
-              type: SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR,
+              type: SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR,
               value: makeConstructorData(data.data),
             });
           })
           .catch(() => {
-            dispatch({ type: GET_INGRIDIENT_FAILED });
+            dispatch({ type: GET_INGREDIENTS_FAILED });
           });
       };
 
