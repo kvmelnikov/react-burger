@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   ConstructorElement,
   DragIcon,
@@ -10,13 +10,17 @@ import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { DataBurgerConstructorContext } from "../../utils/context.js";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux/es/hooks/useDispatch";
+import { getIngridients } from "../../services/actions";
+
 
 const { container, bun, toppings, topping__item, info } =
   burgerConstructorStyle;
 
 function BurgerConstructor(props) {
+  const dispatch = useDispatch();
   const {
-    consrtuctorIngridients,
     numberOrder,
     hanldleOpenModalOrderDetails,
     handleCloseModal,
@@ -24,7 +28,11 @@ function BurgerConstructor(props) {
 
     modalSelector,
   } = React.useContext(DataBurgerConstructorContext);
-  const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0);
+  const consrtuctorIngridients = useSelector((state) => state.burger.ingridientsForConstructor)
+  useEffect(()=>{
+    dispatch(getIngridients())
+  }, [])
+
 
   function calculateAmount() {
     if (!consrtuctorIngridients) return "0";
@@ -36,6 +44,8 @@ function BurgerConstructor(props) {
     );
     return summToppings + consrtuctorIngridients.bun.price;
   }
+  const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0);
+
 
   React.useEffect(() => {
     setSummBurger();
