@@ -1,7 +1,7 @@
 export default class Api {
-  constructor({ baseUrl, headers }) {
+  constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-    this._headers = headers || null;
+
   }
 
   _checkResponse(res) {
@@ -11,11 +11,25 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  _request(url, options) {
-    return fetch(url).then(this._checkResponse);
+  getIngridients() {
+    return fetch(this._baseUrl + "ingredients", { method: "get" }).then((res) => {
+      return this._checkResponse(res);
+    });
   }
 
-  getIngridients() {
-    return this._request(this._baseUrl);
+  getCheckout(ingredients) {
+  
+    return fetch(`${this._baseUrl + "orders"}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ingredients: ingredients
+      }),
+    }).then((res) => {
+     
+      return this._checkResponse(res);
+    });
   }
 }
