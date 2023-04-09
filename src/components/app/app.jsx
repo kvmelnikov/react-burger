@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import appStyle from "./app.module.css";
 import AppHeader from "../app-header/app-header.jsx";
 import BurgerIngridients from "../burger-ingridients/burger-ingridients.jsx";
 import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
 import Api from "../../utils/api/api.js";
+import {useDispatch, useSelector} from 'react-redux';
+import {SET_MODAL_SELECTOR} from '../../services/actions/index'
 import {
   DataBurgerConstructorContext,
   DataBurgerIngridientsContext,
 } from "../../utils/context.js";
-import { SET_MODAL_SELECTOR } from "../../services/actions";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+
 
 const modalSelector = document.querySelector("#modals");
 const api = new Api({
@@ -18,11 +19,7 @@ const api = new Api({
 
 function App() {
 
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    dispatch({type: SET_MODAL_SELECTOR, value: modalSelector})
-  }, [])
-
+  const dispatch = useDispatch();
   const [consrtuctorIngridients, setConsrtuctorIngridients] = React.useState({
     bun: {},
     toppings: [],
@@ -37,8 +34,6 @@ function App() {
   const [ingredientDataForModal, setingredientDataForModal] = React.useState(
     {}
   );
-
-
 
   const hanldleOpenModalIngridientDetails = (ingredient) => {
     setingredientDataForModal(ingredient);
@@ -61,7 +56,7 @@ function App() {
         data.toppings.push(el);
       } else {
         data.bun = el;
-      }  
+      }
     });
 
     setConsrtuctorIngridients((prev) => ({
@@ -73,6 +68,7 @@ function App() {
   };
 
   const hanldleOpenModalOrderDetails = () => {
+    
     api
       .getCheckout(makeCheckout())
       .then((resp) => {
@@ -86,6 +82,11 @@ function App() {
     setShowModalIngridientDetails(false);
     setShowModalOrderDetails(false);
   };
+
+
+  React.useEffect(()=> {
+    dispatch({type: SET_MODAL_SELECTOR, value: modalSelector})
+  }, [])
 
   React.useEffect(() => {
     api

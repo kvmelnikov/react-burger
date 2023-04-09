@@ -5,11 +5,11 @@ import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from 'react-dom';
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import propTypes from "prop-types";
-
+import {useSelector} from 'react-redux';
 
 
 function Modal(props) {
-
+  const modalSelector = useSelector((state) => state.burger.modalSelector)  
   const handleEscapeClose = (e) => {
     if (e.key === "Escape") {
       props.handleCloseModal();
@@ -40,7 +40,7 @@ function Modal(props) {
         {props.children}
       </div>
     </div>
-    </>, props.modalSelector
+    </>, modalSelector
     )
   );
 }

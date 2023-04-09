@@ -7,7 +7,7 @@ import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import { DataBurgerIngridientsContext } from "../../utils/context.js";
 import { getIngridients } from "../../services/actions";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { SET_CURRENT_INGRIDIENT, SHOW_MODAL_INGRIDIENT_DETAILS, CLOSE_MODAL } from "../../services/actions";
 
@@ -72,8 +72,6 @@ function BurgerIngridients(props) {
     })}
   </section>)
   }, [ingredients])
-
-
 
   return (
     <>

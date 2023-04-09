@@ -6,7 +6,10 @@ import {
   SHOW_MODAL_INGRIDIENT_DETAILS,
   CLOSE_MODAL,
   SET_MODAL_SELECTOR,
-  SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR,
+  SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR, 
+  GET_ORDER_NUMBER_REQUEST,
+  GET_ORDER_NUMBER_SUCCESS,
+  GET_ORDER_NUMBER_FAILED
   
 } from "../actions";
 
@@ -14,6 +17,10 @@ const initialState = {
   ingridientsRequest: false,
   ingridientsFailed: false,  
   ingridients: [],
+  orderRequest: false,
+  orderRequestFailed: false,
+  numberOrder: 0,
+
   ingridientsForConstructor: {
     bun: {},
     toppings: [],
@@ -22,12 +29,14 @@ const initialState = {
   order: {},
   modalIngridientDetail: false,
   modalOrderDetail: false,
+  showModalOrderDetails: false,
   modalSelector: {}
 };
 
 export const burgerReducer = (state = initialState, action) => {
   
   switch (action.type) {
+
     case SET_INGRIDIENTS_FOR_BURGER_CONSTRUCTOR: {
         return {
             ...state,
@@ -49,7 +58,9 @@ export const burgerReducer = (state = initialState, action) => {
         return {
             ...state,
             modalIngridientDetail: false,
-            modalOrderDetail: false
+            modalOrderDetail: false,
+            showModalOrderDetails: false,
+            currentIngridient: {},
         }
     }
     
@@ -86,6 +97,30 @@ export const burgerReducer = (state = initialState, action) => {
             ingridients: action.value,
         }
     }
+    case GET_ORDER_NUMBER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true
+      }  
+    }
+    case GET_ORDER_NUMBER_FAILED: {
+        return {
+            ...state,
+            orderRequestFailed: true,
+            orderRequest: false
+        }
+    }
+    case GET_ORDER_NUMBER_SUCCESS: {
+       console.log('reducer number success')
+        return {
+            ...state,
+            orderRequestFailed: false,
+            orderRequest: false,
+            numberOrder: action.value,
+            showModalOrderDetails: true,
+        }
+    }
+
 
     default: {
       return state;

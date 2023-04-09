@@ -10,9 +10,8 @@ import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { DataBurgerConstructorContext } from "../../utils/context.js";
-import { useSelector } from "react-redux/es/hooks/useSelector";
-import { useDispatch } from "react-redux/es/hooks/useDispatch";
-import { getIngridients } from "../../services/actions";
+import { useSelector, useDispatch } from "react-redux";
+import { CLOSE_MODAL, getIngridients, getOrderNumber } from "../../services/actions";
 
 
 const { container, bun, toppings, topping__item, info } =
@@ -21,19 +20,12 @@ const { container, bun, toppings, topping__item, info } =
 function BurgerConstructor(props) {
   const dispatch = useDispatch();
   const {
-    numberOrder,
-    hanldleOpenModalOrderDetails,
-    handleCloseModal,
-    showModalOrderDetails,
-
     modalSelector,
   } = React.useContext(DataBurgerConstructorContext);
+  const numberOrder = useSelector((state)=> state.burger.numberOrder)
+  const showModalOrderDetails = useSelector((state)=>state.burger.showModalOrderDetails)
   const consrtuctorIngridients = useSelector((state) => state.burger.ingridientsForConstructor)
-  useEffect(()=>{
-    dispatch(getIngridients())
-  }, [])
-
-
+  
   function calculateAmount() {
     if (!consrtuctorIngridients) return "0";
     const summToppings = consrtuctorIngridients.toppings.reduce(
@@ -45,6 +37,15 @@ function BurgerConstructor(props) {
     return summToppings + consrtuctorIngridients.bun.price;
   }
   const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0);
+
+  const hanldleOpenModalOrderDetails = () => {
+    dispatch(getOrderNumber(consrtuctorIngridients))
+  }
+
+  const handleCloseModal = () => {
+    dispatch({type: CLOSE_MODAL})
+  }
+
 
 
   React.useEffect(() => {

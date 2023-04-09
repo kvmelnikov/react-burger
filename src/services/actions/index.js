@@ -3,6 +3,10 @@ import Api from "../../utils/api/api.js";
 export const GET_INGRIDIENT_REQUEST = "GET_INGRIDIENT_REQUEST";
 export const GET_INGRIDIENT_SUCCESS = "GET_INGRIDIENT_SUCCESS";
 export const GET_INGRIDIENT_FAILED = "GET_INGRIDIENT_FAILED";
+export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
+export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
+export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
+
 export const SET_CURRENT_INGRIDIENT = "SET_CURRENT_INGRIDIENT";
 export const SHOW_MODAL_INGRIDIENT_DETAILS =
   "SET_SHOW_MODAL_INGRIDIENT_DETAILS";
@@ -29,7 +33,16 @@ const makeConstructorData = (ingredientsForConstructor) => {
 };
 
 
-export const getIngridients = (type) => {
+const makeCheckout = (consrtuctorIngridients) => {
+  const idToppings = consrtuctorIngridients.toppings.map((el) => {
+    return el._id;
+  });
+  idToppings.push(consrtuctorIngridients.bun._id);
+  return idToppings;
+};
+
+
+export const getIngridients = () => {
 
     return function (dispatch) {
         dispatch({
@@ -48,6 +61,27 @@ export const getIngridients = (type) => {
             dispatch({ type: GET_INGRIDIENT_FAILED });
           });
       };
- 
+
+};
+
+
+export const getOrderNumber = (consrtuctorIngridients) => {
+
+  return function (dispatch) {
+      dispatch({
+        type: GET_ORDER_NUMBER_REQUEST,
+      });
+      api
+      .getCheckout(makeCheckout(consrtuctorIngridients))
+      .then((resp) => {
+        dispatch({
+          type: GET_ORDER_NUMBER_SUCCESS, value: resp.order.number   
+        })
+
+      })
+      .catch((err) => {
+        dispatch({ type: GET_ORDER_NUMBER_FAILED });
+      });
+    };
 
 };
