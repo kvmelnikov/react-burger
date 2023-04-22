@@ -1,6 +1,7 @@
 .ingridients__container {
   overflow-y: scroll;
   height: 80vh;
+  position: relative;
 }
 
 .ingridients__tab {

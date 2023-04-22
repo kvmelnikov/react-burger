@@ -9,14 +9,18 @@ import {
   SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR, 
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
-  GET_ORDER_NUMBER_FAILED
-  
+  GET_ORDER_NUMBER_FAILED,
+  ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
+  INCREASE_COUNTER_INGREDIENT,
+  ADD_BUN_TO_BURGER_CONSTRUCTOR,
+  DECREASE_COUNTER_INGREDIENT,
+  DELETE_INGREDIENT_IN_CONSTRUCTOR
 } from "../actions";
 
 const initialState = {
   ingredientsRequest: false,
   ingredientsFailed: false,  
-  ingredients: [],
+  ingridients: [],
   orderRequest: false,
   orderRequestFailed: false,
   numberOrder: 0,
@@ -36,6 +40,57 @@ const initialState = {
 export const burgerReducer = (state = initialState, action) => {
   
   switch (action.type) {
+    
+    case INCREASE_COUNTER_INGREDIENT: {
+      return {
+        ...state,
+        ingridients: [...state.ingridients].map(ingredient => {
+         return ingredient._id === action.id ? { ...ingredient, count: ++ingredient.count } : ingredient  
+        } )
+      };
+    }
+
+    case DELETE_INGREDIENT_IN_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingridientsForConstructor: {
+          ...state.ingridientsForConstructor,
+         toppings: state.ingridientsForConstructor.toppings.length === 1 ? [] : [...state.ingridientsForConstructor.toppings.slice(0, action.indx),
+          ...state.ingridientsForConstructor.toppings.slice(action.indx+1)] 
+
+        }
+    }
+  }
+
+    case DECREASE_COUNTER_INGREDIENT: {
+      return {
+        ...state,
+        ingridients: [...state.ingridients].map(ingredient => {
+          return ingredient._id === action.id &&  ingredient.count > 0 ? { ...ingredient, count: --ingredient.count } : ingredient  
+         } )
+       
+      };
+    }
+
+    case ADD_TOPPING_TO_BURGER_CONSTRUCTOR: {
+      return {
+        ...state,
+        ingridientsForConstructor: {
+            ...state.ingridientsForConstructor,
+            toppings: [...state.ingridientsForConstructor.toppings, action.topping]
+        }      
+    }
+  }
+
+  case ADD_BUN_TO_BURGER_CONSTRUCTOR: {
+    return {
+      ...state,
+      ingridientsForConstructor: {
+          ...state.ingridientsForConstructor,
+          bun: action.bun,
+      }      
+  }
+}
 
     case SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR: {
         return {
@@ -111,7 +166,6 @@ export const burgerReducer = (state = initialState, action) => {
         }
     }
     case GET_ORDER_NUMBER_SUCCESS: {
-       console.log('reducer number success')
         return {
             ...state,
             orderRequestFailed: false,
