@@ -18,6 +18,8 @@ export const INCREASE_COUNTER_INGREDIENT = 'INCREASE_COUNTER_INGREDIENT';
 export const ADD_BUN_TO_BURGER_CONSTRUCTOR = 'ADD_BUN_TO_BURGER_CONSTRUCTOR';
 export const DECREASE_COUNTER_INGREDIENT = 'DECREASE_COUNTER_INGREDIENT';
 export const DELETE_INGREDIENT_IN_CONSTRUCTOR = 'DELETE_INGREDIENT_IN_CONSTRUCTOR';
+export const INSERT_INGREDIENT_IN_CONSTRUCTOR = 'INSERT_INGREDIENT_IN_CONSTRUCTOR';
+
 
 const api = new Api({
   baseUrl: "https://norma.nomoreparties.space/api/",
@@ -46,8 +48,17 @@ const makeCheckout = (consrtuctorIngridients) => {
 };
 
 
+export const movieTopping = (dragIndex, hoverIndex) =>{
+
+  return function(dispatch) {
+    dispatch({type: INSERT_INGREDIENT_IN_CONSTRUCTOR, dragIndex: dragIndex, hoverIndex:hoverIndex })
+  }
+}
+
+
+
 export const deleteTopping  = (ingredientId, index) => {
-  console.log(ingredientId)
+
   return function(dispatch) {
         dispatch({type: DECREASE_COUNTER_INGREDIENT, id: ingredientId})
         dispatch({type: DELETE_INGREDIENT_IN_CONSTRUCTOR, indx: index})    
@@ -56,11 +67,13 @@ export const deleteTopping  = (ingredientId, index) => {
 
 
 export const addBunInConstructor  = (ingredient, currentIdBun) => {
-  console.log(ingredient._id)
+
   return function(dispatch) {
+
       if(currentIdBun){
         dispatch({type: DECREASE_COUNTER_INGREDIENT, id: currentIdBun})
       }
+     
       dispatch({type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient})
       dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient._id })
   }
@@ -68,6 +81,7 @@ export const addBunInConstructor  = (ingredient, currentIdBun) => {
 
 export const addToppingInConstructor = (ingredient) => {
   return function(dispatch) {
+
     dispatch({type: ADD_TOPPING_TO_BURGER_CONSTRUCTOR, topping: ingredient})
     dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient._id })
   }
@@ -95,7 +109,6 @@ export const getIngredients = () => {
             dispatch({ type: GET_INGREDIENTS_FAILED });
           });
       };
-
 };
 
 

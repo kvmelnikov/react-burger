@@ -14,7 +14,8 @@ import {
   INCREASE_COUNTER_INGREDIENT,
   ADD_BUN_TO_BURGER_CONSTRUCTOR,
   DECREASE_COUNTER_INGREDIENT,
-  DELETE_INGREDIENT_IN_CONSTRUCTOR
+  DELETE_INGREDIENT_IN_CONSTRUCTOR,
+  INSERT_INGREDIENT_IN_CONSTRUCTOR
 } from "../actions";
 
 const initialState = {
@@ -37,10 +38,68 @@ const initialState = {
   modalSelector: {}
 };
 
+
+const initialStateModal = {
+  modalIngridientDetail: false,
+  modalOrderDetail: false,
+  showModalOrderDetails: false,
+  modalSelector: {}
+}
+
+export const ModalReducer = (state = initialStateModal, action) => {
+  switch (action.type) {
+    case SET_MODAL_SELECTOR: {
+    return {
+        ...state,
+        modalSelector: action.value
+    }
+}
+
+case CLOSE_MODAL: {
+    return {
+        ...state,
+        modalIngridientDetail: false,
+        modalOrderDetail: false,
+        showModalOrderDetails: false,
+        currentIngridient: {},
+    }
+}
+
+case SHOW_MODAL_INGRIDIENT_DETAILS: {
+    return {
+        ...state,
+        modalIngridientDetail: true
+    }
+}
+
+default: {
+  return state;
+}
+  }
+}
+
+
 export const burgerReducer = (state = initialState, action) => {
   
   switch (action.type) {
-    
+    case INSERT_INGREDIENT_IN_CONSTRUCTOR: {
+      const newArray = [...state.ingridientsForConstructor.toppings]; 
+      
+      newArray.splice(
+        action.dragIndex,
+        0,
+        newArray.splice(action.hoverIndex, 1)[0]
+      );
+
+      return {
+        ...state,
+        ingridientsForConstructor: {
+          ...state.ingridientsForConstructor,
+          toppings: newArray
+        }
+      }
+     }
+
     case INCREASE_COUNTER_INGREDIENT: {
       return {
         ...state,

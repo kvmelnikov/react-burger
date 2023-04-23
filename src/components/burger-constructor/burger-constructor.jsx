@@ -8,14 +8,16 @@ import {
 import burgerConstructorStyle from "./burger-constructor.module.css";
 import propTypes from "prop-types";
 import Modal from "../modal/modal";
+import Topping from "../topping/topping";
 import OrderDetails from "../order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   getOrderNumber,
   addBunInConstructor,
   addToppingInConstructor,
-  deleteTopping,
-  DECREASE_COUNTER_INGREDIENT
+
+  
 } from "../../services/actions";
 import { useDrop } from "react-dnd";
 
@@ -31,20 +33,19 @@ function BurgerConstructor() {
   const ingredientsConstructor = useSelector(
     (state) => state.burger.ingridientsForConstructor
   );
-  console.log(ingredientsConstructor)
-  const ingredients = useSelector((state) => state.burger.ingridients);
- // const toppingRef = React.useRef(null);
 
-  const [{ isHover }, drop] = useDrop({
+
+  const ingredients = useSelector((state) => state.burger.ingridients);
+
+  const [, drop] = useDrop({
     accept: "ingridient",
-    collect: (monitor) => ({
-      isHover: monitor.isOver(),
-    }),
+
     drop(ingredient) {
       if (ingredient[0].type === "bun" )  {
         dispatch(addBunInConstructor(ingredient[0], ingredientsConstructor.bun._id));
       }
        else  {
+        
         dispatch(addToppingInConstructor(ingredient[0]));
       }
     },
@@ -65,8 +66,8 @@ function BurgerConstructor() {
         },
         0
       );
-
-      return summToppings + Number(ingredientsConstructor.bun.price);
+      const priceBun = Number(ingredientsConstructor.bun.price) ? Number(ingredientsConstructor.bun.price) : 0
+      return summToppings + priceBun;
     }
   }
 
@@ -76,14 +77,7 @@ function BurgerConstructor() {
     dispatch(getOrderNumber(ingredientsConstructor));
   };
 
-  const handleDeleteTopping = (e, index) => {
-    if(e.target.parentElement.parentElement.classList.contains('pr-2')) {
-    //  console.log(ingredientsConstructor.toppings[index]._id, index)
-      
-      dispatch(deleteTopping(ingredientsConstructor.toppings[index]._id, index))
-    }
-  }
-
+ 
   React.useEffect(() => {
     setSummBurger();
   }, [ingredientsConstructor]);
@@ -122,14 +116,10 @@ function BurgerConstructor() {
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, index) => {
                  return (
-                  <li onClick={(e) => handleDeleteTopping(e,index)} key={index} className={`${topping__item}`}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={topping.name}
-                      price={topping.price}
-                      thumbnail={topping.image}
-                    />
-                  </li>
+                  <Topping item={topping} index={index} key={index}
+                  
+                  {...topping}
+                  />
                 );
              
               })
