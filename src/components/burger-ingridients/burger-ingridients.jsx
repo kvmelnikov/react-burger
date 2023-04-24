@@ -14,7 +14,7 @@ import { useDrag } from "react-dnd";
 import {
   SET_CURRENT_INGREDIENT,
   SHOW_MODAL_INGRIDIENT_DETAILS,
-  UPDATE_TYPE
+  
 } from "../../services/actions";
 
 const { ingridients__container, ingridients__list, ingridients__tab } =
@@ -30,12 +30,12 @@ function BurgerIngridients() {
   });
  
 
-  const ingredients = useSelector((state) => state.api.ingridients);
+  const ingredients = useSelector((state) => state.ingredients.ingridients);
   
 
 
   const ingredientDataForModal = useSelector(
-    (state) => state.burger.currentIngridient
+    (state) => state.modal.currentIngridient
   );
   const showModalIngridientDetails = useSelector(
     (state) => state.modal.modalIngridientDetail

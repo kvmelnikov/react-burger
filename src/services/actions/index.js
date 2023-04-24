@@ -20,7 +20,7 @@ export const ADD_BUN_TO_BURGER_CONSTRUCTOR = 'ADD_BUN_TO_BURGER_CONSTRUCTOR';
 export const DECREASE_COUNTER_INGREDIENT = 'DECREASE_COUNTER_INGREDIENT';
 export const DELETE_INGREDIENT_IN_CONSTRUCTOR = 'DELETE_INGREDIENT_IN_CONSTRUCTOR';
 export const INSERT_INGREDIENT_IN_CONSTRUCTOR = 'INSERT_INGREDIENT_IN_CONSTRUCTOR';
-export const GET_INGREDIENTS = 'GET_INGREDIENTS'
+export const SET_INGREDIENTS = 'SET_INGREDIENTS'
 
 const api = new Api({
   baseUrl: "https://norma.nomoreparties.space/api/",
@@ -85,6 +85,7 @@ export const getIngredients = () => {
               return el.count = 0
             })
             dispatch({ type: GET_INGREDIENTS_SUCCESS, value: data.data });
+            dispatch({type: SET_INGREDIENTS, value: data.data })
           })
           .catch(() => {
             dispatch({ type: GET_INGREDIENTS_FAILED });

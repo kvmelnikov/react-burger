@@ -1,27 +1,23 @@
 import React, { useEffect } from "react";
 import {
   ConstructorElement,
-  DragIcon,
   CurrencyIcon,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerConstructorStyle from "./burger-constructor.module.css";
-import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import Topping from "../topping/topping";
 import OrderDetails from "../order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
-
+import { useDrop } from "react-dnd";
 import {
   getOrderNumber,
   addBunInConstructor,
   addToppingInConstructor,
-
-  
 } from "../../services/actions";
-import { useDrop } from "react-dnd";
 
-const { container, bun, toppings, topping__item, info } =
+
+const { container, bun, toppings, info } =
   burgerConstructorStyle;
 
 function BurgerConstructor() {
@@ -34,9 +30,7 @@ function BurgerConstructor() {
   const ingredientsConstructor = useSelector(
     (state) => state.burger.ingridientsForConstructor
   );
-
-
-  const ingredients = useSelector((state) => state.burger.ingridients);
+  const ingredients = useSelector((state) => state.ingredients.ingridients);
 
   const [, drop] = useDrop({
     accept: "ingridient",
@@ -46,7 +40,6 @@ function BurgerConstructor() {
         dispatch(addBunInConstructor(ingredient[0], ingredientsConstructor.bun._id));
       }
        else  {
-        
         dispatch(addToppingInConstructor(ingredient[0]));
       }
     },
@@ -60,7 +53,6 @@ function BurgerConstructor() {
       return "0";
     }
     else {
-
       const summToppings = ingredientsConstructor.toppings.reduce(
         (accumulator, next) => {
           return accumulator + Number(next.price);
@@ -154,15 +146,6 @@ function BurgerConstructor() {
   );
 }
 
-// BurgerConstructor.propTypes = {
-//   context: propTypes.shape({
-//     ingredientsConstructor: propTypes.object.isRequired,
-//       handleCloseModal: propTypes.func.isRequired,
-//   hanldleOpenModalOrderDetails: propTypes.func.isRequired,
-//   modalSelector: propTypes.object.isRequired,
-//   showModalOrderDetails: propTypes.bool.isRequired,
-//   }),
 
-// };
 
 export default BurgerConstructor;
