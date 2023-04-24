@@ -9,6 +9,7 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 export const SHOW_MODAL_INGRIDIENT_DETAILS =
   "SET_SHOW_MODAL_INGRIDIENT_DETAILS";
+export const SHOW_MODAL_ORDER_DETAILS = "SHOW_MODAL_ORDER_DETAILS";
 export const CLOSE_MODAL = "CLOSE_MODAL";
 export const SET_MODAL_SELECTOR = "SET_MODAL_SELECTOR";
 export const SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR =
@@ -19,25 +20,11 @@ export const ADD_BUN_TO_BURGER_CONSTRUCTOR = 'ADD_BUN_TO_BURGER_CONSTRUCTOR';
 export const DECREASE_COUNTER_INGREDIENT = 'DECREASE_COUNTER_INGREDIENT';
 export const DELETE_INGREDIENT_IN_CONSTRUCTOR = 'DELETE_INGREDIENT_IN_CONSTRUCTOR';
 export const INSERT_INGREDIENT_IN_CONSTRUCTOR = 'INSERT_INGREDIENT_IN_CONSTRUCTOR';
-
+export const GET_INGREDIENTS = 'GET_INGREDIENTS'
 
 const api = new Api({
   baseUrl: "https://norma.nomoreparties.space/api/",
 });
-
-const makeConstructorData = (ingredientsForConstructor) => {
-  const data = {};
-  data.toppings = [];
-  ingredientsForConstructor.forEach((el) => {
-    if (el.type !== "bun") {
-      data.toppings.push(el);
-    } else {
-      data.bun = el;
-    }
-  });
-  return data;
-};
-
 
 const makeCheckout = (consrtuctorIngridients) => {
   const idToppings = consrtuctorIngridients.toppings.map((el) => {
@@ -56,7 +43,6 @@ export const movieTopping = (dragIndex, hoverIndex) =>{
 }
 
 
-
 export const deleteTopping  = (ingredientId, index) => {
 
   return function(dispatch) {
@@ -67,9 +53,8 @@ export const deleteTopping  = (ingredientId, index) => {
 
 
 export const addBunInConstructor  = (ingredient, currentIdBun) => {
-
+  console.log( ingredient,currentIdBun)
   return function(dispatch) {
-
       if(currentIdBun){
         dispatch({type: DECREASE_COUNTER_INGREDIENT, id: currentIdBun})
       }
@@ -96,14 +81,10 @@ export const getIngredients = () => {
         api
           .getIngredients()
           .then((data) => {
-            const values = data.data.map((el)=>{
+             data.data.map((el)=>{
               return el.count = 0
             })
             dispatch({ type: GET_INGREDIENTS_SUCCESS, value: data.data });
-            // dispatch({
-            //   type: SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR,
-            //   value: makeConstructorData(data.data),
-            // });
           })
           .catch(() => {
             dispatch({ type: GET_INGREDIENTS_FAILED });
@@ -124,6 +105,10 @@ export const getOrderNumber = (consrtuctorIngridients) => {
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS, value: resp.order.number   
         })
+        dispatch({
+          type: SHOW_MODAL_ORDER_DETAILS
+        })
+
 
       })
       .catch((err) => {

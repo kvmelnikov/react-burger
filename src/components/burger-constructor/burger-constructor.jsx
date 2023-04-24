@@ -26,9 +26,10 @@ const { container, bun, toppings, topping__item, info } =
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const numberOrder = useSelector((state) => state.burger.numberOrder);
+  const numberOrder = useSelector((state) => state.api.numberOrder);
+
   const showModalOrderDetails = useSelector(
-    (state) => state.burger.showModalOrderDetails
+    (state) => state.modal.showModalOrderDetails
   );
   const ingredientsConstructor = useSelector(
     (state) => state.burger.ingridientsForConstructor
@@ -121,7 +122,6 @@ function BurgerConstructor() {
                   {...topping}
                   />
                 );
-             
               })
             ) : (
               <div></div>

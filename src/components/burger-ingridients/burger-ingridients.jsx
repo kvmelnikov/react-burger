@@ -7,7 +7,7 @@ import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import { DataBurgerIngridientsContext } from "../../utils/context.js";
 
-import { getIngredients } from "../../services/actions";
+import { GET_INGREDIENTS } from "../../services/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useDrag } from "react-dnd";
@@ -28,15 +28,17 @@ function BurgerIngridients() {
     sauce: "Соусы",
     main: "Начинки",
   });
+ 
+
+  const ingredients = useSelector((state) => state.api.ingridients);
+  
 
 
-  const ingredients = useSelector((state) => state.burger.ingridients);
-  //console.log(ingredients)
   const ingredientDataForModal = useSelector(
     (state) => state.burger.currentIngridient
   );
   const showModalIngridientDetails = useSelector(
-    (state) => state.burger.modalIngridientDetail
+    (state) => state.modal.modalIngridientDetail
   );
 
 

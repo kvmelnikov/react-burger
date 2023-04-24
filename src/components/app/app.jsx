@@ -11,13 +11,11 @@ import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 const modalSelector = document.querySelector("#modals");
-const api = new Api({
-  baseUrl: "https://norma.nomoreparties.space/api/",
-});
+
 
 function App() {
   const dispatch = useDispatch();
-  const ingridients = useSelector((state) => state.burger.ingridients);
+  const ingridients = useSelector((state) => state.api.ingridients);
   
   React.useEffect(() => {
     dispatch(getIngredients());

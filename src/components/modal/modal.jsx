@@ -11,7 +11,7 @@ import { CLOSE_MODAL } from "../../services/actions";
 function Modal(props) {
 
   const dispatch = useDispatch()
-  const modalSelector = useSelector((state) => state.burger.modalSelector)  
+  const modalSelector = useSelector((state) => state.modal.modalSelector)  
   
   const handleCloseModal = () =>{
     dispatch({type: CLOSE_MODAL})
