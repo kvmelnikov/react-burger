@@ -5,9 +5,11 @@ import {
   SHOW_MODAL_ORDER_DETAILS,
   CLOSE_MODAL,
   SET_MODAL_SELECTOR,
-  SET_CURRENT_INGREDIENT
 
-} from "../actions";
+} from "../actions/modal-action";
+
+
+
 
 export const modalReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -42,13 +44,7 @@ case SHOW_MODAL_ORDER_DETAILS: {
     }
 }
 
-case SET_CURRENT_INGREDIENT: {
-  console.log(action)
-  return {
-      ...state, 
-      currentIngridient: action.value
-  }
-}
+
 
 default: {
   return state;

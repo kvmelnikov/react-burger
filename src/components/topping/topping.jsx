@@ -7,11 +7,10 @@ import {
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
-
-  movieTopping,
   deleteTopping,
 } from "../../services/actions";
 
+import { INSERT_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action';
 
 export default function Topping({index, item}) {
   const dispatch = useDispatch();
@@ -21,8 +20,7 @@ export default function Topping({index, item}) {
 
   const [, drag] = useDrag({
     type: "item",
-    item: {key,index},
-
+    item: {key ,index},
 });
 
 const [, drop] = useDrop({
@@ -31,11 +29,12 @@ const [, drop] = useDrop({
     if (!dragRef.current) {
       return;
     }
-    const dragEl = item.index;
+    const dragElIndex = item.index;
     const hoverElIndex = index;
    
-    dispatch(movieTopping(dragEl, hoverElIndex));
+    dispatch({type: INSERT_INGREDIENT_IN_CONSTRUCTOR, dragIndex: dragElIndex, hoverIndex:hoverElIndex })
     item.index = hoverElIndex;
+
   },
 });
 

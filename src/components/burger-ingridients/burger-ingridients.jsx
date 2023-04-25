@@ -7,15 +7,16 @@ import propTypes from "prop-types";
 import Modal from "../modal/modal";
 import { DataBurgerIngridientsContext } from "../../utils/context.js";
 
-import { GET_INGREDIENTS } from "../../services/actions";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useDrag } from "react-dnd";
 import {
-  SET_CURRENT_INGREDIENT,
+ 
   SHOW_MODAL_INGRIDIENT_DETAILS,
   
 } from "../../services/actions";
+
+import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingridients-action.js";
 
 const { ingridients__container, ingridients__list, ingridients__tab } =
   burgerIngridientsStyle;
@@ -35,7 +36,7 @@ function BurgerIngridients() {
 
 
   const ingredientDataForModal = useSelector(
-    (state) => state.modal.currentIngridient
+    (state) => state.ingredients.currentIngridient
   );
   const showModalIngridientDetails = useSelector(
     (state) => state.modal.modalIngridientDetail

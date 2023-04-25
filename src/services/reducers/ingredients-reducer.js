@@ -1,10 +1,11 @@
 import {initialState} from "./index";
+
 import {
+  SET_CURRENT_INGREDIENT,
   SET_INGREDIENTS,
   INCREASE_COUNTER_INGREDIENT,
   DECREASE_COUNTER_INGREDIENT,
-  SET_CURRENT_INGREDIENT
-} from "../actions";
+} from "../actions/ingridients-action";
 
 export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -36,7 +37,13 @@ export const ingredientsReducer = (state = initialState, action) => {
         }),
       };
     }
-
+    case SET_CURRENT_INGREDIENT: {
+      console.log(action)
+      return {
+          ...state, 
+          currentIngridient: action.value
+      }
+    }
 
 
 

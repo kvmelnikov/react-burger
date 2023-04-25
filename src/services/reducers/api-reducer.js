@@ -8,7 +8,7 @@ import {
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
 
-} from "../actions";
+} from "../actions/api-action";
 
 
 export const apiReducer = (state = initialState, action) => {

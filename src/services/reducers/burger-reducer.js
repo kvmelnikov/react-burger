@@ -1,6 +1,6 @@
 import {initialState} from "./index";
 import {
-  SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR, 
+
   ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
   ADD_BUN_TO_BURGER_CONSTRUCTOR,
   DELETE_INGREDIENT_IN_CONSTRUCTOR,
@@ -65,16 +65,16 @@ export const burgerReducer = (state = initialState, action) => {
   }
 }
 
-    case SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR: {
-        return {
-            ...state,
-            ingridientsForConstructor: {
-                ...state.ingridientsForConstructor,
-                bun: action.value.bun,
-                toppings: action.value.toppings
-            }
-        }
-    }
+    // case SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR: {
+    //     return {
+    //         ...state,
+    //         ingridientsForConstructor: {
+    //             ...state.ingridientsForConstructor,
+    //             bun: action.value.bun,
+    //             toppings: action.value.toppings
+    //         }
+    //     }
+    // }
 
 
 

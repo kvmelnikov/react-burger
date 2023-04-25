@@ -6,7 +6,7 @@ import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
 import Api from "../../utils/api/api.js";
 import { useDispatch, useSelector } from "react-redux";
 import { SET_MODAL_SELECTOR } from "../../services/actions/index";
-import { getIngredients } from "../../services/actions";
+import { getIngredients } from "../../services/actions/api-action";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 

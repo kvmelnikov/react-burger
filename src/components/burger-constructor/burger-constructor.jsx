@@ -12,10 +12,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
   getOrderNumber,
-  addBunInConstructor,
-  addToppingInConstructor,
-} from "../../services/actions";
-
+} from "../../services/actions/api-action";
+import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from "../../services/actions/burger-action";
+import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from "../../services/actions/ingridients-action";
+import { v1 as uuidv1 } from 'uuid';
 
 const { container, bun, toppings, info } =
   burgerConstructorStyle;
@@ -36,11 +36,19 @@ function BurgerConstructor() {
     accept: "ingridient",
 
     drop(ingredient) {
+      console.log(ingredientsConstructor.bun._id,ingredient[0]._id )
       if (ingredient[0].type === "bun" )  {
-        dispatch(addBunInConstructor(ingredient[0], ingredientsConstructor.bun._id));
+        dispatch({type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0]})
+        dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient[0]._id })
+       
+        if(ingredientsConstructor.bun._id) {
+          dispatch({type: DECREASE_COUNTER_INGREDIENT, id: ingredientsConstructor.bun._id})
+        }
+        
       }
        else  {
-        dispatch(addToppingInConstructor(ingredient[0]));
+        dispatch({type: ADD_TOPPING_TO_BURGER_CONSTRUCTOR, topping: ingredient[0]})
+        dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient[0]._id })
       }
     },
   });
@@ -109,8 +117,7 @@ function BurgerConstructor() {
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, index) => {
                  return (
-                  <Topping item={topping} index={index} key={index}
-                  
+                  <Topping item={topping} index={index} index2={index} key={uuidv1()}
                   {...topping}
                   />
                 );
