@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -15,14 +15,15 @@ import {
 } from "../../services/actions/api-action";
 import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from "../../services/actions/burger-action";
 import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from "../../services/actions/ingridients-action";
-import { v1 as uuidv1 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+
 
 const { container, bun, toppings, info } =
   burgerConstructorStyle;
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
-  const numberOrder = useSelector((state) => state.api.numberOrder);
+  const numberOrder = useSelector((state) => state.burger.numberOrder);
 
   const showModalOrderDetails = useSelector(
     (state) => state.modal.showModalOrderDetails
@@ -30,13 +31,11 @@ function BurgerConstructor() {
   const ingredientsConstructor = useSelector(
     (state) => state.burger.ingridientsForConstructor
   );
-  const ingredients = useSelector((state) => state.ingredients.ingridients);
 
   const [, drop] = useDrop({
     accept: "ingridient",
 
     drop(ingredient) {
-      console.log(ingredientsConstructor.bun._id,ingredient[0]._id )
       if (ingredient[0].type === "bun" )  {
         dispatch({type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0]})
         dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient[0]._id })
@@ -117,7 +116,7 @@ function BurgerConstructor() {
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, index) => {
                  return (
-                  <Topping item={topping} index={index} index2={index} key={uuidv1()}
+                  <Topping   key={uuidv4()} item={topping} index={index} 
                   {...topping}
                   />
                 );
@@ -132,6 +131,9 @@ function BurgerConstructor() {
           <p className="text text_type_digits-medium mr-2">{summBurger}</p>
           <CurrencyIcon type="primary" />
           <Button
+            disabled={
+              ingredientsConstructor.bun.name ? false: true
+            }
             onClick={hanldleOpenModalOrderDetails}
             extraClass="ml-10"
             htmlType="button"

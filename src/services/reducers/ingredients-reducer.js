@@ -1,14 +1,30 @@
-import {initialState} from "./index";
 
 import {
   SET_CURRENT_INGREDIENT,
   SET_INGREDIENTS,
   INCREASE_COUNTER_INGREDIENT,
   DECREASE_COUNTER_INGREDIENT,
+  CLEAR_INGREDIENTS
 } from "../actions/ingridients-action";
+
+const initialState = {
+  ingridients: [],
+  currentIngridient: {},
+}
+
 
 export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
+    case CLEAR_INGREDIENTS: {
+      return {
+        ...state,
+        ingridients: [...state.ingridients].map((ingredient)=>{
+           ingredient.count = 0
+           return ingredient
+        })
+      }
+    }
+
     case SET_INGREDIENTS: {
       return {
         ...state,

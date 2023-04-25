@@ -1,4 +1,3 @@
-import {initialState} from "./index";
 
 import {
   GET_INGREDIENTS_REQUEST,
@@ -9,6 +8,15 @@ import {
   GET_ORDER_NUMBER_FAILED,
 
 } from "../actions/api-action";
+
+
+const initialState = {
+  ingredientsRequest: false,
+  ingredientsFailed: false,  
+  orderRequest: false,
+  orderRequestFailed: false,
+}
+ 
 
 
 export const apiReducer = (state = initialState, action) => {

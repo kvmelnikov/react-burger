@@ -3,18 +3,15 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import burgerIngridientsStyle from "./burger-ingridients.module.css";
 import Ingridient from "../ingridient/ingridient.jsx";
 import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
-import propTypes from "prop-types";
 import Modal from "../modal/modal";
-import { DataBurgerIngridientsContext } from "../../utils/context.js";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { useDrag } from "react-dnd";
+
 import {
  
   SHOW_MODAL_INGRIDIENT_DETAILS,
   
-} from "../../services/actions";
+} from "../../services/actions/modal-action";
 
 import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingridients-action.js";
 
@@ -156,17 +153,5 @@ function BurgerIngridients() {
     </>
   );
 }
-
-// BurgerIngridients.propTypes = {
-//   constext: propTypes.shape({
-//     ingridients: propTypes.array,
-//     ingredientDataForModal: propTypes.object.isRequired,
-//     handleOpenModal: propTypes.func.isRequired,
-//     handleCloseModal: propTypes.func.isRequired,
-//     showModal: propTypes.bool.isRequired,
-//     modalSelector: propTypes.object.isRequired,
-//   })
-
-// };
 
 export default BurgerIngridients;

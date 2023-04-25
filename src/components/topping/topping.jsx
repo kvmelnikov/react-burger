@@ -6,21 +6,21 @@ import {
   ConstructorElement,
   DragIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import {
-  deleteTopping,
-} from "../../services/actions";
+
 
 import { INSERT_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action';
+import { DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action';
+import { DELETE_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action';
 
 export default function Topping({index, item}) {
   const dispatch = useDispatch();
 
-  const {key} = item;
+  const {index2} = item;
   const dragRef = useRef(null);
 
   const [, drag] = useDrag({
     type: "item",
-    item: {key ,index},
+    item: {index2 ,index},
 });
 
 const [, drop] = useDrop({
@@ -42,7 +42,8 @@ drag(drop(dragRef));
 
 const handleDeleteTopping = (e, index) => {
   if(e.target.parentElement.parentElement.classList.contains('pr-2')) {
-    dispatch(deleteTopping(item._id, index))
+    dispatch({type: DECREASE_COUNTER_INGREDIENT, id:item._id})
+    dispatch({type: DELETE_INGREDIENT_IN_CONSTRUCTOR, indx: index})    
   }
 }
 

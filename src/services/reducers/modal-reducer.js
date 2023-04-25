@@ -1,4 +1,4 @@
-import {initialState} from "./index";
+//import {initialState} from "./index";
 
 import {
   SHOW_MODAL_INGRIDIENT_DETAILS,
@@ -8,6 +8,12 @@ import {
 
 } from "../actions/modal-action";
 
+
+const initialState = {
+  modalIngridientDetail: false,
+  showModalOrderDetails: false,
+  modalSelector: {}
+}
 
 
 

@@ -1,6 +1,8 @@
 import Api from "../../utils/api/api.js";
-import { SET_INGREDIENTS } from "./ingridients-action.js";
+import { SET_INGREDIENTS, CLEAR_INGREDIENTS } from "./ingridients-action.js";
 import { SHOW_MODAL_ORDER_DETAILS } from "./modal-action.js";
+import { SET_NUMBER_ORDER, ClEAR_BUN_AND_TOPPING, ClEAR_NUMBER_ORDER } from "./burger-action.js";
+
 
 export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
 export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
@@ -8,7 +10,6 @@ export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
 export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
 export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
 export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
-export const SET_CURRENT_INGREDIENT = "SET_CURRENT_INGREDIENT";
 
 const api = new Api({
     baseUrl: "https://norma.nomoreparties.space/api/",
@@ -41,6 +42,7 @@ const makeCheckout = (consrtuctorIngridients) => {
           })
           .catch(() => {
             dispatch({ type: GET_INGREDIENTS_FAILED });
+           
           });
       };
 };
@@ -56,16 +58,23 @@ export const getOrderNumber = (consrtuctorIngridients) => {
       .getCheckout(makeCheckout(consrtuctorIngridients))
       .then((resp) => {
         dispatch({
-          type: GET_ORDER_NUMBER_SUCCESS, value: resp.order.number   
+          type: GET_ORDER_NUMBER_SUCCESS
         })
+        dispatch({type: SET_NUMBER_ORDER, value: resp.order.number})
         dispatch({
           type: SHOW_MODAL_ORDER_DETAILS
         })
-
+        dispatch({
+          type: ClEAR_BUN_AND_TOPPING
+        })
+        dispatch({
+          type: CLEAR_INGREDIENTS
+        })
 
       })
       .catch((err) => {
         dispatch({ type: GET_ORDER_NUMBER_FAILED });
+        dispatch({type: ClEAR_NUMBER_ORDER});
       });
     };
 

@@ -1,16 +1,55 @@
-import {initialState} from "./index";
+//import {initialState} from "./index";
 import {
 
   ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
   ADD_BUN_TO_BURGER_CONSTRUCTOR,
   DELETE_INGREDIENT_IN_CONSTRUCTOR,
-  INSERT_INGREDIENT_IN_CONSTRUCTOR
-} from "../actions";
+  INSERT_INGREDIENT_IN_CONSTRUCTOR,
+  SET_NUMBER_ORDER,
+  ClEAR_BUN_AND_TOPPING,
+  ClEAR_NUMBER_ORDER
+} from "../actions/burger-action";
+
+
+const initialState = {
+  numberOrder: 0,
+  ingridientsForConstructor: {
+    bun: {},
+    toppings: [],
+  },
+}
 
 
 export const burgerReducer = (state = initialState, action) => {
-  
+
+
   switch (action.type) {
+    case ClEAR_NUMBER_ORDER: {
+      return {
+        ...state,
+        numberOrder: 0,
+      }
+    }
+
+
+    case ClEAR_BUN_AND_TOPPING: {
+      return {
+        ...state,
+        ingridientsForConstructor: {
+          bun: {},
+          toppings: [],
+        },
+      }
+    }
+
+    case SET_NUMBER_ORDER: {
+      return {
+        ...state,
+        numberOrder: action.value,
+      }
+    }
+    
+    
     case INSERT_INGREDIENT_IN_CONSTRUCTOR: {
       const newArray = [...state.ingridientsForConstructor.toppings]; 
       
@@ -64,19 +103,6 @@ export const burgerReducer = (state = initialState, action) => {
       }      
   }
 }
-
-    // case SET_INGREDIENTS_FOR_BURGER_CONSTRUCTOR: {
-    //     return {
-    //         ...state,
-    //         ingridientsForConstructor: {
-    //             ...state.ingridientsForConstructor,
-    //             bun: action.value.bun,
-    //             toppings: action.value.toppings
-    //         }
-    //     }
-    // }
-
-
 
     default: {
       return state;

@@ -1,12 +1,10 @@
 import React from "react";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyle from "./modal.module.css";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { createPortal } from 'react-dom';
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import propTypes from "prop-types";
 import {useSelector, useDispatch} from 'react-redux';
-import { CLOSE_MODAL } from "../../services/actions";
+import { CLOSE_MODAL } from "../../services/actions/modal-action";
 
 function Modal(props) {
 
@@ -54,10 +52,3 @@ function Modal(props) {
 
 export default Modal;
 
-// Modal.propTypes  = {
-//   modalSelector: propTypes.object.isRequired,
-//   children: propTypes.object,
-//   heading: propTypes.string,
-//   handleCloseModal: propTypes.func.isRequired,
-
-// }
