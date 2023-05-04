@@ -11,7 +11,7 @@ export default class Api {
     return Promise.reject(`Ошибка: ${res.status}`);
   }
 
-  getIngridients() {
+  getIngredients() {
     return fetch(this._baseUrl + "ingredients", { method: "get" }).then((res) => {
       return this._checkResponse(res);
     });

@@ -30,12 +30,7 @@
   justify-content: end;
 }
 
-.topping__item {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-}
+
 
 .toppings::-webkit-scrollbar {
   width: 8px;

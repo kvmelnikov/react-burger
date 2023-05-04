@@ -5,17 +5,25 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingridientStyle from "./ingridient.module.css";
 import propTypes from "prop-types";
-
-
+import { useDrag } from "react-dnd";
 
 const { ingridients__ingridient, ingridients__icon, ingridients__text } =
   ingridientStyle;
 
 export default function Ingridient(props) {
-  return (
 
-    <li onClick={()=>props.handleOpenModal(props)} className={`${ingridients__ingridient}`}>
-      <Counter count={1} size="default" extraClass="m-1" />
+  const [{ isDrag }, dragRef] = useDrag({
+    type: "ingridient",
+    item: [props],
+    collect: monitor => ({
+      isDrag: monitor.isDragging()
+    })
+  });
+
+
+  return (
+    <li ref={dragRef}  onClick={()=>props.handleOpenModal(props)} className={`${ingridients__ingridient}`}>
+      { props.count>0 ? <Counter count={props.count} size="default" extraClass="m-1" />: "" }
       <img src={props.image} alt={props.name} />
       <div className={`${ingridients__icon} mb-2`}>
         <span className={`text text_type_main-medium mr-2`}>20</span>
