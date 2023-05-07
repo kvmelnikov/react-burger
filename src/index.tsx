@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './components/app/app.jsx';
+import App from './app.jsx';
 import { rootReducer } from './services/reducers';
 import thunk from 'redux-thunk';
 import { compose, createStore, applyMiddleware } from 'redux';

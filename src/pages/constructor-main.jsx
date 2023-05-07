@@ -1,18 +1,18 @@
 import React from "react";
-import appStyle from "./app.module.css";
-import AppHeader from "../app-header/app-header.jsx";
-import BurgerIngridients from "../burger-ingridients/burger-ingridients.jsx";
-import BurgerConstuctor from "../burger-constructor/burger-constructor.jsx";
+import mainConstructorStyle from "./constructor-main.module.css";
+import AppHeader from "../components/app-header/app-header.jsx";
+import BurgerIngridients from "../components/burger-ingridients/burger-ingridients.jsx";
+import BurgerConstuctor from "../components/burger-constructor/burger-constructor.jsx";
 import { useDispatch } from "react-redux";
-import { SET_MODAL_SELECTOR } from "../../services/actions/modal-action";
-import { getIngredients } from "../../services/actions/api-action";
+import { SET_MODAL_SELECTOR } from "../services/actions/modal-action";
+import { getIngredients } from "../services/actions/api-action";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 const modalSelector = document.querySelector("#modals");
 
 
-function App() {
+export function ConstructorMain(){
   const dispatch = useDispatch();
  
   
@@ -29,9 +29,9 @@ function App() {
 
   return (
     <>
-      <div className={appStyle.body}>
+      <div className={mainConstructorStyle.body}>
         <AppHeader />
-        <main className={appStyle.container}>
+        <main className={mainConstructorStyle.container}>
           <DndProvider backend={HTML5Backend}>
             <BurgerIngridients />
 
@@ -41,6 +41,5 @@ function App() {
       </div>
     </>
   );
+  
 }
-
-export default App;
