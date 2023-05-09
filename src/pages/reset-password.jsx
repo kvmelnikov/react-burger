@@ -1,64 +1,110 @@
 import {
   Input,
   Button,
-  EmailInput
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import AppHeader from "../components/app-header/app-header";
-import { Form } from "../components/form/form";
-import { Link } from "react-router-dom";
-import StyleForm from '../components/form/form.module.css'
-import React from "react";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import AppHeader from '../components/app-header/app-header';
+import { Form } from '../components/form/form';
+import { Link } from 'react-router-dom';
+import StyleForm from '../components/form/form.module.css';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFormValue } from '../services/actions/form-action';
+import { resetPassRequest } from '../services/actions/form-action';
 
+const getFormData = (state) => state.form.formResetPassword;
 
 export function ResetPassword() {
+  const dispatch = useDispatch();
 
-  const [typePass, setTypePass] = React.useState('password')
-  const [pass, setPass] = React.useState('')
-  const inputRef = React.useRef(null)
+  const {
+    inputs: {
+      password: { value: pass },
+      token: { value: token },
+    },
+  } = useSelector(getFormData);
+
+  console.log(token);
+  const [typePass, setTypePass] = React.useState('password');
 
   const onIconClick = () => {
-    setTypePass(()=>{
-      return typePass === 'password' ? 'text':  'password'
-    })
-  }
+    setTypePass(() => {
+      return typePass === 'password' ? 'text' : 'password';
+    });
+  };
 
+  const onChangePass = (e) => {
+    dispatch(
+      setFormValue({
+        field: e.target.name,
+        value: e.target.value,
+        form: 'formResetPassword',
+      })
+    );
+  };
 
-  const onChangePass = e => {
-    setPass(e.target.value)
-  }
-  
+  const onChangeToken = (e) => {
+    dispatch(
+      setFormValue({
+        field: e.target.name,
+        value: e.target.value,
+        form: 'formResetPassword',
+      })
+    );
+  };
+
+  const onFormSubmit = (e) => {
+    // Предотвращаем дефолтное поведение формы при её отправке
+    e.preventDefault();
+    // Вызываем наш thunk-экшен
+    dispatch(resetPassRequest());
+  };
+
   return (
     <>
-    <AppHeader/>
-    <Form heading='Восстановление пароля'>
-    <Input 
-      type={typePass}
-      placeholder={'Введите новый пароль'}
-      onChange={onChangePass}
-      icon={'ShowIcon'}
-      value={pass}
-      name={'name'}
-      error={false}
-      ref={inputRef}
-      onIconClick={onIconClick}
-      errorText={'Ошибка'}
-      size={'default'}
-      extraClass="mt-6"/>
+      <AppHeader />
+      <form onSubmit={onFormSubmit}>
+        <Form heading="Восстановление пароля">
+          <Input
+            type={typePass}
+            placeholder={'Введите новый пароль'}
+            onChange={onChangePass}
+            icon={'ShowIcon'}
+            value={pass}
+            name={'password'}
+            error={false}
+            onIconClick={onIconClick}
+            errorText={'Ошибка'}
+            size={'default'}
+            extraClass="mt-6"
+          />
 
-<Input 
-      type={'text'}
-      placeholder={'Введите код из письма'}
-      name={'name'}
-      error={false}
-      errorText={'Ошибка'}
-      size={'default'}
-      extraClass="mt-6"/>
+          <Input
+            type={'text'}
+            onChange={onChangeToken}
+            placeholder={'Введите код из письма'}
+            name={'token'}
+            error={false}
+            errorText={'Ошибка'}
+            size={'default'}
+            extraClass="mt-6"
+            value={token}
+          />
 
-      <Button extraClass="mt-6">Сохранить</Button>
-      <p className='text text_type_medium mt-6'>Вспомнили пароль?
-        <Link  to="/login" className={`${StyleForm.Link} text text_type_medium`}> Войти</Link> 
-      </p>
-    </Form>
+          <Button htmlType="submit" extraClass="mt-6">
+            Сохранить
+          </Button>
+          <p className="text text_type_medium mt-6">
+            Вспомнили пароль?
+            <Link
+              to="/login"
+              className={`${StyleForm.Link} text text_type_medium`}
+            >
+              {' '}
+              Войти
+            </Link>
+          </p>
+        </Form>
+      </form>
     </>
-    )
+  );
 }

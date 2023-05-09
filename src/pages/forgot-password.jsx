@@ -8,10 +8,7 @@ import { Link } from 'react-router-dom';
 import StyleForm from '../components/form/form.module.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { setFormValue } from '../services/actions/form-action';
-import {
-  SET_VALID_TO_FORM,
-  forgotPassRequest,
-} from '../services/actions/form-action';
+import { forgotPassRequest } from '../services/actions/form-action';
 
 import React from 'react';
 const getFormData = (state) => state.form.formForgotPassword;
