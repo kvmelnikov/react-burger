@@ -1,5 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { ConstructorMain, Login, ForgotPassword, Register, ResetPassword} from './pages';
+import {
+  ConstructorMain,
+  Login,
+  ForgotPassword,
+  Register,
+  ResetPassword,
+  Profile,
+} from './pages';
 
 export default function App() {
   return (
@@ -10,6 +17,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );
