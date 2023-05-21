@@ -5,7 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import AppHeader from '../components/app-header/app-header';
 import { Form } from '../components/form/form';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import StyleForm from '../components/form/form.module.css';
 import mainConstructorStyle from './constructor-main.module.css';
 import React, { useEffect } from 'react';
@@ -15,11 +15,13 @@ import {
   setFormValue,
   getUserRequest,
   updateUserRequest,
+  logoutUser,
 } from '../services/actions/form-action';
 const getFormData = (state) => state.form.formProfile;
 
 export function Profile() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getUserRequest());
@@ -32,7 +34,6 @@ export function Profile() {
     },
   } = useSelector(getFormData);
 
-  console.log(nameUser);
   const onChangeEmail = (e) => {
     dispatch(
       setFormValue({
@@ -63,6 +64,15 @@ export function Profile() {
     dispatch(getUserRequest());
   };
 
+  const onLogOut = (e) => {
+    dispatch();
+  };
+
+  const onOrders = (e) => {
+    console.log('nav');
+    navigate('orders');
+  };
+
   return (
     <>
       <AppHeader />
@@ -72,11 +82,13 @@ export function Profile() {
             Профиль
           </li>
           <li
+            onClick={onOrders}
             className={`${ProfileStyle.item} text text_type_main-medium text_color_inactive`}
           >
             История заказов
           </li>
           <li
+            onClick={onLogOut}
             className={`${ProfileStyle.item} text text_type_main-medium text_color_inactive`}
           >
             Выход
@@ -85,7 +97,6 @@ export function Profile() {
         <form onSubmit={onFormSubmit} onReset={onFormReset} className="ml-15">
           <Input
             type="text"
-            isIcon={false}
             placeholder={'Имя'}
             name={'name'}
             errorText={'Ошибка'}
@@ -97,7 +108,6 @@ export function Profile() {
           />
           <EmailInput
             name={'email'}
-            isIcon={false}
             placeholder={'Логин'}
             extraClass="mt-6"
             disabled={false}
@@ -110,6 +120,7 @@ export function Profile() {
             placeholder={'Пароль'}
             icon={'EditIcon'}
             name={'password'}
+            value="****"
             error={false}
             errorText={'Ошибка'}
             size={'default'}

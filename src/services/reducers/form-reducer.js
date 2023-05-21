@@ -18,19 +18,16 @@ import {
   GET_USER_FORM_SUBMIT,
   GET_USER_FORM_SUBMIT_SUCCESS,
   GET_USER_FORM_SUBMIT_FAILED,
-  PROFILE_FORM_SUBMIT,
-  PROFILE_FORM_SUBMIT_SUCCESS,
-  PROFILE_FORM_SUBMIT_FAILED,
 } from '../actions/form-action';
 
 export const stateForms = {
   formProfile: {
     inputs: {
-      email: { value: '' },
-      name: { value: '' },
+      email: { value: null },
+      name: { value: null },
     },
-    Request: false,
-    Failed: false,
+    request: true,
+    failed: false,
   },
   formForgotPassword: {
     inputs: {
@@ -248,6 +245,8 @@ export const formReducer = (state = stateForms, action) => {
             email: { value: action.value.email },
             name: { value: action.value.name },
           },
+          request: false,
+          failed: false,
         },
       };
     }

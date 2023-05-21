@@ -4,6 +4,8 @@ import { Register } from './register';
 import { ForgotPassword } from './forgot-password';
 import { ResetPassword } from './reset-password';
 import { Profile } from './profile';
+import { Order } from './order';
+import { Orders } from './orders';
 
 export {
   ConstructorMain,
@@ -12,4 +14,6 @@ export {
   ForgotPassword,
   ResetPassword,
   Profile,
+  Order,
+  Orders,
 };

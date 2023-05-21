@@ -30,9 +30,6 @@ export const LOGIN_FORM_SUBMIT_FAILED = 'LOGIN_FORM_SUBMIT_FAILED';
 export const GET_USER_FORM_SUBMIT = 'GET_USER_FORM_SUBMIT';
 export const GET_USER_FORM_SUBMIT_SUCCESS = 'GET_USER_FORM_SUBMIT_SUCCESS';
 export const GET_USER_FORM_SUBMIT_FAILED = 'GET_USER_FORM_SUBMIT_FAILED';
-export const PROFILE_FORM_SUBMIT = 'PROFILE_FORM_SUBMIT';
-export const PROFILE_FORM_SUBMIT_SUCCESS = 'PROFILE_FORM_SUBMIT_SUCCESS';
-export const PROFILE_FORM_SUBMIT_FAILED = 'PROFILE_FORM_SUBMIT_FAILED';
 
 export const setFormValue = ({ field, value, form }) => ({
   type: SET_VALUE_TO_FORM,
@@ -43,10 +40,47 @@ export const setFormValue = ({ field, value, form }) => ({
 
 const createBodyFormRequest = (inputs) => {
   let data = {};
+
   Object.keys(inputs).forEach((key) => {
     data[key] = inputs[key].value;
   });
   return JSON.stringify(data);
+};
+
+const getUser = async () => {
+  return await fetch('https://norma.nomoreparties.space/api/auth/user', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `${getCookie('accessToken')}`,
+    },
+  });
+};
+
+const updateToken = async () => {
+  const token = getCookie('refreshToken');
+
+  return fetch('https://norma.nomoreparties.space/api/auth/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      authorization: `${getCookie('accessToken')}`,
+    },
+    body: JSON.stringify({ token: token }),
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((res) => {
+      console.log(res);
+      if (res.success) {
+        setCookie('accessToken', res.accessToken);
+        setCookie('refreshToken', res.refreshToken);
+        return res.json();
+      }
+      return Promise.reject(`Ошибка: ${res.status}`);
+    })
+    .catch((err) => {});
 };
 
 export const updateUserRequest = () => (dispatch, getState) => {
@@ -65,14 +99,12 @@ export const updateUserRequest = () => (dispatch, getState) => {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       if (res.success) {
         dispatch({
           type: GET_USER_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', res.accessToken, 20);
+        setCookie('accessToken', res.accessToken);
         setCookie('refreshToken', res.refreshToken);
-        console.log(getCookie('accessToken'));
         return res.json();
       }
       return Promise.reject(`Ошибка: ${res.status}`);
@@ -88,18 +120,40 @@ export const getUserRequest = () => (dispatch) => {
   dispatch({
     type: GET_USER_FORM_SUBMIT,
   });
-  fetch('https://norma.nomoreparties.space/api/auth/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `${getCookie('accessToken')}`,
-    },
-  })
+
+  getUser()
     .then((res) => {
       return res.json();
     })
     .then((res) => {
-      if (res.success) {
+      updateToken();
+      console.log(res);
+      if (res.message === 'jwt expired') {
+        updateToken()
+          .then((res) => {
+            console.log('updated');
+            getUser()
+              .then((res) => {
+                if (res.success) {
+                  dispatch({
+                    type: GET_USER_FORM_SUBMIT_SUCCESS,
+                    value: res.user,
+                  });
+                  return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+              })
+              .catch((err) => {
+                dispatch({
+                  type: GET_USER_FORM_SUBMIT_FAILED,
+                });
+              });
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else if (res.success) {
+        console.log('res succ');
         dispatch({
           type: GET_USER_FORM_SUBMIT_SUCCESS,
           value: res.user,
@@ -115,38 +169,24 @@ export const getUserRequest = () => (dispatch) => {
     });
 };
 
-export const updateToken = () => (dispatch) => {
-  dispatch({
-    type: UPDATE_FORM_SUBMIT,
-  });
-  fetch('https://norma.nomoreparties.space/api/auth/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: createBodyFormRequest({ token: `${getCookie('refreshToken')}` }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      console.log(res);
-      if (res.success) {
-        dispatch({
-          type: UPDATE_FORM_SUBMIT_SUCCESS,
-        });
-        setCookie('accessToken', res.accessToken, 20);
-        setCookie('refreshToken', res.refreshToken);
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      dispatch({
-        type: UPDATE_FORM_SUBMIT_FAILED,
-      });
-    });
-};
+// .then((res) => {
+//   return res.json();
+// })
+// .then((res) => {
+//   if (res.success) {
+//     dispatch({
+//       type: GET_USER_FORM_SUBMIT_SUCCESS,
+//       value: res.user,
+//     });
+//     return res.json();
+//   }
+//   return Promise.reject(`Ошибка: ${res.status}`);
+// })
+// .catch((err) => {
+//   dispatch({
+//     type: GET_USER_FORM_SUBMIT_FAILED,
+//   });
+// });
 
 export const logoutUser = () => (dispatch) => {
   dispatch({
@@ -196,12 +236,11 @@ export const loginUser = () => (dispatch, getState) => {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       if (res.success) {
         dispatch({
           type: LOGIN_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', res.accessToken, 20);
+        setCookie('accessToken', res.accessToken);
         setCookie('refreshToken', res.refreshToken);
         console.log(getCookie('accessToken'));
         return res.json();
@@ -235,7 +274,7 @@ export const registrationUser = () => (dispatch, getState) => {
         dispatch({
           type: REGISTRATION_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', res.accessToken, 20);
+        setCookie('accessToken', res.accessToken);
         setCookie('refreshToken', res.refreshToken);
         return res.json();
       }
