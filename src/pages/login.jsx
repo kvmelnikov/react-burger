@@ -2,36 +2,50 @@ import {
   Input,
   Button,
   EmailInput,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeader from '../components/app-header/app-header';
-import { Form } from '../components/form/form';
-import { Link } from 'react-router-dom';
-import StyleForm from '../components/form/form.module.css';
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFormValue } from '../services/actions/form-action';
-import { loginUser } from '../services/actions/form-action';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import AppHeader from "../components/app-header/app-header";
+import { Form } from "../components/form/form";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import StyleForm from "../components/form/form.module.css";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  getUserRequest,
+  setFormValue,
+  updateUserRequest,
+} from "../services/actions/form-action";
+import { loginUser } from "../services/actions/form-action";
 
 const getFormData = (state) => state.form.formLogin;
+const getFormProfile = (state) => state.form.formProfile;
 
 export function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const {
     inputs: {
       email: { value: email },
       password: { value: password },
     },
+    request,
+    failed,
   } = useSelector(getFormData);
 
-  const [typePass, setTypePass] = React.useState('password');
+  const {
+    inputs: {
+      name: { value: nameUser },
+    },
+  } = useSelector(getFormProfile);
+
+  const [typePass, setTypePass] = React.useState("password");
 
   const onChangeEmail = (e) => {
     dispatch(
       setFormValue({
         field: e.target.name,
         value: e.target.value,
-        form: 'formLogin',
+        form: "formLogin",
       })
     );
   };
@@ -41,21 +55,28 @@ export function Login() {
       setFormValue({
         field: e.target.name,
         value: e.target.value,
-        form: 'formLogin',
+        form: "formLogin",
       })
     );
   };
 
   const onIconClick = () => {
     setTypePass(() => {
-      return typePass === 'password' ? 'text' : 'password';
+      return typePass === "password" ? "text" : "password";
     });
   };
 
   const onFormSubmit = (e) => {
     e.preventDefault();
     dispatch(loginUser());
+    if (!request && !failed) {
+      navigate("/");
+    }
   };
+
+  if (nameUser) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>
@@ -65,21 +86,21 @@ export function Login() {
           <EmailInput
             onChange={onChangeEmail}
             value={email}
-            name={'email'}
+            name={"email"}
             isIcon={false}
             extraClass="mt-6"
           />
           <Input
             type={typePass}
-            placeholder={'placeholder'}
+            placeholder={"placeholder"}
             onChange={onChangePass}
-            icon={'ShowIcon'}
+            icon={"ShowIcon"}
             value={password}
-            name={'password'}
+            name={"password"}
             error={false}
             onIconClick={onIconClick}
-            errorText={'Ошибка'}
-            size={'default'}
+            errorText={"Ошибка"}
+            size={"default"}
             extraClass="mt-6"
           />
 
@@ -93,7 +114,6 @@ export function Login() {
               to={`/register`}
               className={`${StyleForm.link} text text_type_medium`}
             >
-              {' '}
               Зарегистрироваться
             </Link>
           </p>
@@ -103,7 +123,6 @@ export function Login() {
               to={`/forgot-password`}
               className={`${StyleForm.link} text text_type_medium`}
             >
-              {' '}
               Восстановить пароль
             </Link>
           </p>

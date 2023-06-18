@@ -7,13 +7,10 @@ import Modal from "../modal/modal";
 
 import { useSelector, useDispatch } from "react-redux";
 
-import {
- 
-  SHOW_MODAL_INGRIDIENT_DETAILS,
-  
-} from "../../services/actions/modal-action";
+import { SHOW_MODAL_INGRIDIENT_DETAILS } from "../../services/actions/modal-action";
 
 import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingridients-action.js";
+import { Link, useLocation } from "react-router-dom";
 
 const { ingridients__container, ingridients__list, ingridients__tab } =
   burgerIngridientsStyle;
@@ -21,16 +18,14 @@ const { ingridients__container, ingridients__list, ingridients__tab } =
 function BurgerIngridients() {
   const dispatch = useDispatch();
   const [current, setCurrent] = React.useState("bun");
+
   const [types] = React.useState({
     bun: "Булки",
     sauce: "Соусы",
     main: "Начинки",
   });
- 
 
   const ingredients = useSelector((state) => state.ingredients.ingridients);
-  
-
 
   const ingredientDataForModal = useSelector(
     (state) => state.ingredients.currentIngridient
@@ -39,35 +34,32 @@ function BurgerIngridients() {
     (state) => state.modal.modalIngridientDetail
   );
 
-
-  
   const typeRefs = React.useRef([]);
-  const containerRef = React.useRef()
-  
-  typeRefs.current = Object.keys(types).map((_, i) => typeRefs.current[i] ?? React.createRef());
+  const containerRef = React.useRef();
 
-  const calculateMinDistanceTypeToScroll = (scrollDistanceTop, currentType) =>{
-    let currentTab = currentType
+  typeRefs.current = Object.keys(types).map(
+    (_, i) => typeRefs.current[i] ?? React.createRef()
+  );
+
+  const calculateMinDistanceTypeToScroll = (scrollDistanceTop, currentType) => {
+    let currentTab = currentType;
     let minElement = 9999999;
 
-    typeRefs.current.forEach((el)=>{
-      const elementDistanceTop = el.current.offsetTop
-      const currentDifference =  (scrollDistanceTop + 40) - elementDistanceTop ;
-      if( currentDifference < minElement && currentDifference >= 0) {
-          minElement = currentDifference
-          currentTab = el.current.dataset.types
+    typeRefs.current.forEach((el) => {
+      const elementDistanceTop = el.current.offsetTop;
+      const currentDifference = scrollDistanceTop + 40 - elementDistanceTop;
+      if (currentDifference < minElement && currentDifference >= 0) {
+        minElement = currentDifference;
+        currentTab = el.current.dataset.types;
       }
-    
-    })
-    return currentTab
-  }
-  
+    });
+    return currentTab;
+  };
 
-  const handleScroll = React.useCallback( (() => {
-    const scrollDistanceTop = containerRef.current.scrollTop
-      setCurrent(calculateMinDistanceTypeToScroll(scrollDistanceTop, current))
-    }), [types])
- 
+  const handleScroll = React.useCallback(() => {
+    const scrollDistanceTop = containerRef.current.scrollTop;
+    setCurrent(calculateMinDistanceTypeToScroll(scrollDistanceTop, current));
+  }, [types]);
 
   const filterIngridients = (currentType) => {
     const filterIngridient = ingredients.filter(
@@ -77,26 +69,27 @@ function BurgerIngridients() {
   };
 
   const hanldleOpenModalIngridientDetails = (ingredient) => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, value: ingredient });
+    dispatch({ type: SET_CURRENT_INGREDIENT, value: ingredient._id });
     dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS });
   };
 
   const content = useMemo(() => {
     return (
-      <section ref={containerRef} onScroll={handleScroll} className={`${ingridients__container}`}>
+      <section
+        ref={containerRef}
+        onScroll={handleScroll}
+        className={`${ingridients__container}`}
+      >
         {Object.keys(types).map((type, index) => {
           return (
-            <div key={type} data-types={type}  ref={typeRefs.current[index]} >
-              <h3
-                className={`text text_type_main-medium mt-10 mb-4`}
-              >
+            <div key={type} data-types={type} ref={typeRefs.current[index]}>
+              <h3 className={`text text_type_main-medium mt-10 mb-4`}>
                 {types[type]}
               </h3>
               <ul className={`${ingridients__list}`}>
                 {filterIngridients(type).map((el) => {
                   return (
                     <Ingridient
-                     
                       key={el._id}
                       handleOpenModal={hanldleOpenModalIngridientDetails}
                       {...el}
@@ -143,13 +136,13 @@ function BurgerIngridients() {
         </div>
         {content}
       </section>
-      {showModalIngridientDetails && (
+      {/* {showModalIngridientDetails && (
         <>
           <Modal heading="Детали ингридиента">
             <IngridientDetails {...ingredientDataForModal} />
           </Modal>
         </>
-      )}
+      )} */}
     </>
   );
 }

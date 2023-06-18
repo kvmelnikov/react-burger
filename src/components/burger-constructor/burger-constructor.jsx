@@ -1,25 +1,25 @@
-import React from 'react';
+import React from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
   Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerConstructorStyle from './burger-constructor.module.css';
-import Modal from '../modal/modal';
-import Topping from '../topping/topping';
-import OrderDetails from '../order-details/order-details';
-import { useSelector, useDispatch } from 'react-redux';
-import { useDrop } from 'react-dnd';
-import { getOrderNumber } from '../../services/actions/api-action';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import burgerConstructorStyle from "./burger-constructor.module.css";
+import Modal from "../modal/modal";
+import Topping from "../topping/topping";
+import OrderDetails from "../order-details/order-details";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+import { getOrderNumber } from "../../services/actions/api-action";
 import {
   ADD_BUN_TO_BURGER_CONSTRUCTOR,
   ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
-} from '../../services/actions/burger-action';
+} from "../../services/actions/burger-action";
 import {
   INCREASE_COUNTER_INGREDIENT,
   DECREASE_COUNTER_INGREDIENT,
-} from '../../services/actions/ingridients-action';
-import { v4 as uuidv4 } from 'uuid';
+} from "../../services/actions/ingridients-action";
+import { v4 as uuidv4 } from "uuid";
 
 const { container, bun, toppings, info } = burgerConstructorStyle;
 
@@ -35,10 +35,9 @@ function BurgerConstructor() {
   );
 
   const [, drop] = useDrop({
-    accept: 'ingridient',
-
+    accept: "ingridient",
     drop(ingredient) {
-      if (ingredient[0].type === 'bun') {
+      if (ingredient[0].type === "bun") {
         dispatch({ type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0] });
         dispatch({ type: INCREASE_COUNTER_INGREDIENT, id: ingredient[0]._id });
 
@@ -63,7 +62,7 @@ function BurgerConstructor() {
       Object.keys(ingredientsConstructor.bun).length === 0 &&
       Object.keys(ingredientsConstructor.toppings).length === 0
     ) {
-      return '0';
+      return "0";
     } else {
       const summToppings = ingredientsConstructor.toppings.reduce(
         (accumulator, next) => {

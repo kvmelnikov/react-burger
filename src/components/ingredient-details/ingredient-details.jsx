@@ -1,12 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientDetailsStyles from "./ingredient-details.module.css";
 import Ingridient from "../ingridient/ingridient.jsx";
 import propTypes from "prop-types";
-
-const { details__container } = ingredientDetailsStyles;
+import { useDispatch, useSelector } from "react-redux";
+import {
+  GET_INGREDIENT,
+  SET_CURRENT_INGREDIENT,
+} from "../../services/actions/ingridients-action";
+import { useLocation, useParams } from "react-router-dom";
+import { getIngredients } from "../../services/actions/api-action";
 
 function IngridientDetails(props) {
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
   return (
     <div className={ingredientDetailsStyles.details__container}>
       <img src={props.image_large} alt={props.name} />
@@ -26,7 +34,9 @@ function IngridientDetails(props) {
           <p className="text text_type_main-default text_color_inactive mb-2">
             Белки, г
           </p>
-          <p  className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}>
+          <p
+            className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}
+          >
             {props.proteins}
           </p>
         </div>
@@ -34,7 +44,9 @@ function IngridientDetails(props) {
           <p className="text text_type_main-default text_color_inactive mb-2">
             Жиры, г
           </p>
-          <p  className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}>
+          <p
+            className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}
+          >
             {props.fat}
           </p>
         </div>
@@ -42,7 +54,9 @@ function IngridientDetails(props) {
           <p className="text text_type_main-default text_color_inactive mb-2">
             Углеводы, г
           </p>
-          <p  className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}>
+          <p
+            className={`text text_type_main-default text_color_inactive ${ingredientDetailsStyles.element_nutritional_digits}`}
+          >
             {props.carbohydrates}
           </p>
         </div>
@@ -53,10 +67,10 @@ function IngridientDetails(props) {
 
 export default IngridientDetails;
 
-IngridientDetails.propTypes = {
-  calories: propTypes.number.isRequired,
-  fat: propTypes.number.isRequired,
-  proteins:propTypes.number.isRequired,
-  image_large: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
-}
+// IngridientDetails.propTypes = {
+//   calories: propTypes.number.isRequired,
+//   fat: propTypes.number.isRequired,
+//   proteins: propTypes.number.isRequired,
+//   image_large: propTypes.string.isRequired,
+//   name: propTypes.string.isRequired,
+// };

@@ -1,17 +1,19 @@
 import {
   Input,
   Button,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import AppHeader from '../components/app-header/app-header';
-import { Form } from '../components/form/form';
-import { Link } from 'react-router-dom';
-import StyleForm from '../components/form/form.module.css';
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { setFormValue } from '../services/actions/form-action';
-import { resetPassRequest } from '../services/actions/form-action';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import AppHeader from "../components/app-header/app-header";
+import { Form } from "../components/form/form";
+import { Link, Navigate } from "react-router-dom";
+
+import StyleForm from "../components/form/form.module.css";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setFormValue } from "../services/actions/form-action";
+import { resetPassRequest } from "../services/actions/form-action";
 
 const getFormData = (state) => state.form.formResetPassword;
+const getFormProfile = (state) => state.form.formProfile;
 
 export function ResetPassword() {
   const dispatch = useDispatch();
@@ -23,12 +25,17 @@ export function ResetPassword() {
     },
   } = useSelector(getFormData);
 
-  console.log(token);
-  const [typePass, setTypePass] = React.useState('password');
+  const {
+    inputs: {
+      name: { value: nameUser },
+    },
+  } = useSelector(getFormProfile);
+
+  const [typePass, setTypePass] = React.useState("password");
 
   const onIconClick = () => {
     setTypePass(() => {
-      return typePass === 'password' ? 'text' : 'password';
+      return typePass === "password" ? "text" : "password";
     });
   };
 
@@ -37,7 +44,7 @@ export function ResetPassword() {
       setFormValue({
         field: e.target.name,
         value: e.target.value,
-        form: 'formResetPassword',
+        form: "formResetPassword",
       })
     );
   };
@@ -47,17 +54,19 @@ export function ResetPassword() {
       setFormValue({
         field: e.target.name,
         value: e.target.value,
-        form: 'formResetPassword',
+        form: "formResetPassword",
       })
     );
   };
 
   const onFormSubmit = (e) => {
-    // Предотвращаем дефолтное поведение формы при её отправке
     e.preventDefault();
-    // Вызываем наш thunk-экшен
     dispatch(resetPassRequest());
   };
+
+  if (nameUser) {
+    return <Navigate to="/" replace />;
+  }
 
   return (
     <>
@@ -66,26 +75,26 @@ export function ResetPassword() {
         <Form heading="Восстановление пароля">
           <Input
             type={typePass}
-            placeholder={'Введите новый пароль'}
+            placeholder={"Введите новый пароль"}
             onChange={onChangePass}
-            icon={'ShowIcon'}
+            icon={"ShowIcon"}
             value={pass}
-            name={'password'}
+            name={"password"}
             error={false}
             onIconClick={onIconClick}
-            errorText={'Ошибка'}
-            size={'default'}
+            errorText={"Ошибка"}
+            size={"default"}
             extraClass="mt-6"
           />
 
           <Input
-            type={'text'}
+            type={"text"}
             onChange={onChangeToken}
-            placeholder={'Введите код из письма'}
-            name={'token'}
+            placeholder={"Введите код из письма"}
+            name={"token"}
             error={false}
-            errorText={'Ошибка'}
-            size={'default'}
+            errorText={"Ошибка"}
+            size={"default"}
             extraClass="mt-6"
             value={token}
           />
@@ -99,7 +108,7 @@ export function ResetPassword() {
               to="/login"
               className={`${StyleForm.Link} text text_type_medium`}
             >
-              {' '}
+              {" "}
               Войти
             </Link>
           </p>

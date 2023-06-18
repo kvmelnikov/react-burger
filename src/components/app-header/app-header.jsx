@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 import {
   Logo,
   BurgerIcon,
   ProfileIcon,
   ListIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
-import headerStyle from './app-header.module.css';
-import { render } from '@testing-library/react';
-import { Link } from 'react-router-dom';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import headerStyle from "./app-header.module.css";
+import { render } from "@testing-library/react";
+import { Link, NavLink } from "react-router-dom";
 const {
   header,
   header__nav,
@@ -24,26 +24,51 @@ function AppHeader() {
         <ul className={header__icons}>
           <li className={`text text_type_main-default ${header__icon}`}>
             <BurgerIcon type="primary" />
-            <span className={`ml-2 mr-10`}>Конструктор</span>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive
+                  ? `${headerStyle.link_active} ml-2 mr-10`
+                  : `${headerStyle.link} ml-2 mr-10`
+              }
+            >
+              Конструктор
+            </NavLink>
           </li>
           <li
             className={`text text_type_main-default text_color_inactive ${header__icon}`}
           >
             <ListIcon type="secondary" />
-            <span className={`ml-2`}>Лента заказов</span>
+            <NavLink
+              to="/profile/orders"
+              className={({ isActive }) =>
+                isActive
+                  ? `${headerStyle.link_active} ml-2`
+                  : `${headerStyle.link} ml-2`
+              }
+            >
+              Лента заказов
+            </NavLink>
           </li>
         </ul>
-        <a className={`${header__logo} pt-6 pb-6`} href="#">
+        <NavLink to="/" className={`${header__logo} pt-6 pb-6`} href="#">
           <Logo />
-        </a>
+        </NavLink>
         <ul className={`${header__icons} ${header__icons_type_user}`}>
           <li
             className={`text text_type_main-default text_color_inactive ${header__icon}`}
           >
             <ProfileIcon type="secondary" />
-            <Link to="/profile" className={`ml-2`}>
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive
+                  ? `${headerStyle.link_active} ml-2`
+                  : `${headerStyle.link} ml-2`
+              }
+            >
               Личный кабинет
-            </Link>
+            </NavLink>
           </li>
         </ul>
       </nav>

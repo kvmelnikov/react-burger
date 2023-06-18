@@ -14,12 +14,10 @@ const modalSelector = document.querySelector('#modals');
 
 export function ConstructorMain() {
   const dispatch = useDispatch();
-  // React.useEffect(() => {
-  //   dispatch(getUserRequest());
-  // }, []);
 
   React.useEffect(() => {
     dispatch(getIngredients());
+    //dispatch(getUserRequest());
   }, []);
 
   React.useEffect(() => {
@@ -27,17 +25,9 @@ export function ConstructorMain() {
   }, []);
 
   return (
-    <>
-      <div className={mainConstructorStyle.body}>
-        <AppHeader />
-        <main className={mainConstructorStyle.container}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngridients />
-
-            <BurgerConstuctor />
-          </DndProvider>
-        </main>
-      </div>
-    </>
+    <DndProvider backend={HTML5Backend}>
+      <BurgerIngridients />
+      <BurgerConstuctor />
+    </DndProvider>
   );
 }

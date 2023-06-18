@@ -44,6 +44,7 @@ const createBodyFormRequest = (inputs) => {
   Object.keys(inputs).forEach((key) => {
     data[key] = inputs[key].value;
   });
+  console.log(data);
   return JSON.stringify(data);
 };
 
@@ -52,35 +53,68 @@ const getUser = async () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `${getCookie('accessToken')}`,
+      authorization: `${localStorage.getItem('accessToken')}`,
     },
-  });
+  }).then((res) => res.json());
 };
 
 const updateToken = async () => {
-  const token = getCookie('refreshToken');
-
   return fetch('https://norma.nomoreparties.space/api/auth/token', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `${getCookie('accessToken')}`,
     },
-    body: JSON.stringify({ token: token }),
+    body: JSON.stringify({ token: localStorage.getItem('refreshToken') }),
   })
     .then((res) => {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       if (res.success) {
-        setCookie('accessToken', res.accessToken);
-        setCookie('refreshToken', res.refreshToken);
-        return res.json();
+        localStorage.setItem('accessToken', res.accessToken);
+        getUserRequest();
+        return res;
+      }
+      return Promise.reject(`Ошибка: ${res}`);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const getUserRequest = () => (dispatch) => {
+  dispatch({
+    type: GET_USER_FORM_SUBMIT,
+  });
+  getUser()
+    .then((res) => {
+      if (res.message === 'jwt expired') {
+        updateToken().then((res) => {
+          getUser().then((res) => {
+            if (res.success) {
+              dispatch({
+                type: GET_USER_FORM_SUBMIT_SUCCESS,
+                value: res.user,
+              });
+              return res;
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
+          });
+        });
+      } else if (res.success) {
+        dispatch({
+          type: GET_USER_FORM_SUBMIT_SUCCESS,
+          value: res.user,
+        });
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
-    .catch((err) => {});
+    .catch((err) => {
+      dispatch({
+        type: GET_USER_FORM_SUBMIT_FAILED,
+      });
+    });
 };
 
 export const updateUserRequest = () => (dispatch, getState) => {
@@ -91,7 +125,7 @@ export const updateUserRequest = () => (dispatch, getState) => {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      authorization: `${getCookie('accessToken')}`,
+      authorization: `${localStorage.getItem('accessToken')}`,
     },
     body: createBodyFormRequest(getState().form.formProfile.inputs),
   })
@@ -99,94 +133,35 @@ export const updateUserRequest = () => (dispatch, getState) => {
       return res.json();
     })
     .then((res) => {
-      if (res.success) {
-        dispatch({
-          type: GET_USER_FORM_SUBMIT_SUCCESS,
-        });
-        setCookie('accessToken', res.accessToken);
-        setCookie('refreshToken', res.refreshToken);
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
-    .catch((err) => {
-      dispatch({
-        type: GET_USER_FORM_SUBMIT_FAILED,
-      });
-    });
-};
-
-export const getUserRequest = () => (dispatch) => {
-  dispatch({
-    type: GET_USER_FORM_SUBMIT,
-  });
-
-  getUser()
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      updateToken();
-      console.log(res);
       if (res.message === 'jwt expired') {
-        updateToken()
-          .then((res) => {
-            console.log('updated');
-            getUser()
-              .then((res) => {
-                if (res.success) {
-                  dispatch({
-                    type: GET_USER_FORM_SUBMIT_SUCCESS,
-                    value: res.user,
-                  });
-                  return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-              })
-              .catch((err) => {
-                dispatch({
-                  type: GET_USER_FORM_SUBMIT_FAILED,
-                });
+        updateToken().then((res) => {
+          getUser().then((res) => {
+            if (res.success) {
+              dispatch({
+                type: GET_USER_FORM_SUBMIT_SUCCESS,
+                value: res.user,
               });
-          })
-          .catch((err) => {
-            console.log(err);
+              return res;
+            }
+            return Promise.reject(`Ошибка: ${res.status}`);
           });
+        });
       } else if (res.success) {
-        console.log('res succ');
         dispatch({
           type: GET_USER_FORM_SUBMIT_SUCCESS,
           value: res.user,
         });
-        return res.json();
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
     .catch((err) => {
+      console.log(err);
       dispatch({
         type: GET_USER_FORM_SUBMIT_FAILED,
       });
     });
 };
-
-// .then((res) => {
-//   return res.json();
-// })
-// .then((res) => {
-//   if (res.success) {
-//     dispatch({
-//       type: GET_USER_FORM_SUBMIT_SUCCESS,
-//       value: res.user,
-//     });
-//     return res.json();
-//   }
-//   return Promise.reject(`Ошибка: ${res.status}`);
-// })
-// .catch((err) => {
-//   dispatch({
-//     type: GET_USER_FORM_SUBMIT_FAILED,
-//   });
-// });
 
 export const logoutUser = () => (dispatch) => {
   dispatch({
@@ -197,20 +172,19 @@ export const logoutUser = () => (dispatch) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: createBodyFormRequest({ token: `${getCookie('refreshToken')}` }),
+    body: JSON.stringify({ token: `${localStorage.getItem('refreshToken')}` }),
   })
     .then((res) => {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       if (res.success) {
         dispatch({
           type: LOGOUT_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', '');
-        setCookie('refreshToken', '');
-        return res.json();
+        localStorage.setItem('accessToken', '');
+        localStorage.setItem('refreshToken', '');
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
@@ -240,10 +214,9 @@ export const loginUser = () => (dispatch, getState) => {
         dispatch({
           type: LOGIN_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', res.accessToken);
-        setCookie('refreshToken', res.refreshToken);
-        console.log(getCookie('accessToken'));
-        return res.json();
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
@@ -269,14 +242,13 @@ export const registrationUser = () => (dispatch, getState) => {
       return res.json();
     })
     .then((res) => {
-      console.log(res);
       if (res.success) {
         dispatch({
           type: REGISTRATION_FORM_SUBMIT_SUCCESS,
         });
-        setCookie('accessToken', res.accessToken);
-        setCookie('refreshToken', res.refreshToken);
-        return res.json();
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
@@ -303,7 +275,7 @@ export const forgotPassRequest = () => (dispatch, getState) => {
         dispatch({
           type: FORGOT_PASS_FORM_SUBMIT_SUCCESS,
         });
-        return res.json();
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })
@@ -330,7 +302,7 @@ export const resetPassRequest = () => (dispatch, getState) => {
         dispatch({
           type: RESET_PASS_FORM_SUBMIT_SUCCESS,
         });
-        return res.json();
+        return res;
       }
       return Promise.reject(`Ошибка: ${res.status}`);
     })

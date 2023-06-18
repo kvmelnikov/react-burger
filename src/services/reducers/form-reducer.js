@@ -26,7 +26,7 @@ export const stateForms = {
       email: { value: null },
       name: { value: null },
     },
-    request: true,
+    request: false,
     failed: false,
   },
   formForgotPassword: {
@@ -58,8 +58,8 @@ export const stateForms = {
       email: { value: '' },
       password: { value: '' },
     },
-    Request: false,
-    Failed: false,
+    request: false,
+    failed: false,
   },
   Logout: {
     Request: false,
@@ -163,8 +163,8 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formResetPassword: {
           ...state.formResetPassword,
-          Request: false,
-          Failed: true,
+          request: false,
+          failed: true,
         },
       };
     }
@@ -174,16 +174,19 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formLogin: {
           ...state.formLogin,
-          Request: true,
-          Failed: false,
+          request: true,
+          failed: false,
         },
       };
     }
+
     case LOGIN_FORM_SUBMIT_SUCCESS: {
       return {
         ...state,
         formLogin: {
           ...stateForms.formLogin,
+          request: false,
+          failed: false,
         },
       };
     }
@@ -232,8 +235,8 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formProfile: {
           ...state.formProfile,
-          Request: true,
-          Failed: false,
+          request: true,
+          failed: false,
         },
       };
     }
@@ -255,8 +258,8 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formProfile: {
           ...state.formProfile,
-          Request: false,
-          Failed: true,
+          request: false,
+          failed: true,
         },
       };
     }

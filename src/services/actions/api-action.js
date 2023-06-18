@@ -1,22 +1,26 @@
-import Api from '../../utils/api/api.js';
-import { SET_INGREDIENTS, CLEAR_INGREDIENTS } from './ingridients-action.js';
-import { SHOW_MODAL_ORDER_DETAILS } from './modal-action.js';
+import Api from "../../utils/api/api.js";
+import {
+  SET_INGREDIENTS,
+  CLEAR_INGREDIENTS,
+  SET_CURRENT_INGREDIENT,
+} from "./ingridients-action.js";
+import { SHOW_MODAL_ORDER_DETAILS } from "./modal-action.js";
 import {
   SET_NUMBER_ORDER,
   ClEAR_BUN_AND_TOPPING,
   ClEAR_NUMBER_ORDER,
-} from './burger-action.js';
-import React from 'react';
+} from "./burger-action.js";
+import React from "react";
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
-export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
-export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
-export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
-export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
-export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
+export const GET_INGREDIENTS_REQUEST = "GET_INGREDIENTS_REQUEST";
+export const GET_INGREDIENTS_SUCCESS = "GET_INGREDIENTS_SUCCESS";
+export const GET_INGREDIENTS_FAILED = "GET_INGREDIENTS_FAILED";
+export const GET_ORDER_NUMBER_REQUEST = "GET_ORDER_NUMBER_REQUEST";
+export const GET_ORDER_NUMBER_SUCCESS = "GET_ORDER_NUMBER_SUCCESS";
+export const GET_ORDER_NUMBER_FAILED = "GET_ORDER_NUMBER_FAILED";
 
 const api = new Api({
-  baseUrl: 'https://norma.nomoreparties.space/api/',
+  baseUrl: "https://norma.nomoreparties.space/api/",
 });
 
 const makeCheckout = (consrtuctorIngridients) => {
@@ -27,7 +31,7 @@ const makeCheckout = (consrtuctorIngridients) => {
   return idToppings;
 };
 
-export const getIngredients = () => {
+export const getIngredients = (id) => {
   return function (dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
@@ -40,6 +44,9 @@ export const getIngredients = () => {
         });
         dispatch({ type: GET_INGREDIENTS_SUCCESS, value: data.data });
         dispatch({ type: SET_INGREDIENTS, value: data.data });
+        if (id) {
+          dispatch({ type: SET_CURRENT_INGREDIENT, value: id });
+        }
       })
       .catch(() => {
         dispatch({ type: GET_INGREDIENTS_FAILED });

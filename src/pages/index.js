@@ -1,11 +1,14 @@
-import { ConstructorMain } from './constructor-main';
-import { Login } from './login';
-import { Register } from './register';
-import { ForgotPassword } from './forgot-password';
-import { ResetPassword } from './reset-password';
-import { Profile } from './profile';
-import { Order } from './order';
-import { Orders } from './orders';
+import { ConstructorMain } from "./constructor-main";
+import { Login } from "./login";
+import { Register } from "./register";
+import { ForgotPassword } from "./forgot-password";
+import { ResetPassword } from "./reset-password";
+import { ProfileForm } from "./profile-form";
+import { Order } from "./order";
+import { Orders } from "./orders";
+import { Profile } from "./profile";
+import { MainB } from "./main-b";
+import { DetailPageIngredient } from "./detail-page-ingredient";
 
 export {
   ConstructorMain,
@@ -13,7 +16,10 @@ export {
   Register,
   ForgotPassword,
   ResetPassword,
-  Profile,
+  ProfileForm,
   Order,
   Orders,
+  Profile,
+  MainB,
+  DetailPageIngredient,
 };
