@@ -14,6 +14,7 @@ import { getIngredients } from "../../services/actions/api-action";
 function IngridientDetails(props) {
   const dispatch = useDispatch();
   const { id } = useParams();
+  // console.log(props);
 
   return (
     <div className={ingredientDetailsStyles.details__container}>
@@ -67,10 +68,10 @@ function IngridientDetails(props) {
 
 export default IngridientDetails;
 
-// IngridientDetails.propTypes = {
-//   calories: propTypes.number.isRequired,
-//   fat: propTypes.number.isRequired,
-//   proteins: propTypes.number.isRequired,
-//   image_large: propTypes.string.isRequired,
-//   name: propTypes.string.isRequired,
-// };
+IngridientDetails.propTypes = {
+  calories: propTypes.number,
+  fat: propTypes.number,
+  proteins: propTypes.number,
+  image_large: propTypes.string,
+  name: propTypes.string,
+};

@@ -28,6 +28,7 @@ export function ProfileForm() {
     inputs: {
       name: { value: nameUser },
       email: { value: email },
+      pass: { value: pass },
     },
   } = useSelector(getFormData);
 
@@ -42,6 +43,15 @@ export function ProfileForm() {
   };
 
   const onChangeName = (e) => {
+    dispatch(
+      setFormValue({
+        field: e.target.name,
+        value: e.target.value,
+        form: "formProfile",
+      })
+    );
+  };
+  const onChangePass = (e) => {
     dispatch(
       setFormValue({
         field: e.target.name,
@@ -90,13 +100,14 @@ export function ProfileForm() {
             type="text"
             placeholder={"Пароль"}
             icon={"EditIcon"}
-            name={"password"}
-            value="****"
+            name={"pass"}
+            value={pass}
             error={false}
             errorText={"Ошибка"}
             size={"default"}
             extraClass="mt-6"
-            disabled={true}
+            disabled={false}
+            onChange={onChangePass}
           />
           <Button htmlType="submit" extraClass="mt-6">
             Сохранить

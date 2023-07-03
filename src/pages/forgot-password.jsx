@@ -4,7 +4,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/app-header/app-header";
 import { Form } from "../components/form/form";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import StyleForm from "../components/form/form.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setFormValue } from "../services/actions/form-action";
@@ -15,11 +15,15 @@ const getFormData = (state) => state.form.formForgotPassword;
 const getFormProfile = (state) => state.form.formProfile;
 
 export function ForgotPassword() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     inputs: {
       email: { value },
     },
+    request,
+    failed,
+    redirect,
   } = useSelector(getFormData);
 
   const {
@@ -28,7 +32,12 @@ export function ForgotPassword() {
     },
   } = useSelector(getFormProfile);
 
-  React.useEffect(() => {}, []);
+  // React.useEffect(() => {
+  //   console.log(redirect);
+  //   if (redirect) {
+  //     navigate("/reset-password");
+  //   }
+  // }, [redirect]);
 
   const onFormChange = (e) => {
     dispatch(
@@ -41,9 +50,7 @@ export function ForgotPassword() {
   };
 
   const onFormSubmit = (e) => {
-    // Предотвращаем дефолтное поведение формы при её отправке
     e.preventDefault();
-    // Вызываем наш thunk-экшен
     dispatch(forgotPassRequest());
   };
 

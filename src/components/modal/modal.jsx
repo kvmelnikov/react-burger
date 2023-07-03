@@ -6,12 +6,12 @@ import ModalOverlay from "../modal-overlay/modal-overlay";
 import { useSelector, useDispatch } from "react-redux";
 import { CLOSE_MODAL } from "../../services/actions/modal-action";
 import { useNavigate } from "react-router-dom";
+import propTypes from "prop-types";
 
 function Modal(props) {
   const dispatch = useDispatch();
   const modalSelector = useSelector((state) => state.modal.modalSelector);
   const navigate = useNavigate();
-
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_MODAL });
     navigate("/");
@@ -52,3 +52,7 @@ function Modal(props) {
 }
 
 export default Modal;
+
+Modal.propTypes = {
+  heading: propTypes.string,
+};

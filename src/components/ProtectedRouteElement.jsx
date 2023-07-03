@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { Route } from "react-router-dom";
 import { getUserRequest, updateToken } from "../services/actions/form-action";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,8 +9,7 @@ import Api from "../utils/api/api";
 const getFormData = (state) => state.form.formProfile;
 
 export const ProtectedRouteElement = ({ element }) => {
-  const dispatch = useDispatch();
-
+  const location = useLocation();
   const {
     inputs: {
       name: { value: nameUser },
@@ -24,7 +23,7 @@ export const ProtectedRouteElement = ({ element }) => {
   }
 
   if (failed) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/login" state={{ from: location }} />;
   }
 
   return nameUser ? element : <Navigate to="/login" replace />;

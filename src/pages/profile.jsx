@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import AppHeader from "../components/app-header/app-header";
 import ProfileStyle from "./profile.module.css";
 import { ProfileMenu } from "../components/profile-menu/profile-menu";

@@ -5,7 +5,7 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import AppHeader from "../components/app-header/app-header";
 import { Form } from "../components/form/form";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import StyleForm from "../components/form/form.module.css";
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -22,6 +22,8 @@ const getFormProfile = (state) => state.form.formProfile;
 export function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || "/";
 
   const {
     inputs: {
@@ -70,13 +72,9 @@ export function Login() {
     e.preventDefault();
     dispatch(loginUser());
     if (!request && !failed) {
-      navigate("/");
+      navigate(from, { replace: true });
     }
   };
-
-  if (nameUser) {
-    return <Navigate to="/" replace />;
-  }
 
   return (
     <>

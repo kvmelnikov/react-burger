@@ -18,45 +18,48 @@ import {
   GET_USER_FORM_SUBMIT,
   GET_USER_FORM_SUBMIT_SUCCESS,
   GET_USER_FORM_SUBMIT_FAILED,
-} from '../actions/form-action';
+  RESET_USER_FORM,
+} from "../actions/form-action";
 
 export const stateForms = {
   formProfile: {
     inputs: {
       email: { value: null },
       name: { value: null },
+      pass: { value: null },
     },
     request: false,
     failed: false,
   },
   formForgotPassword: {
     inputs: {
-      email: { value: '' },
+      email: { value: "" },
     },
-    Request: false,
-    Failed: false,
+    request: false,
+    failed: false,
+    redirect: false,
   },
   formResetPassword: {
     inputs: {
-      password: { value: 'new pass' },
-      token: { value: 'token' },
+      password: { value: "" },
+      token: { value: "" },
     },
     Request: false,
     Failed: false,
   },
   formRegister: {
     inputs: {
-      email: { value: '' },
-      password: { value: '' },
-      name: { value: '' },
+      email: { value: "" },
+      password: { value: "" },
+      name: { value: "" },
     },
     Request: false,
     Failed: false,
   },
   formLogin: {
     inputs: {
-      email: { value: '' },
-      password: { value: '' },
+      email: { value: "" },
+      password: { value: "" },
     },
     request: false,
     failed: false,
@@ -88,16 +91,20 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formForgotPassword: {
           ...state.formForgotPassword,
-          Request: true,
-          Failed: false,
+          request: true,
+          failed: false,
         },
       };
     }
     case FORGOT_PASS_FORM_SUBMIT_SUCCESS: {
+      console.log("");
       return {
         ...state,
         formForgotPassword: {
           ...stateForms.formForgotPassword,
+          request: false,
+          failed: false,
+          redirect: true,
         },
       };
     }
@@ -106,8 +113,8 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formForgotPassword: {
           ...state.formForgotPassword,
-          Request: false,
-          Failed: true,
+          request: false,
+          failed: true,
         },
       };
     }
@@ -155,6 +162,8 @@ export const formReducer = (state = stateForms, action) => {
         ...state,
         formResetPassword: {
           ...stateForms.formResetPassword,
+          Request: false,
+          Failed: false,
         },
       };
     }
@@ -247,6 +256,7 @@ export const formReducer = (state = stateForms, action) => {
           inputs: {
             email: { value: action.value.email },
             name: { value: action.value.name },
+            pass: { value: "" },
           },
           request: false,
           failed: false,
@@ -260,6 +270,19 @@ export const formReducer = (state = stateForms, action) => {
           ...state.formProfile,
           request: false,
           failed: true,
+        },
+      };
+    }
+    case RESET_USER_FORM: {
+      return {
+        ...state,
+        formProfile: {
+          inputs: {
+            email: { value: null },
+            name: { value: null },
+          },
+          request: false,
+          failed: false,
         },
       };
     }

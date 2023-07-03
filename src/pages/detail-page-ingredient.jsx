@@ -17,5 +17,5 @@ export function DetailPageIngredient() {
     (state) => state.ingredients.currentIngridient
   );
 
-  return <IngridientDetails s {...ingredientDataForModal} />;
+  return <IngridientDetails {...ingredientDataForModal} />;
 }

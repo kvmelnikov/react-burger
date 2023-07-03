@@ -1,29 +1,29 @@
-import { useMemo, useRef } from 'react';
-import toppingStyles from './topping.module.css';
-import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useMemo, useRef } from "react";
+import toppingStyles from "./topping.module.css";
+import { useDrag, useDrop } from "react-dnd";
+import { useDispatch } from "react-redux";
 import {
   ConstructorElement,
   DragIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+} from "@ya.praktikum/react-developer-burger-ui-components";
+import propTypes from "prop-types";
 
-import { INSERT_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action';
-import { DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action';
-import { DELETE_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action';
+import { INSERT_INGREDIENT_IN_CONSTRUCTOR } from "../../services/actions/burger-action";
+import { DECREASE_COUNTER_INGREDIENT } from "../../services/actions/ingridients-action";
+import { DELETE_INGREDIENT_IN_CONSTRUCTOR } from "../../services/actions/burger-action";
 
 export default function Topping({ index, item }) {
   const dispatch = useDispatch();
-
   const { index2 } = item;
   const dragRef = useRef(null);
 
   const [, drag] = useDrag({
-    type: 'item',
+    type: "item",
     item: { index2, index },
   });
 
   const [, drop] = useDrop({
-    accept: 'item',
+    accept: "item",
     hover(item) {
       if (!dragRef.current) {
         return;
@@ -43,7 +43,7 @@ export default function Topping({ index, item }) {
   drag(drop(dragRef));
 
   const handleDeleteTopping = (e, index) => {
-    if (e.target.parentElement.parentElement.classList.contains('pr-2')) {
+    if (e.target.parentElement.parentElement.classList.contains("pr-2")) {
       dispatch({ type: DECREASE_COUNTER_INGREDIENT, id: item._id });
       dispatch({ type: DELETE_INGREDIENT_IN_CONSTRUCTOR, indx: index });
     }
@@ -69,3 +69,8 @@ export default function Topping({ index, item }) {
 
   return content;
 }
+
+Topping.propTypes = {
+  index: propTypes.number.isRequired,
+  item: propTypes.object.isRequired,
+};
