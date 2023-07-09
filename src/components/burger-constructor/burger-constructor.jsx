@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ConstructorElement,
   CurrencyIcon,
@@ -10,20 +10,32 @@ import Topping from "../topping/topping";
 import OrderDetails from "../order-details/order-details";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
+import { getOrderNumber } from "../../services/actions/api-action";
 import {
-  getOrderNumber,
-} from "../../services/actions/api-action";
-import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from "../../services/actions/burger-action";
-import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from "../../services/actions/ingridients-action";
-import { v4 as uuidv4 } from 'uuid';
+  ADD_BUN_TO_BURGER_CONSTRUCTOR,
+  ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
+} from "../../services/actions/burger-action";
+import {
+  INCREASE_COUNTER_INGREDIENT,
+  DECREASE_COUNTER_INGREDIENT,
+} from "../../services/actions/ingridients-action";
+import { v4 as uuidv4 } from "uuid";
+import { useLocation } from "react-router-dom";
 
+const { container, bun, toppings, info } = burgerConstructorStyle;
 
-const { container, bun, toppings, info } =
-  burgerConstructorStyle;
+const getFormData = (state) => state.form.formProfile;
 
 function BurgerConstructor() {
   const dispatch = useDispatch();
   const numberOrder = useSelector((state) => state.burger.numberOrder);
+  const location = useLocation();
+
+  const {
+    inputs: {
+      email: { value: email },
+    },
+  } = useSelector(getFormData);
 
   const showModalOrderDetails = useSelector(
     (state) => state.modal.showModalOrderDetails
@@ -34,20 +46,23 @@ function BurgerConstructor() {
 
   const [, drop] = useDrop({
     accept: "ingridient",
-
     drop(ingredient) {
-      if (ingredient[0].type === "bun" )  {
-        dispatch({type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0]})
-        dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient[0]._id })
-       
-        if(ingredientsConstructor.bun._id) {
-          dispatch({type: DECREASE_COUNTER_INGREDIENT, id: ingredientsConstructor.bun._id})
+      if (ingredient[0].type === "bun") {
+        dispatch({ type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0] });
+        dispatch({ type: INCREASE_COUNTER_INGREDIENT, id: ingredient[0]._id });
+
+        if (ingredientsConstructor.bun._id) {
+          dispatch({
+            type: DECREASE_COUNTER_INGREDIENT,
+            id: ingredientsConstructor.bun._id,
+          });
         }
-        
-      }
-       else  {
-        dispatch({type: ADD_TOPPING_TO_BURGER_CONSTRUCTOR, topping: ingredient[0]})
-        dispatch({type: INCREASE_COUNTER_INGREDIENT,  id: ingredient[0]._id })
+      } else {
+        dispatch({
+          type: ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
+          topping: ingredient[0],
+        });
+        dispatch({ type: INCREASE_COUNTER_INGREDIENT, id: ingredient[0]._id });
       }
     },
   });
@@ -58,15 +73,16 @@ function BurgerConstructor() {
       Object.keys(ingredientsConstructor.toppings).length === 0
     ) {
       return "0";
-    }
-    else {
+    } else {
       const summToppings = ingredientsConstructor.toppings.reduce(
         (accumulator, next) => {
           return accumulator + Number(next.price);
         },
         0
       );
-      const priceBun = Number(ingredientsConstructor.bun.price) ? Number(ingredientsConstructor.bun.price) : 0
+      const priceBun = Number(ingredientsConstructor.bun.price)
+        ? Number(ingredientsConstructor.bun.price)
+        : 0;
       return summToppings + priceBun;
     }
   }
@@ -77,7 +93,6 @@ function BurgerConstructor() {
     dispatch(getOrderNumber(ingredientsConstructor));
   };
 
- 
   React.useEffect(() => {
     setSummBurger();
   }, [ingredientsConstructor]);
@@ -100,12 +115,31 @@ function BurgerConstructor() {
         type="bottom"
         isLocked={true}
         text={`${ingredientsConstructor.bun.name} (низ)`}
-        price={ingredientsConstructor.bun.price/ 2}
+        price={ingredientsConstructor.bun.price / 2}
         thumbnail={ingredientsConstructor.bun.image}
       />
     ) : (
       <div></div>
     );
+
+  const button = useMemo(() => {
+    let disabled = true;
+    if (email && ingredientsConstructor.bun.name) {
+      disabled = false;
+    }
+    return (
+      <Button
+        disabled={disabled}
+        onClick={hanldleOpenModalOrderDetails}
+        extraClass="ml-10"
+        htmlType="button"
+        type="primary"
+        size="large"
+      >
+        Оформить заказ
+      </Button>
+    );
+  }, [ingredientsConstructor, email, location]);
 
   return (
     <>
@@ -115,9 +149,12 @@ function BurgerConstructor() {
           <ul className={`${toppings}`}>
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, index) => {
-                 return (
-                  <Topping   key={uuidv4()} item={topping} index={index} 
-                  {...topping}
+                return (
+                  <Topping
+                    key={uuidv4()}
+                    item={topping}
+                    index={index}
+                    {...topping}
                   />
                 );
               })
@@ -130,18 +167,7 @@ function BurgerConstructor() {
         <div className={`${info} mt-5`}>
           <p className="text text_type_digits-medium mr-2">{summBurger}</p>
           <CurrencyIcon type="primary" />
-          <Button
-            disabled={
-              ingredientsConstructor.bun.name ? false: true
-            }
-            onClick={hanldleOpenModalOrderDetails}
-            extraClass="ml-10"
-            htmlType="button"
-            type="primary"
-            size="large"
-          >
-            Оформить заказ
-          </Button>
+          {button}
         </div>
       </section>
       {showModalOrderDetails && (
@@ -154,7 +180,5 @@ function BurgerConstructor() {
     </>
   );
 }
-
-
 
 export default BurgerConstructor;

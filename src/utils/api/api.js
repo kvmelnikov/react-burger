@@ -1,7 +1,8 @@
+import { setCookie } from '../cookie';
+
 export default class Api {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
-
   }
 
   _checkResponse(res) {
@@ -12,23 +13,50 @@ export default class Api {
   }
 
   getIngredients() {
-    return fetch(this._baseUrl + "ingredients", { method: "get" }).then((res) => {
+    return fetch(this._baseUrl + 'ingredients', { method: 'get' }).then(
+      (res) => {
+        return this._checkResponse(res);
+      }
+    );
+  }
+  getUser(token) {
+    return fetch(this._baseUrl + 'auth/user', {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: token,
+      },
+    }).then((res) => {
+      return this._checkResponse(res);
+    });
+  }
+
+  updateToken(token) {
+    return fetch('https://norma.nomoreparties.space/api/auth/user', {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: `${token}` }),
+    }).then((res) => {
+      console.log(res);
+      if (res.ok) {
+        setCookie('accessToken', res.accessToken, { expires: 1200 });
+      }
       return this._checkResponse(res);
     });
   }
 
   getCheckout(ingredients) {
-  
-    return fetch(`${this._baseUrl + "orders"}`, {
-      method: "POST",
+    return fetch(`${this._baseUrl + 'orders'}`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        ingredients: ingredients
+        ingredients: ingredients,
       }),
     }).then((res) => {
-     
       return this._checkResponse(res);
     });
   }
