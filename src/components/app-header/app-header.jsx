@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 import {
   Logo,
   BurgerIcon,
   ProfileIcon,
   ListIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import headerStyle from "./app-header.module.css";
-import { render } from "@testing-library/react";
-import { Link, NavLink } from "react-router-dom";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import headerStyle from './app-header.module.css';
+import { render } from '@testing-library/react';
+import { Link, NavLink } from 'react-router-dom';
 const {
   header,
   header__nav,
@@ -40,7 +40,7 @@ function AppHeader() {
           >
             <ListIcon type="secondary" />
             <NavLink
-              to="/profile/orders"
+              to="/feed"
               className={({ isActive }) =>
                 isActive
                   ? `${headerStyle.link_active} ml-2`
