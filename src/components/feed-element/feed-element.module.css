@@ -1,0 +1,22 @@
+.box {
+  width: 584px;
+  background-color: #1C1C21;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  max-width: 536px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}

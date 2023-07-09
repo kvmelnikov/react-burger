@@ -47,7 +47,6 @@ export default function App() {
       dispatch(getUserRequest());
     }
   }, [location]);
-
   return (
     <>
       <Routes location={background || location}>
