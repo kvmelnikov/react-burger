@@ -8,10 +8,23 @@ import { Provider } from 'react-redux';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from '@reduxjs/toolkit';
+import { socketMiddleware } from './services/middleware/socket-middleware';
+
+const liveTableMiddleware = socketMiddleware({
+  wsConnect: LiveTableWsConnect,
+  wsDisconnect: LiveTableWsDisconnect,
+  wsConnecting: LiveTableWsConnecting,
+  onOpen: LiveTableWsOpen,
+  onClose: LiveTableWsClose,
+  onError: LiveTableWsError,
+  onMessage: LiveTableWsMessage,
+});
 
 const store = configureStore({
   reducer: rootReducer,
-  middleware: [thunk],
+  middleware: (getDefaultMiddleware) => {
+    return getDefaultMiddleware().concat(liveTableMiddleware);
+  },
   devTools: process.env.NODE_ENV !== 'production',
 });
 

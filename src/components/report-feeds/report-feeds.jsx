@@ -1,24 +1,38 @@
+import ReportStyle from './report-feeds.module.css';
+
 export function ReportFeeds() {
   return (
-    <div>
-      <div>
-        <h3>Готовы:</h3>
-        <h3>В работе:</h3>
+    <div className={`${ReportStyle.container} mt-25 ml-15`}>
+      <div className={`${ReportStyle.headings} mb-6`}>
+        <h3 className={`${ReportStyle.heading}`}>Готовы:</h3>
+        <h3 className={`${ReportStyle.heading}`}>В работе:</h3>
       </div>
-      <div>
-        <ul>
-          <li>031116</li>
-          <li>052164</li>
+      <div className={`${ReportStyle.numbers}`}>
+        <ul className={`${ReportStyle.list}`}>
+          <li className={`${ReportStyle.number} text text_type_digits-default`}>
+            031116
+          </li>
+          <li className={`${ReportStyle.number} text text_type_digits-default`}>
+            052164
+          </li>
         </ul>
-        <ul>
-          <li>0654165</li>
-          <li>1566</li>
+        <ul className={`${ReportStyle.list}`}>
+          <li className={`${ReportStyle.number} text text_type_digits-default`}>
+            0654165
+          </li>
+          <li className={`${ReportStyle.number} text text_type_digits-default`}>
+            1566
+          </li>
         </ul>
       </div>
-      <p>Выполнено за все время:</p>
-      <p>28 752</p>
-      <p>Выполнено за сегодня:</p>
-      <p>138</p>
+      <p className={`text text_type_main-medium mt-15 mb-0`}>
+        Выполнено за все время:
+      </p>
+      <p className={`text text_type_digits-large`}>28 752</p>
+      <p className={`text text_type_main-medium mt-15 mb-0`}>
+        Выполнено за сегодня:
+      </p>
+      <p className={`text text_type_digits-large`}>138</p>
     </div>
   );
 }
