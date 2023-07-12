@@ -1,30 +1,30 @@
 import { liveTableReducer } from './live-table/reducer';
 import { configureStore } from '@reduxjs/toolkit';
-import { socketMiddleware } from './middleware/socket-middleware.js';
+//import { socketMiddleware } from './middleware/socket-middleware.js';
 import {
-  connect as LiveTableWsConnect,
-  disconnect as LiveTableWsDisconnect,
-  wsOpen as LiveTableWsOpen,
-  wsClose as LiveTableWsClose,
-  wsMessage as LiveTableWsMessage,
-  wsError as LiveTableWsError,
-  wsConnecting as LiveTableWsConnecting,
-} from './live-table/actions';
-
+  wsConnect as FeedWsConnect,
+  wsConnecting as FeedWsConnecting,
+  wsClose as FeedWsClose,
+  wssError as FeedWsError,
+  wssMessage as FeedWsMessage,
+  wsDisconnect as FeedWsDisconnect,
+  wsOpen as FeedWsOpen,
+} from './feed/feed-slice';
+import { websocketMiddleware } from './middleware/websocket-middleware';
 import { burgerReducer } from './reducers/burger-reducer';
 import { ingredientsReducer } from './reducers/ingredients-reducer';
 import { modalReducer } from './reducers/modal-reducer';
 import { apiReducer } from './reducers/api-reducer';
 import { formReducer } from './reducers/form-reducer';
 
-const liveTableMiddleware = socketMiddleware({
-  wsConnect: LiveTableWsConnect,
-  wsDisconnect: LiveTableWsDisconnect,
-  wsConnecting: LiveTableWsConnecting,
-  onOpen: LiveTableWsOpen,
-  onClose: LiveTableWsClose,
-  onError: LiveTableWsError,
-  onMessage: LiveTableWsMessage,
+const FeedMiddleware = websocketMiddleware({
+  wsConnect: FeedWsConnect,
+  wsDisconnect: FeedWsDisconnect,
+  wsConnecting: FeedWsConnecting,
+  onOpen: FeedWsOpen,
+  onClose: FeedWsClose,
+  onError: FeedWsError,
+  onMessage: FeedWsMessage,
 });
 
 export const store = configureStore({
@@ -37,7 +37,7 @@ export const store = configureStore({
     liveTable: liveTableReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(liveTableMiddleware);
+    return getDefaultMiddleware().concat(FeedMiddleware);
   },
   devTools: process.env.NODE_ENV !== 'production',
 });

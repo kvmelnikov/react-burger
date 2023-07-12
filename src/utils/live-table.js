@@ -1,8 +1,10 @@
-export const WebsocketStatus  = {
-  CONNECTING:  'CONNECTING...',
+export const WebsocketStatus = {
+  CONNECTING: 'CONNECTING...',
   ONLINE: 'ONLINE',
-  OFFLINE: 'OFFLINE'
-}
+  OFFLINE: 'OFFLINE',
+  CONNECT: 'CONNECT',
+  DISCONNECT: 'DISCONNECT',
+};
 
 export const LiveTableActionType = {
   DATA: 'data',
@@ -10,4 +12,4 @@ export const LiveTableActionType = {
   DELETE: 'delete',
   UPDATE: 'update',
   MOVE: 'move',
-}
+};

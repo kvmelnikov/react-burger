@@ -1,32 +1,32 @@
-import React from "react";
-import modalStyle from "./modal.module.css";
-import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { createPortal } from "react-dom";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import { useSelector, useDispatch } from "react-redux";
-import { CLOSE_MODAL } from "../../services/actions/modal-action";
-import { useNavigate } from "react-router-dom";
-import propTypes from "prop-types";
+import React from 'react';
+import modalStyle from './modal.module.css';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { createPortal } from 'react-dom';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import { useSelector, useDispatch } from 'react-redux';
+import { CLOSE_MODAL } from '../../services/actions/modal-action';
+import { useNavigate } from 'react-router-dom';
+import propTypes from 'prop-types';
+const modalSelector = document.querySelector('#modals');
 
 function Modal(props) {
   const dispatch = useDispatch();
-  const modalSelector = useSelector((state) => state.modal.modalSelector);
   const navigate = useNavigate();
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_MODAL });
-    navigate("/");
+    navigate('/');
   };
   const handleEscapeClose = (e) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       handleCloseModal();
     }
   };
 
   React.useEffect(() => {
-    document.addEventListener("keydown", handleEscapeClose);
+    document.addEventListener('keydown', handleEscapeClose);
 
     return () => {
-      document.removeEventListener("keydown", handleEscapeClose);
+      document.removeEventListener('keydown', handleEscapeClose);
     };
   }, []);
 
