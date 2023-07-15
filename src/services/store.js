@@ -1,7 +1,6 @@
-import { liveTableReducer } from './live-table/reducer';
 import { configureStore } from '@reduxjs/toolkit';
 //import { socketMiddleware } from './middleware/socket-middleware.js';
-import {
+import feedSlice, {
   wsConnect as FeedWsConnect,
   wsConnecting as FeedWsConnecting,
   wsClose as FeedWsClose,
@@ -16,6 +15,7 @@ import { ingredientsReducer } from './reducers/ingredients-reducer';
 import { modalReducer } from './reducers/modal-reducer';
 import { apiReducer } from './reducers/api-reducer';
 import { formReducer } from './reducers/form-reducer';
+import feedReducer from './feed/feed-slice';
 
 const FeedMiddleware = websocketMiddleware({
   wsConnect: FeedWsConnect,
@@ -34,7 +34,7 @@ export const store = configureStore({
     modal: modalReducer,
     api: apiReducer,
     form: formReducer,
-    liveTable: liveTableReducer,
+    feed: feedReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(FeedMiddleware);

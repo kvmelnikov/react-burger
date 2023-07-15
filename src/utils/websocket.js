@@ -6,10 +6,10 @@ export const WebsocketStatus = {
   DISCONNECT: 'DISCONNECT',
 };
 
-export const LiveTableActionType = {
+export const FeedActionType = {
   DATA: 'data',
   INSERT: 'insert',
   DELETE: 'delete',
-  UPDATE: 'update',
+  UPDATE: 'feed/wssMessage',
   MOVE: 'move',
 };

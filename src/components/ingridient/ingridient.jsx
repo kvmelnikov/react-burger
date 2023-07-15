@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   CurrencyIcon,
   Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import ingridientStyle from "./ingridient.module.css";
-import propTypes from "prop-types";
-import { useDrag } from "react-dnd";
-import { Link, useLocation } from "react-router-dom";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import ingridientStyle from './ingridient.module.css';
+import propTypes from 'prop-types';
+import { useDrag } from 'react-dnd';
+import { Link, useLocation } from 'react-router-dom';
 
 const { ingridients__ingridient, ingridients__icon, ingridients__text, link } =
   ingridientStyle;
 
 export default function Ingridient(props) {
   const [{ isDrag }, dragRef] = useDrag({
-    type: "ingridient",
+    type: 'ingridient',
     item: [props],
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
@@ -36,7 +36,7 @@ export default function Ingridient(props) {
         {props.count > 0 ? (
           <Counter count={props.count} size="default" extraClass="m-1" />
         ) : (
-          ""
+          ''
         )}
         <img src={props.image} alt={props.name} />
         <div className={`${ingridients__icon} mb-2`}>

@@ -1,7 +1,13 @@
 import { FeedElement } from '../feed-element/feed-element';
 import TapeFeedStyle from './tape-feed.module.css';
+import propTypes from 'prop-types';
+import { useEffect } from 'react';
+import { GET_IMAGES } from '../../services/actions/ingridients-action';
+import { useDispatch } from 'react-redux';
 
-export function TapeFeed() {
+export function TapeFeed({ feeds }) {
+  const dispatch = useDispatch();
+
   return (
     <div>
       <h2
@@ -10,14 +16,18 @@ export function TapeFeed() {
         Лента заказов
       </h2>
       <ul className={`${TapeFeedStyle.list}`}>
-        <li>
-          <FeedElement />
-        </li>
-        <li>
-          {' '}
-          <FeedElement />
-        </li>
+        {feeds.map((feedElement) => {
+          return (
+            <li key={feedElement._id}>
+              <FeedElement {...feedElement} />
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
 }
+
+TapeFeed.propTypes = {
+  feeds: propTypes.array,
+};

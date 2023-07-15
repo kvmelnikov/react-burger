@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { WebsocketStatus } from '../../utils/live-table';
+import { WebsocketStatus } from '../../utils/websocket';
 import { wsError, wsMessage } from '../live-table/actions';
-
+import { FeedUpdate } from './feed-update';
 const initialState = {
   status: WebsocketStatus.OFFLINE,
   feeds: [],
@@ -32,7 +32,7 @@ const feedSlice = createSlice({
       state.connectingError = action.payload;
     },
     wssMessage(state, action) {
-      state.feeds = action.payload;
+      state.feeds = action.payload.orders;
     },
   },
 });

@@ -1,30 +1,29 @@
-import React, { useMemo } from "react";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import burgerIngridientsStyle from "./burger-ingridients.module.css";
-import Ingridient from "../ingridient/ingridient.jsx";
-import IngridientDetails from "../ingredient-details/ingredient-details.jsx";
-import Modal from "../modal/modal";
+import React, { useMemo } from 'react';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import burgerIngridientsStyle from './burger-ingridients.module.css';
+import Ingridient from '../ingridient/ingridient.jsx';
+import IngridientDetails from '../ingredient-details/ingredient-details.jsx';
+import Modal from '../modal/modal';
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux';
 
-import { SHOW_MODAL_INGRIDIENT_DETAILS } from "../../services/actions/modal-action";
+import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action';
 
-import { SET_CURRENT_INGREDIENT } from "../../services/actions/ingridients-action.js";
-import { Link, useLocation } from "react-router-dom";
+import { SET_CURRENT_INGREDIENT } from '../../services/actions/ingridients-action.js';
+import { Link, useLocation } from 'react-router-dom';
 
 const { ingridients__container, ingridients__list, ingridients__tab } =
   burgerIngridientsStyle;
 
 function BurgerIngridients() {
   const dispatch = useDispatch();
-  const [current, setCurrent] = React.useState("bun");
+  const [current, setCurrent] = React.useState('bun');
 
   const [types] = React.useState({
-    bun: "Булки",
-    sauce: "Соусы",
-    main: "Начинки",
+    bun: 'Булки',
+    sauce: 'Соусы',
+    main: 'Начинки',
   });
-
   const ingredients = useSelector((state) => state.ingredients.ingridients);
 
   const ingredientDataForModal = useSelector(
@@ -112,24 +111,24 @@ function BurgerIngridients() {
           <Tab
             key={0}
             value="bun"
-            active={current === "bun"}
-            onClick={() => setCurrent("bun")}
+            active={current === 'bun'}
+            onClick={() => setCurrent('bun')}
           >
             Булки
           </Tab>
           <Tab
             key={1}
             value="sauce"
-            active={current === "sauce"}
-            onClick={() => setCurrent("sauce")}
+            active={current === 'sauce'}
+            onClick={() => setCurrent('sauce')}
           >
             Соусы
           </Tab>
           <Tab
             key={2}
             value="main"
-            active={current === "main"}
-            onClick={() => setCurrent("main")}
+            active={current === 'main'}
+            onClick={() => setCurrent('main')}
           >
             Начинки
           </Tab>

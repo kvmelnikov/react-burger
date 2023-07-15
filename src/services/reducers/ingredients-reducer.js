@@ -5,11 +5,13 @@ import {
   DECREASE_COUNTER_INGREDIENT,
   CLEAR_INGREDIENTS,
   GET_INGREDIENT,
-} from "../actions/ingridients-action";
+  GET_IMAGES,
+} from '../actions/ingridients-action';
 
 const initialState = {
   ingridients: [],
   currentIngridient: {},
+  imagesForFeed: [],
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -25,12 +27,27 @@ export const ingredientsReducer = (state = initialState, action) => {
     }
 
     case GET_INGREDIENT: {
-      console.log("get ing");
       return {
         ...state,
         currentIngridient: state.ingridients.filter((el) => {
           return el._id === action.id;
         }),
+      };
+    }
+
+    case GET_IMAGES: {
+      const images = [];
+      let filteredIngredients = [];
+      action.payload.forEach((el) => {
+        state.ingridients.forEach((ingr) => {
+          if (ingr._id === el) {
+            images.push(ingr.image_mobile);
+          }
+        });
+      });
+      return {
+        ...state,
+        imagesForFeed: images,
       };
     }
 
@@ -63,7 +80,6 @@ export const ingredientsReducer = (state = initialState, action) => {
       };
     }
     case SET_CURRENT_INGREDIENT: {
-      console.log(action);
       return {
         ...state,
         currentIngridient: state.ingridients.filter(
