@@ -1,6 +1,6 @@
 .box {
   width: 584px;
-  background-color: #1C1C21;
+  background-color: #1c1c21;
   border-radius: 40px;
   display: flex;
   flex-direction: column;
@@ -19,4 +19,45 @@
   display: flex;
   align-items: center;
   justify-content: end;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: start;
+  position: relative;
+}
+
+.image {
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 2px solid #801ab2;
+  background-color: #131316;
+}
+
+.cover_image {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  opacity: 0.7;
+  border-radius: 50%;
+  border: 2px solid #801ab2;
+  background-color: #131316;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.list_item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
 }

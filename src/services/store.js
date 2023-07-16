@@ -1,4 +1,4 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 //import { socketMiddleware } from './middleware/socket-middleware.js';
 import feedSlice, {
   wsConnect as FeedWsConnect,
@@ -8,14 +8,14 @@ import feedSlice, {
   wssMessage as FeedWsMessage,
   wsDisconnect as FeedWsDisconnect,
   wsOpen as FeedWsOpen,
-} from './feed/feed-slice';
-import { websocketMiddleware } from './middleware/websocket-middleware';
-import { burgerReducer } from './reducers/burger-reducer';
-import { ingredientsReducer } from './reducers/ingredients-reducer';
-import { modalReducer } from './reducers/modal-reducer';
-import { apiReducer } from './reducers/api-reducer';
-import { formReducer } from './reducers/form-reducer';
-import feedReducer from './feed/feed-slice';
+} from "./feed/feed-slice";
+import { websocketMiddleware } from "./middleware/websocket-middleware";
+import { burgerReducer } from "./reducers/burger-reducer";
+import { ingredientsReducer } from "./reducers/ingredients-reducer";
+import { modalReducer } from "./reducers/modal-reducer";
+import { apiReducer } from "./reducers/api-reducer";
+import { formReducer } from "./reducers/form-reducer";
+import feedReducer from "./feed/feed-slice";
 
 const FeedMiddleware = websocketMiddleware({
   wsConnect: FeedWsConnect,
@@ -39,5 +39,5 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(FeedMiddleware);
   },
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: process.env.NODE_ENV !== "production",
 });

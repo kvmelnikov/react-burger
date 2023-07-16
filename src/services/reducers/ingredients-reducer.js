@@ -11,7 +11,7 @@ import {
 const initialState = {
   ingridients: [],
   currentIngridient: {},
-  imagesForFeed: [],
+  images: [],
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -41,13 +41,15 @@ export const ingredientsReducer = (state = initialState, action) => {
       action.payload.forEach((el) => {
         state.ingridients.forEach((ingr) => {
           if (ingr._id === el) {
-            images.push(ingr.image_mobile);
+            console.log(ingr)
+            images.push({src: ingr.image_mobile, alt: ingr.name});
           }
         });
       });
+
       return {
         ...state,
-        imagesForFeed: images,
+        images: images,
       };
     }
 

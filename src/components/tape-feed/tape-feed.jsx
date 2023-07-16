@@ -1,33 +1,53 @@
-import { FeedElement } from '../feed-element/feed-element';
-import TapeFeedStyle from './tape-feed.module.css';
-import propTypes from 'prop-types';
-import { useEffect } from 'react';
-import { GET_IMAGES } from '../../services/actions/ingridients-action';
-import { useDispatch } from 'react-redux';
+import { FeedElement } from '../feed-element/feed-element'
+import TapeFeedStyle from './tape-feed.module.css'
+
+import propTypes from 'prop-types'
+import { useEffect, useMemo } from 'react'
+import { GET_IMAGES } from '../../services/actions/ingridients-action'
+import { useDispatch, useSelector } from 'react-redux'
 
 export function TapeFeed({ feeds }) {
-  const dispatch = useDispatch();
+  let imagesAndPrice = []
+
+  const getImagesAndTotalPrice = (ingredients, idsOrder) => {
+    const images = []
+    let totalPrice = 0
+    idsOrder.forEach((el) => {
+      ingredients.forEach((ingr) => {
+        if (ingr._id === el) {
+          images.push({ src: ingr.image_mobile, alt: ingr.name })
+          totalPrice += ingr.price
+        }
+      })
+    })
+    return [images, totalPrice]
+  }
+
+  const ingredients = useSelector((state) => state.ingredients.ingridients)
 
   return (
     <div>
-      <h2
-        className={`${TapeFeedStyle.heading} text text_type_main-large mt-10 mb-5`}
-      >
-        Лента заказов
-      </h2>
+      <h2 className={`${TapeFeedStyle.heading} text text_type_main-large mt-10 mb-5`}>Лента заказов</h2>
       <ul className={`${TapeFeedStyle.list}`}>
         {feeds.map((feedElement) => {
+          imagesAndPrice = getImagesAndTotalPrice(ingredients, feedElement.ingredients)
           return (
             <li key={feedElement._id}>
-              <FeedElement {...feedElement} />
+              <FeedElement
+                totalPrice={imagesAndPrice[1]}
+                name={feedElement.name}
+                number={feedElement.number}
+                createdAt={feedElement.createdAt}
+                images={imagesAndPrice[0]}
+              />
             </li>
-          );
+          )
         })}
       </ul>
     </div>
-  );
+  )
 }
 
 TapeFeed.propTypes = {
   feeds: propTypes.array,
-};
+}

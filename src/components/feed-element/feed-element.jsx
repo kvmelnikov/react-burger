@@ -1,37 +1,44 @@
-import { useDispatch, useSelector } from 'react-redux';
-import FeedElementStyle from './feed-element.module.css';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect } from 'react';
-import { GET_IMAGES } from '../../services/actions/ingridients-action';
-export function FeedElement(props) {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch({ type: GET_IMAGES, payload: props.ingredients });
-  }, []);
-
-  const images = useSelector((state) => state.ingredients.images);
-  console.log(images);
+import FeedElementStyle from './feed-element.module.css'
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { v4 as uuidv4 } from 'uuid'
+export function FeedElement({ images, createdAt, number, name, totalPrice }) {
+  const length = images.length
   return (
     <div className={`${FeedElementStyle.box} mb-4`}>
       <div className={`${FeedElementStyle.line} mt-6`}>
-        <span className="text text_type_digits-default">#{}</span>
-        <span className="text text_type_main-small text_color_inactive">
-          Сегодня, 16:20 i-GMT+3
-        </span>
+        <span className='text text_type_digits-default'>#{number}</span>
+        <span className='text text_type_main-small text_color_inactive'>{createdAt}</span>
       </div>
-      <p className={`${FeedElementStyle.line} mt-6 text text_type_main-medium`}>
-        Death Star Starship Main бургер
-      </p>
+      <p className={`${FeedElementStyle.line} mt-6 text text_type_main-medium`}>{name}</p>
       <div className={`${FeedElementStyle.line} mt-6 mb-6`}>
-        {images.map((img) => {
-          return <img src={img} />;
-        })}
+        <ul className={`${FeedElementStyle.list}`}>
+          {images.slice(0, 6).map((image, index) => {
+            return (
+              <li
+                className={FeedElementStyle.list_item}
+                style={{ zIndex: index, position: index === 5 ? 'absolute' : '' }}
+                key={uuidv4()}
+              >
+                <img
+                  style={{ left: index * 50 }}
+                  className={`${FeedElementStyle.image}`}
+                  src={image.src}
+                  alt={image.alt}
+                />
+              </li>
+            )
+          })}
+          {length > 6 ? (
+            <li className={FeedElementStyle.list_item} style={{ zIndex: length }}>
+              <span style={{ left: 250 }} className={`${FeedElementStyle.cover_image}`}>{`+${length - 6}`}</span>
+            </li>
+          ) : null}
+        </ul>
         <div className={`${FeedElementStyle.price}`}>
-          <span className="text text_type_digits-default">50</span>
-          <CurrencyIcon type="primary" />
+          <span className='text text_type_digits-default mr-2'>{totalPrice}</span>
+          <CurrencyIcon type='primary' />
         </div>
       </div>
     </div>
-  );
+  )
 }
