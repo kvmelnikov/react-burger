@@ -1,7 +1,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  max-width: 580px;
+  max-width: 790px;
   width: 100%;
 }
 
@@ -16,16 +16,14 @@
 .list {
   list-style: none;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  max-width: 280px;
+  display: grid;
+  max-width: 395px;
   width: 100%;
-  align-self: flex-start;
   margin-top: 0;
   margin-bottom: 0;
+  grid-template-columns: repeat(5, 79px);
+  grid-template-rows: repeat(10, 24px);
 }
-
-
 
 .numbers {
   display: flex;

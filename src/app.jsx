@@ -21,6 +21,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUserRequest, RESET_USER_FORM } from './services/actions/form-action'
 import IngridientDetails from './components/ingredient-details/ingredient-details'
+import { getIngredients } from './services/actions/api-action'
 
 // const getFormData = (state) => state.form.formProfile;
 
@@ -40,6 +41,7 @@ export default function App() {
 
   const background = location.state && location.state.background
   useEffect(() => {
+    dispatch(getIngredients())
     if (localStorage.getItem('accessToken')) {
       dispatch(getUserRequest())
     }
