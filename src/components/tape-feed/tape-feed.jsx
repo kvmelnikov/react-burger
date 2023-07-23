@@ -39,6 +39,7 @@ export function TapeFeed({ feeds }) {
                 number={feedElement.number}
                 createdAt={feedElement.createdAt}
                 images={imagesAndPrice[0]}
+                id={feedElement._id}
               />
             </li>
           )

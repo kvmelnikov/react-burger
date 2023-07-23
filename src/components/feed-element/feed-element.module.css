@@ -14,6 +14,17 @@
   display: flex;
   justify-content: space-between;
 }
+.link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+link:link {
+  color: #ffffff;
+}
+link:visited {
+  color: #ffffff;
+}
 
 .price {
   display: flex;

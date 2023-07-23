@@ -1,5 +1,8 @@
-import { useDispatch } from 'react-redux'
-//import { FeedActionType } from '../../utils/websocket'
+export const getNumberOrder = (id, feeds) => {
+  const res = feeds.filter((el) => feeds._id === id)
+
+  console.log(id, feeds)
+}
 
 const checkDate = (date) => {
   const today = new Date().getDate()
@@ -10,7 +13,6 @@ const checkDate = (date) => {
 }
 
 export const addStatus = (feeds) => {
-  console.log(feeds)
   const done = []
   const pending = []
   let todayBurgers = 0
@@ -31,27 +33,3 @@ export const addStatus = (feeds) => {
 
   return { done: done, pending: pending, todayBurgers: todayBurgers, allBurgers: allBurgers }
 }
-
-// const updateData = (table, action) => {
-//   return table.map((row) => {
-//     const index = action.data.findIndex((updatedRow) => updatedRow.id === row.id)
-//     if (index !== -1) {
-//       return action.data[index]
-//     }
-//     return row
-//   })
-// }
-
-// export const FeedUpdate = (prevTable, actions) => {
-//   // actions.forEach((action) => {
-//   //   switch (action.type) {
-//   //     case FeedActionType.UPDATE:
-//   //       table = updateData(table, action);
-//   //       break;
-//   //     default:
-//   //       break;
-//   //   }
-//   // });
-
-//   return table
-// }

@@ -22,6 +22,8 @@ import { useEffect } from 'react'
 import { getUserRequest, RESET_USER_FORM } from './services/actions/form-action'
 import IngridientDetails from './components/ingredient-details/ingredient-details'
 import { getIngredients } from './services/actions/api-action'
+import { FeedDetail } from './components/feed-detail/feed-detail'
+import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
 
 // const getFormData = (state) => state.form.formProfile;
 
@@ -35,17 +37,20 @@ export default function App() {
   const profile = '/profile'
   const orders = '/profile/orders'
   const feed = '/feed'
+  const feedDetail = 'feed/:id'
 
   const dispatch = useDispatch()
   let location = useLocation()
 
   const background = location.state && location.state.background
+
   useEffect(() => {
     dispatch(getIngredients())
     if (localStorage.getItem('accessToken')) {
       dispatch(getUserRequest())
     }
   }, [location])
+
   return (
     <>
       <Routes location={background || location}>
@@ -53,6 +58,7 @@ export default function App() {
           <Route path={home} element={<ConstructorMain />} />
           <Route path={ingredient} element={<DetailPageIngredient />} />
           <Route path={feed} element={<Feeds />} />
+          <Route path={feedDetail} element={<FeedDetail />} />
         </Route>
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
@@ -67,6 +73,7 @@ export default function App() {
       {background && (
         <Routes>
           <Route path={ingredient} element={<ModalDetail />} />
+          <Route path={feedDetail} element={<ModalFeedDetail />} />
         </Routes>
       )}
     </>
