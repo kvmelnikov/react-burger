@@ -2,12 +2,25 @@ import FeedElementStyle from './feed-element.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
+import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
+import { useDispatch } from 'react-redux'
 
 export function FeedElement({ images, createdAt, number, name, totalPrice, id }) {
   let location = useLocation()
   const length = images.length
+  const dispatch = useDispatch()
+
+  const hanldleOpenModalIngridientDetails = () => {
+    dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
+  }
+
   return (
-    <Link className={FeedElementStyle.link} to={{ pathname: `/feed/${id}` }} state={{ background: location }}>
+    <Link
+      className={FeedElementStyle.link}
+      to={{ pathname: `/feed/${id}` }}
+      state={{ background: location }}
+      onClick={hanldleOpenModalIngridientDetails()}
+    >
       <div className={`${FeedElementStyle.box} mb-4`}>
         <div className={`${FeedElementStyle.line} mt-6`}>
           <span className='text text_type_digits-default'>#{number}</span>

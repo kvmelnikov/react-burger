@@ -6,7 +6,8 @@ import { FeedDetail } from '../feed-detail/feed-detail'
 
 function ModalFeedDetail(props) {
   const dispatch = useDispatch()
-  console.log('dfdfd')
+  console.log('ModalFeedDetail')
+  const showModalIngridientDetails = useSelector((state) => state.modal.modalIngridientDetail)
 
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_MODAL })
@@ -27,7 +28,7 @@ function ModalFeedDetail(props) {
   }, [])
 
   return (
-    true && (
+    showModalIngridientDetails && (
       <Modal heading=''>
         <FeedDetail />
       </Modal>

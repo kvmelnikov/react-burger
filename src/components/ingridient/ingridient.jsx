@@ -34,7 +34,7 @@ export default function Ingridient(props) {
         pathname: `/ingredients/${props._id}`,
       }}
       state={{ background: location }}
-      onClick={() => props.hanldleOpenModalIngridientDetails()}
+      onClick={() => hanldleOpenModalIngridientDetails()}
     >
       <li className={`${ingridients__ingridient}`}>
         {props.count > 0 ? <Counter count={props.count} size='default' extraClass='m-1' /> : ''}

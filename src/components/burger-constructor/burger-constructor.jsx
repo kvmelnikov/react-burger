@@ -20,7 +20,6 @@ function BurgerConstructor() {
   const dispatch = useDispatch()
   const numberOrder = useSelector((state) => state.burger.numberOrder)
   const location = useLocation()
-  const orderRequest = useSelector((state) => state.api.orderRequest)
   const showModalOrderDetails = useSelector((state) => state.modal.showModalOrderDetails)
   const {
     inputs: {

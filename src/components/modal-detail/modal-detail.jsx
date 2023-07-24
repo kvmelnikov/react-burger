@@ -30,7 +30,7 @@ function ModalDetail(props) {
   }, [])
 
   return (
-    true && (
+    showModalIngridientDetails && (
       <Modal heading='Детали ингридиента'>
         <IngridientDetails {...ingredientDataForModal} />
       </Modal>
