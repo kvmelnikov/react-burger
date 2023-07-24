@@ -1,16 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { WebsocketStatus } from '../../utils/websocket'
-import { addStatus } from './feed-update'
 
 const initialState = {
   status: WebsocketStatus.OFFLINE,
-  feeds: [],
+  orders: [],
   connectingError: '',
-  statusOrders: {},
 }
 
-const feedSlice = createSlice({
-  name: 'feed',
+const orderSlice = createSlice({
+  name: 'order',
   initialState,
   reducers: {
     wsConnecting(state) {
@@ -33,14 +31,11 @@ const feedSlice = createSlice({
       state.connectingError = action.payload
     },
     wssMessage(state, action) {
-      state.feeds = action.payload.orders
-    },
-    addStatusOrders(state, action) {
-      state.statusOrders = addStatus(action.payload)
+      console.log(action.payload)
+      state.orders = action.payload.orders
     },
   },
 })
 
-export const { addStatusOrders, wsConnecting, wsConnect, wsOpen, wsClose, wssError, wssMessage, wsDisconnect } =
-  feedSlice.actions
-export default feedSlice.reducer
+export const { wsConnecting, wsConnect, wsOpen, wsClose, wssError, wssMessage, wsDisconnect } = orderSlice.actions
+export default orderSlice.reducer

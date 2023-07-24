@@ -34,34 +34,6 @@ const makeCheckout = (consrtuctorIngridients) => {
   return idToppings
 }
 
-// export const getDetailFeed = (order) => {
-//   return function (dispatch) {
-//     dispatch({
-//       type: GET_FEED_DETAIL_REQUEST,
-//     })
-//     fetch(`https://norma.nomoreparties.space/api/orders/${order}`, {
-//       method: 'GET',
-//     })
-//       .then((res) => {
-//         if (res.ok) {
-//           return res.json()
-//         }
-//         return Promise.reject(`Ошибка: ${res.status}`)
-//       })
-//       .then((res) => {
-//         dispatch({
-//           type: GET_FEED_DETAIL_SUCCESS,
-//           payload: res.orders[0],
-//         })
-//       })
-//       .catch((err) => {
-//         dispatch({
-//           type: GET_FEED_DETAIL_FAILED,
-//         })
-//       })
-//   }
-// }
-
 export const getIngredients = (id) => {
   return function (dispatch) {
     dispatch({
@@ -90,16 +62,18 @@ export const getOrderNumber = (consrtuctorIngridients) => {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST,
     })
+    dispatch({
+      type: SHOW_MODAL_ORDER_DETAILS,
+    })
     api
       .getCheckout(makeCheckout(consrtuctorIngridients))
       .then((resp) => {
+        console.log(resp)
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
         })
         dispatch({ type: SET_NUMBER_ORDER, value: resp.order.number })
-        dispatch({
-          type: SHOW_MODAL_ORDER_DETAILS,
-        })
+
         dispatch({
           type: ClEAR_BUN_AND_TOPPING,
         })

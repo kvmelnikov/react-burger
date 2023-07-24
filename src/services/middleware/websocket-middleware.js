@@ -8,6 +8,7 @@ export const websocketMiddleware = (wsActions) => {
       const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions
 
       if (type === wsConnect.type) {
+        console.log(action.payload)
         socket = new WebSocket(action.payload)
         dispatch(wsConnecting())
       }
@@ -23,6 +24,7 @@ export const websocketMiddleware = (wsActions) => {
         socket.onmessage = (event) => {
           const { data } = event
           const parsedData = JSON.parse(data)
+          console.log(parsedData)
           dispatch(onMessage(parsedData))
         }
 

@@ -5,12 +5,21 @@ import ingridientStyle from './ingridient.module.css'
 import propTypes from 'prop-types'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
-
+import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
+import { SET_CURRENT_INGREDIENT } from '../../services/actions/ingridients-action.js'
+import { useDispatch } from 'react-redux'
 const { ingridients__ingridient, ingridients__icon, ingridients__text, link } = ingridientStyle
 
 export default function Ingridient(props) {
+  const dispatch = useDispatch()
+
+  const hanldleOpenModalIngridientDetails = () => {
+    dispatch({ type: SET_CURRENT_INGREDIENT, value: props._id })
+    dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
+  }
+
   const [{ isDrag }, dragRef] = useDrag({
-    type: 'ingridient',
+    type: 'ingredient',
     item: [props],
     collect: (monitor) => ({
       isDrag: monitor.isDragging(),
@@ -25,8 +34,9 @@ export default function Ingridient(props) {
         pathname: `/ingredients/${props._id}`,
       }}
       state={{ background: location }}
+      onClick={() => props.hanldleOpenModalIngridientDetails()}
     >
-      <li onClick={() => props.handleOpenModal(props)} className={`${ingridients__ingridient}`}>
+      <li className={`${ingridients__ingridient}`}>
         {props.count > 0 ? <Counter count={props.count} size='default' extraClass='m-1' /> : ''}
         <img src={props.image} alt={props.name} />
         <div className={`${ingridients__icon} mb-2`}>

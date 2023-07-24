@@ -14,7 +14,7 @@ function Modal(props) {
   const navigate = useNavigate()
   const handleCloseModal = () => {
     dispatch({ type: CLOSE_MODAL })
-    navigate(-1)
+    // navigate()
   }
   const handleEscapeClose = (e) => {
     if (e.key === 'Escape') {

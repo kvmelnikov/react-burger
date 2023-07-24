@@ -27,7 +27,6 @@ export function FeedDetail() {
       return 'Не выполнен'
     }
   }
-  console.log(feedDetailStrucure, Object.keys(feedDetail).length > 0)
 
   const content =
     Object.keys(feedDetail).length > 0 ? (
