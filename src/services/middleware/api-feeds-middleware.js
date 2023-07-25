@@ -43,10 +43,9 @@ export const apiFeedsMiddleware = (apiActions) => {
         setFeedDetailStructure,
       } = apiActions
       if (getDetailFeed.type === type) {
-        const currentFeeds = getState().feed.feeds
-
+        const currentFeeds = action.payload.feeds
         if (currentFeeds.length > 0) {
-          const elementFeeds = currentFeeds.filter((el) => action.payload === el._id)
+          const elementFeeds = currentFeeds.filter((el) => action.payload.id === el._id)
           const orderNumber = elementFeeds[0].number
           dispatch(getDetailRequest())
           fetch(`https://norma.nomoreparties.space/api/orders/${orderNumber}`, {

@@ -3,6 +3,7 @@ import ReportStyle from './report-feeds.module.css'
 
 export function ReportFeeds() {
   const statusOrders = useSelector((state) => state.feed.statusOrders)
+  console.log(statusOrders)
   return (
     <div className={`${ReportStyle.container} mt-25 ml-15`}>
       <div className={`${ReportStyle.headings} mb-6`}>

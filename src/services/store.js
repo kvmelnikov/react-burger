@@ -78,7 +78,7 @@ export const store = configureStore({
     form: formReducer,
     feed: feedReducer,
     feedApi: feedApiReducer,
-    order: orderReducer,
+    orders: orderReducer,
   },
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat(FeedMiddleware).concat(FeedApiMiddleware).concat(OrderMiddleware)

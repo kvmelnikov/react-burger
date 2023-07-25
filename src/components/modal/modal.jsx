@@ -12,13 +12,13 @@ const modalSelector = document.querySelector('#modals')
 function Modal(props) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const handleCloseModal = () => {
-    dispatch({ type: CLOSE_MODAL })
-    // navigate()
-  }
+
+  // const handleCloseModal = () => {
+  //   dispatch({ type: CLOSE_MODAL })
+  // }
   const handleEscapeClose = (e) => {
     if (e.key === 'Escape') {
-      handleCloseModal()
+      props.handleCloseModal()
     }
   }
 
@@ -32,13 +32,17 @@ function Modal(props) {
 
   return createPortal(
     <>
-      <ModalOverlay handleCloseModal={handleCloseModal} />
+      <ModalOverlay handleCloseModal={props.handleCloseModal} />
       <div className={modalStyle.__open}>
         <div className={modalStyle.__container}>
           <div className={`${modalStyle.__heading} text text_type_main-large mt-15`}>
             {props.heading}
             <div className={modalStyle.__close}>
-              <CloseIcon onClick={handleCloseModal} />
+              <CloseIcon
+                onClick={() => {
+                  props.handleCloseModal()
+                }}
+              />
             </div>
           </div>
           {props.children}

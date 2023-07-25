@@ -2,11 +2,11 @@ import { FeedElement } from '../feed-element/feed-element'
 import TapeFeedStyle from './tape-feed.module.css'
 
 import propTypes from 'prop-types'
-import { useEffect, useMemo } from 'react'
+import { Children, useEffect, useMemo } from 'react'
 import { GET_IMAGES } from '../../services/actions/ingridients-action'
 import { useDispatch, useSelector } from 'react-redux'
 
-export function TapeFeed({ feeds }) {
+export function TapeFeed({ feeds, children }) {
   let imagesAndPrice = []
 
   const getImagesAndTotalPrice = (ingredients, idsOrder) => {
@@ -27,7 +27,7 @@ export function TapeFeed({ feeds }) {
 
   return (
     <div>
-      <h2 className={`${TapeFeedStyle.heading} text text_type_main-large mt-10 mb-5`}>Лента заказов</h2>
+      {children}
       <ul className={`${TapeFeedStyle.list}`}>
         {feeds.map((feedElement) => {
           imagesAndPrice = getImagesAndTotalPrice(ingredients, feedElement.ingredients)

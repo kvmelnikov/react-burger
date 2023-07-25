@@ -31,7 +31,6 @@ const orderSlice = createSlice({
       state.connectingError = action.payload
     },
     wssMessage(state, action) {
-      console.log(action.payload)
       state.orders = action.payload.orders
     },
   },

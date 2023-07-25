@@ -9,15 +9,15 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
   let location = useLocation()
   const length = images.length
   const dispatch = useDispatch()
-
   const hanldleOpenModalIngridientDetails = () => {
     dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
   }
+  const path = location.pathname === '/feed' ? `/feed/${id}` : `/profile/orders/${id}`
 
   return (
     <Link
       className={FeedElementStyle.link}
-      to={{ pathname: `/feed/${id}` }}
+      to={{ pathname: `${path}` }}
       state={{ background: location }}
       onClick={hanldleOpenModalIngridientDetails()}
     >

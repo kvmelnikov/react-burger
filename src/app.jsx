@@ -12,6 +12,7 @@ import {
   MainB,
   DetailPageIngredient,
   Feeds,
+  FeedDetailPage,
 } from './pages'
 import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
@@ -24,6 +25,7 @@ import IngridientDetails from './components/ingredient-details/ingredient-detail
 import { getIngredients } from './services/actions/api-action'
 import { FeedDetail } from './components/feed-detail/feed-detail'
 import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
+import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
 
 // const getFormData = (state) => state.form.formProfile;
 
@@ -38,6 +40,7 @@ export default function App() {
   const orders = '/profile/orders'
   const feed = '/feed'
   const feedDetail = 'feed/:id'
+  const orderDetail = '/profile/orders/:id'
 
   const dispatch = useDispatch()
   let location = useLocation()
@@ -58,7 +61,7 @@ export default function App() {
           <Route path={home} element={<ConstructorMain />} />
           <Route path={ingredient} element={<DetailPageIngredient />} />
           <Route path={feed} element={<Feeds />} />
-          <Route path={feedDetail} element={<FeedDetail />} />
+          <Route path={feedDetail} element={<FeedDetailPage />} />
         </Route>
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
@@ -74,6 +77,7 @@ export default function App() {
         <Routes>
           <Route path={ingredient} element={<ModalDetail />} />
           <Route path={feedDetail} element={<ModalFeedDetail />} />
+          <Route path={orderDetail} element={<ModalOrderDetail />} />
         </Routes>
       )}
     </>

@@ -14,7 +14,9 @@ export function Feeds() {
 
   return (
     <>
-      <TapeFeed feeds={feeds} />
+      <TapeFeed feeds={feeds}>
+        <h2 className={`$text text_type_main-large`}>Лента заказов</h2>
+      </TapeFeed>
       <ReportFeeds />
     </>
   )

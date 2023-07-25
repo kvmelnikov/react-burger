@@ -8,7 +8,6 @@ export const websocketMiddleware = (wsActions) => {
       const { wsConnect, wsSendMessage, onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions
 
       if (type === wsConnect.type) {
-        console.log(action.payload)
         socket = new WebSocket(action.payload)
         dispatch(wsConnecting())
       }
