@@ -12,6 +12,8 @@ const initialState = {
 const feedSlice = createSlice({
   name: 'feed',
   initialState,
+  totalToday: 0,
+  total: 0,
   reducers: {
     wsConnecting(state) {
       state.status = WebsocketStatus.CONNECTING
@@ -33,6 +35,8 @@ const feedSlice = createSlice({
       state.connectingError = action.payload
     },
     wssMessage(state, action) {
+      state.totalToday = action.payload.totalToday
+      state.total = action.payload.total
       state.feeds = action.payload.orders
     },
     addStatusOrders(state, action) {

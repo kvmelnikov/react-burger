@@ -3,7 +3,9 @@ import ReportStyle from './report-feeds.module.css'
 
 export function ReportFeeds() {
   const statusOrders = useSelector((state) => state.feed.statusOrders)
-  console.log(statusOrders)
+  const total = useSelector((state) => state.feed.total)
+  const totalToday = useSelector((state) => state.feed.totalToday)
+
   return (
     <div className={`${ReportStyle.container} mt-25 ml-15`}>
       <div className={`${ReportStyle.headings} mb-6`}>
@@ -23,9 +25,9 @@ export function ReportFeeds() {
         </ul>
       </div>
       <p className={`text text_type_main-medium mt-15 mb-0`}>Выполнено за все время:</p>
-      <p className={`text text_type_digits-large`}>{statusOrders.allBurgers}</p>
+      <p className={`text text_type_digits-large`}>{total}</p>
       <p className={`text text_type_main-medium mt-15 mb-0`}>Выполнено за сегодня:</p>
-      <p className={`text text_type_digits-large`}>{statusOrders.todayBurgers}</p>
+      <p className={`text text_type_digits-large`}>{totalToday}</p>
     </div>
   )
 }

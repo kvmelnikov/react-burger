@@ -15,21 +15,17 @@ const checkDate = (date) => {
 export const addStatus = (feeds) => {
   const done = []
   const pending = []
-  let todayBurgers = 0
-  let allBurgers = 0
-
+  console.log(feeds)
   feeds.forEach((element) => {
     if (element.status === 'done') {
       const date = new Date()
       if (checkDate(element.updatedAt) === 'Сегодня') {
-        todayBurgers += 1
       }
       done.push(element.number)
     } else if (element.status === 'pending') {
       pending.push(element.number)
     }
-    allBurgers += 1
   })
 
-  return { done: done, pending: pending, todayBurgers: todayBurgers, allBurgers: allBurgers }
+  return { done: done, pending: pending }
 }
