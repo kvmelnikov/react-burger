@@ -1,4 +1,3 @@
-import { setCookie, getCookie } from '../../utils/cookie'
 export const SET_VALUE_TO_FORM = 'SET_VALUE_TO_FORM'
 
 export const FORGOT_PASS_FORM_SUBMIT = 'FORGOT_PASS_FORM_SUBMIT'
@@ -40,7 +39,7 @@ const createBodyFormRequest = (inputs) => {
   Object.keys(inputs).forEach((key) => {
     data[key] = inputs[key].value
   })
-  console.log(data)
+
   return JSON.stringify(data)
 }
 

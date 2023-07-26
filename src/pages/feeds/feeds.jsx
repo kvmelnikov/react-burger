@@ -13,7 +13,7 @@ export function Feeds() {
 
   useEffect(() => {
     dispatch(addStatusOrders(feeds))
-  }, [])
+  }, [feeds])
 
   return (
     <>

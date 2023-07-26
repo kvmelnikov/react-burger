@@ -6,7 +6,7 @@ import { FeedDetail } from '../feed-detail/feed-detail'
 import { getDetailFeed } from '../../services/feed/feed-api-slice'
 import { useNavigate, useParams } from 'react-router-dom'
 
-function ModalOrderDetail(props) {
+function ModalOrderDetail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const params = useParams()

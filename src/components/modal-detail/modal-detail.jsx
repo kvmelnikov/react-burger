@@ -5,7 +5,7 @@ import Modal from '../modal/modal'
 import IngridientDetails from '../ingredient-details/ingredient-details'
 import { useNavigate } from 'react-router-dom'
 
-function ModalDetail(props) {
+function ModalDetail() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const ingredientDataForModal = useSelector((state) => state.ingredients.currentIngridient)

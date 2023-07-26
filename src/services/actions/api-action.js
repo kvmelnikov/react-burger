@@ -2,8 +2,6 @@ import Api from '../../utils/api/api.js'
 import { SET_INGREDIENTS, CLEAR_INGREDIENTS, SET_CURRENT_INGREDIENT } from './ingridients-action.js'
 import { SHOW_MODAL_ORDER_DETAILS } from './modal-action.js'
 import { SET_NUMBER_ORDER, ClEAR_BUN_AND_TOPPING, ClEAR_NUMBER_ORDER } from './burger-action.js'
-import React from 'react'
-import { compose } from '@reduxjs/toolkit'
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST'
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS'
@@ -15,16 +13,6 @@ export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED'
 const api = new Api({
   baseUrl: 'https://norma.nomoreparties.space/api/',
 })
-
-const getUser = async () => {
-  return await fetch('https://norma.nomoreparties.space/api/auth/user', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      authorization: `${localStorage.getItem('accessToken')}`,
-    },
-  }).then((res) => res.json())
-}
 
 const makeCheckout = (consrtuctorIngridients) => {
   const idToppings = consrtuctorIngridients.toppings.map((el) => {
@@ -68,7 +56,6 @@ export const getOrderNumber = (consrtuctorIngridients) => {
     api
       .getCheckout(makeCheckout(consrtuctorIngridients))
       .then((resp) => {
-        console.log(resp)
         dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
         })

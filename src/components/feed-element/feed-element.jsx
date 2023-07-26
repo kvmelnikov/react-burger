@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
 import { useDispatch } from 'react-redux'
+import propTypes from 'prop-types'
 
 export function FeedElement({ images, createdAt, number, name, totalPrice, id }) {
   let location = useLocation()
@@ -59,4 +60,13 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
       </div>
     </Link>
   )
+}
+
+FeedElement.propTypes = {
+  images: propTypes.array,
+  createdAt: propTypes.string,
+  number: propTypes.number,
+  name: propTypes.string,
+  totalPrice: propTypes.number,
+  id: propTypes.string,
 }

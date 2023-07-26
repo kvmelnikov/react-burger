@@ -1,13 +1,11 @@
-import { useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
+import { useMemo } from 'react'
+import { useDispatch } from 'react-redux'
 import Style from './feed-detail.module.css'
-import { getDetailFeed } from '../../services/feed/feed-api-slice'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
+import propTypes from 'prop-types'
 
 export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, feedDetailStrucure }) {
   const dispatch = useDispatch()
-  console.log(feedDetail)
   const checkStatusBurger = () => {
     if (feedDetail.status === 'done') {
       return 'Выполнен'
@@ -67,4 +65,11 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
   }, [feedDetail, feedDetailRequest, feedDetailFailed])
 
   return <div className={`${Style.container}`}>{content}</div>
+}
+
+FeedDetail.propTypes = {
+  feedDetailFailed: propTypes.bool,
+  feedDetailRequest: propTypes.bool,
+  feedDetail: propTypes.object,
+  feedDetailStrucure: propTypes.object,
 }

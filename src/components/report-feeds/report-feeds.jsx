@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux'
 import ReportStyle from './report-feeds.module.css'
+import propTypes from 'prop-types'
 
 export function ReportFeeds({ statusOrders, total, totalToday }) {
-  console.log(statusOrders)
   return (
     <div className={`${ReportStyle.container} mt-25 ml-15`}>
       <div className={`${ReportStyle.headings} mb-6`}>
@@ -35,4 +35,10 @@ export function ReportFeeds({ statusOrders, total, totalToday }) {
       <p className={`text text_type_digits-large`}>{totalToday}</p>
     </div>
   )
+}
+
+ReportFeeds.propTypes = {
+  statusOrders: propTypes.object,
+  total: propTypes.number,
+  totalToday: propTypes.number,
 }
