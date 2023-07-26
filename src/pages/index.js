@@ -11,6 +11,7 @@ import { MainB } from './main-b'
 import { DetailPageIngredient } from './detail-page-ingredient'
 import { Feeds } from './feeds/feeds'
 import { FeedDetailPage } from './feed-detail-page'
+import { OrderDetailPage } from './order-detail-page'
 
 export {
   ConstructorMain,
@@ -26,4 +27,5 @@ export {
   DetailPageIngredient,
   Feeds,
   FeedDetailPage,
+  OrderDetailPage,
 }

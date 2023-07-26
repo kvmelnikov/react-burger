@@ -62,7 +62,6 @@ export const apiFeedsMiddleware = (apiActions) => {
               const orderIngredients = res.orders[0].ingredients
               dispatch(getDetailRequestSuccess())
               dispatch(setFeedDetail(res.orders[0]))
-              console.log(modificateOrder(currentIngredients, orderIngredients))
               dispatch(setFeedDetailStructure(modificateOrder(currentIngredients, orderIngredients)))
             })
             .catch((err) => {

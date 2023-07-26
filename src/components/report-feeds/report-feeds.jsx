@@ -1,11 +1,8 @@
 import { useSelector } from 'react-redux'
 import ReportStyle from './report-feeds.module.css'
 
-export function ReportFeeds() {
-  const statusOrders = useSelector((state) => state.feed.statusOrders)
-  const total = useSelector((state) => state.feed.total)
-  const totalToday = useSelector((state) => state.feed.totalToday)
-
+export function ReportFeeds({ statusOrders, total, totalToday }) {
+  console.log(statusOrders)
   return (
     <div className={`${ReportStyle.container} mt-25 ml-15`}>
       <div className={`${ReportStyle.headings} mb-6`}>
@@ -15,12 +12,20 @@ export function ReportFeeds() {
       <div className={`${ReportStyle.numbers}`}>
         <ul className={`${ReportStyle.list}`}>
           {statusOrders?.done?.map((element) => {
-            return <li className={`${ReportStyle.number} text text_type_digits-default`}>{element}</li>
+            return (
+              <li key={element} className={`${ReportStyle.number} text text_type_digits-default`}>
+                <span>{element}</span>
+              </li>
+            )
           })}
         </ul>
         <ul className={`${ReportStyle.list}`}>
           {statusOrders?.pending?.map((element) => {
-            return <li className={`${ReportStyle.number} text text_type_digits-default`}>{element}</li>
+            return (
+              <li key={element} className={`${ReportStyle.number} text text_type_digits-default`}>
+                <span>{element}</span>
+              </li>
+            )
           })}
         </ul>
       </div>

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { WebsocketStatus } from '../../utils/websocket'
-import { addStatus } from './feed-update'
+import { addStatus } from './feed-utils'
 
 const initialState = {
   status: WebsocketStatus.OFFLINE,

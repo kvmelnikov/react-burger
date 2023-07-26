@@ -23,7 +23,6 @@ export const websocketMiddleware = (wsActions) => {
         socket.onmessage = (event) => {
           const { data } = event
           const parsedData = JSON.parse(data)
-          console.log(parsedData)
           dispatch(onMessage(parsedData))
         }
 

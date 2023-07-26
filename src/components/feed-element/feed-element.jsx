@@ -7,17 +7,15 @@ import { useDispatch } from 'react-redux'
 
 export function FeedElement({ images, createdAt, number, name, totalPrice, id }) {
   let location = useLocation()
-  const length = images.length
   const dispatch = useDispatch()
   const hanldleOpenModalIngridientDetails = () => {
     dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
   }
-  const path = location.pathname === '/feed' ? `/feed/${id}` : `/profile/orders/${id}`
 
   return (
     <Link
       className={FeedElementStyle.link}
-      to={{ pathname: `${path}` }}
+      to={{ pathname: `${location.pathname === '/feed' ? `/feed/${id}` : `/profile/orders/${id}`}` }}
       state={{ background: location }}
       onClick={hanldleOpenModalIngridientDetails()}
     >
@@ -45,9 +43,11 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
                 </li>
               )
             })}
-            {length > 6 ? (
-              <li className={FeedElementStyle.list_item} style={{ zIndex: length }}>
-                <span style={{ left: 250 }} className={`${FeedElementStyle.cover_image}`}>{`+${length - 6}`}</span>
+            {images.length > 6 ? (
+              <li className={FeedElementStyle.list_item} style={{ zIndex: images.length }}>
+                <span style={{ left: 250 }} className={`${FeedElementStyle.cover_image}`}>{`+${
+                  images.length - 6
+                }`}</span>
               </li>
             ) : null}
           </ul>
