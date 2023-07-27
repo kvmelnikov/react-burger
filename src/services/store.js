@@ -81,7 +81,7 @@ export const store = configureStore({
     orders: orderReducer,
   },
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(FeedMiddleware).concat(FeedApiMiddleware).concat(OrderMiddleware)
+    return getDefaultMiddleware().concat(FeedMiddleware, FeedApiMiddleware, OrderMiddleware)
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

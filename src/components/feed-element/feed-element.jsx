@@ -33,7 +33,7 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
                 <li
                   className={FeedElementStyle.list_item}
                   style={{ zIndex: index, position: index === 5 ? 'absolute' : '' }}
-                  key={uuidv4()}
+                  key={index}
                 >
                   <img
                     style={{ left: index * 50 }}
@@ -63,7 +63,7 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
 }
 
 FeedElement.propTypes = {
-  images: propTypes.array,
+  images: propTypes.arrayOf(propTypes.string),
   createdAt: propTypes.string,
   number: propTypes.number,
   name: propTypes.string,

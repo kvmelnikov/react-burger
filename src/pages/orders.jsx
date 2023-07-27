@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux'
 
 export const Orders = () => {
   const orders = useSelector((state) => state.orders.orders)
-
+  const reverseOrders = [...orders].reverse()
   return (
     <>
-      <TapeFeed feeds={orders} />
+      <TapeFeed feeds={reverseOrders} />
     </>
   )
 }

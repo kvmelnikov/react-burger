@@ -140,7 +140,7 @@ function BurgerConstructor() {
           <ul className={`${toppings}`}>
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, index) => {
-                return <Topping key={uuidv4()} item={topping} index={index} {...topping} />
+                return <Topping key={index} item={topping} index={index} {...topping} />
               })
             ) : (
               <div></div>

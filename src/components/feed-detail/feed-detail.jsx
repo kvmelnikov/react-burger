@@ -19,7 +19,6 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
       <>
         <span className={`${Style.number} mb-10 text text_type_digits-default`}>#{feedDetail.number}</span>
         <p className={`${Style.line} mb-3 text text_type_main-medium`}>{feedDetail.name}</p>
-        {/* <span className={`${Style.line} mb-15 text text_type_main-default`}>{checkStatusBurger()}</span> */}
         <span className={`${Style.line} mb-6 text text_type_main-medium`}>Состав:</span>
         <ul className={`${Style.list}`}>
           {feedDetailStrucure.ingredients.map((el) => {

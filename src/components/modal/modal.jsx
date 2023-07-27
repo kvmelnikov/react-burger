@@ -56,6 +56,6 @@ function Modal(props) {
 export default Modal
 
 Modal.propTypes = {
-  handleCloseModal: propTypes.object,
+  handleCloseModal: propTypes.function,
   heading: propTypes.string,
 }
