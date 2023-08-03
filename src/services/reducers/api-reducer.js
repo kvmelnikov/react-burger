@@ -1,4 +1,3 @@
-
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
@@ -6,67 +5,64 @@ import {
   GET_ORDER_NUMBER_REQUEST,
   GET_ORDER_NUMBER_SUCCESS,
   GET_ORDER_NUMBER_FAILED,
-
-} from "../actions/api-action";
-
+} from '../actions/api-action'
 
 const initialState = {
   ingredientsRequest: false,
-  ingredientsFailed: false,  
+  ingredientsFailed: false,
   orderRequest: false,
   orderRequestFailed: false,
+  feedDetailRequest: false,
+  feeDetailFailed: false,
+  feedDetail: {},
 }
- 
-
 
 export const apiReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
-        ingridientsRequest: true
-      }  
+        ingridientsRequest: true,
+      }
     }
     case GET_INGREDIENTS_FAILED: {
-        return {
-            ...state,
-            ingridientsFailed: true,
-            ingridientsRequest: false
-        }
+      return {
+        ...state,
+        ingridientsFailed: true,
+        ingridientsRequest: false,
+      }
     }
     case GET_INGREDIENTS_SUCCESS: {
-        return {
-            ...state,
-            ingridientsFailed: false,
-            ingridientsRequest: false,
-           
-        }
+      return {
+        ...state,
+        ingridientsFailed: false,
+        ingridientsRequest: false,
+      }
     }
     case GET_ORDER_NUMBER_REQUEST: {
       return {
         ...state,
-        orderRequest: true
-      }  
+        orderRequest: true,
+      }
     }
     case GET_ORDER_NUMBER_FAILED: {
-        return {
-            ...state,
-            orderRequestFailed: true,
-            orderRequest: false
-        }
+      return {
+        ...state,
+        orderRequestFailed: true,
+        orderRequest: false,
+      }
     }
     case GET_ORDER_NUMBER_SUCCESS: {
-        return {
-            ...state,
-            orderRequestFailed: false,
-            orderRequest: false,
-            numberOrder: action.value,
-       
-        }
+      return {
+        ...state,
+        orderRequestFailed: false,
+        orderRequest: false,
+        numberOrder: action.value,
+      }
     }
 
-  default: {
-    return state;
-  }
+    default: {
+      return state
+    }
   }
 }

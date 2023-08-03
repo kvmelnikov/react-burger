@@ -1,11 +1,11 @@
-.__open{
+.__open {
   display: flex;
-  visibility:visible;
+  visibility: visible;
   position: fixed;
+  z-index: 100;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-
 }
 
 .__close {
@@ -13,7 +13,7 @@
   right: 0;
 }
 
-.__close:hover{
+.__close:hover {
   cursor: pointer;
 }
 
@@ -28,10 +28,12 @@
 }
 
 .__container {
+  z-index: 100;
   position: relative;
   width: 720px;
-  min-height:200px;
-  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  min-height: 200px;
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04),
+    0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
-  background: #1C1C21;
+  background: #1c1c21;
 }
