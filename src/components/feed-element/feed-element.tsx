@@ -1,15 +1,30 @@
 import FeedElementStyle from './feed-element.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
 import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
 import { useDispatch } from 'react-redux'
 import propTypes from 'prop-types'
+import { FC, MouseEvent } from 'react'
 
-export function FeedElement({ images, createdAt, number, name, totalPrice, id }) {
+type TImage = {
+  src: string
+  alt: string
+}
+
+interface IFeedElement {
+  images: TImage[]
+  createdAt: Date
+  number: number
+  name: string
+  totalPrice: number
+  id: number
+}
+
+
+export const FeedElement: FC<IFeedElement> = ({ images, createdAt, number, name, totalPrice, id }) => {
   let location = useLocation()
   const dispatch = useDispatch()
-  const hanldleOpenModalIngridientDetails = () => {
+  const hanldleOpenModalIngridientDetails = (event: MouseEvent<HTMLElement>) => {
     dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
   }
 
@@ -18,7 +33,7 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
       className={FeedElementStyle.link}
       to={{ pathname: `${location.pathname === '/feed' ? `/feed/${id}` : `/profile/orders/${id}`}` }}
       state={{ background: location }}
-      onClick={hanldleOpenModalIngridientDetails()}
+      onClick={hanldleOpenModalIngridientDetails}
     >
       <div className={`${FeedElementStyle.box} mb-4`}>
         <div className={`${FeedElementStyle.line} mt-6`}>
@@ -28,11 +43,11 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
         <p className={`${FeedElementStyle.line} mt-6 text text_type_main-medium`}>{name}</p>
         <div className={`${FeedElementStyle.line} mt-6 mb-6`}>
           <ul className={`${FeedElementStyle.list}`}>
-            {images.slice(0, 6).map((image, index) => {
+            {images.slice(0, 6).map((image, index ) => {
               return (
                 <li
-                  className={FeedElementStyle.list_item}
-                  style={{ zIndex: index, position: index === 5 ? 'absolute' : '' }}
+                  className={index === 5 ? FeedElementStyle.list_item_absolute : FeedElementStyle.list_item }
+                  style={{ zIndex: index }}
                   key={index}
                 >
                   <img
@@ -62,11 +77,4 @@ export function FeedElement({ images, createdAt, number, name, totalPrice, id })
   )
 }
 
-FeedElement.propTypes = {
-  images: propTypes.arrayOf(propTypes.string),
-  createdAt: propTypes.string,
-  number: propTypes.number,
-  name: propTypes.string,
-  totalPrice: propTypes.number,
-  id: propTypes.string,
-}
+
