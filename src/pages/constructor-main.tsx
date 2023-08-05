@@ -1,8 +1,8 @@
 import React from 'react'
 import mainConstructorStyle from './constructor-main.module.css'
-import AppHeader from '../components/app-header/app-header.jsx'
+// import AppHeader from '../components/app-header/app-header.jsx'
 import BurgerIngridients from '../components/burger-ingridients/burger-ingridients.jsx'
-import BurgerConstuctor from '../components/burger-constructor/burger-constructor.jsx'
+import BurgerConstuctor from '../components/burger-constructor/burger-constructor'
 import { useDispatch } from 'react-redux'
 import { SET_MODAL_SELECTOR } from '../services/actions/modal-action'
 import { getIngredients } from '../services/actions/api-action'
@@ -14,10 +14,6 @@ import { setFormValue, getUserRequest } from '../services/actions/form-action'
 
 export function ConstructorMain() {
   const dispatch = useDispatch()
-
-  // React.useEffect(() => {
-  //   dispatch({ type: SET_MODAL_SELECTOR, value: modalSelector });
-  // }, []);
 
   return (
     <DndProvider backend={HTML5Backend}>

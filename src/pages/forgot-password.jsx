@@ -11,6 +11,7 @@ import { setFormValue } from "../services/actions/form-action";
 import { forgotPassRequest } from "../services/actions/form-action";
 
 import React from "react";
+
 const getFormData = (state) => state.form.formForgotPassword;
 const getFormProfile = (state) => state.form.formProfile;
 

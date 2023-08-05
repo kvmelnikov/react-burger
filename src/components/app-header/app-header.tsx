@@ -51,7 +51,7 @@ function AppHeader() {
             </NavLink>
           </li>
         </ul>
-        <NavLink to="/" className={`${header__logo} pt-6 pb-6`} href="#">
+        <NavLink to="/" className={`${header__logo} pt-6 pb-6`} >
           <Logo />
         </NavLink>
         <ul className={`${header__icons} ${header__icons_type_user}`}>

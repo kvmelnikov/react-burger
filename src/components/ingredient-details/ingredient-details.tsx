@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, FC } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingredientDetailsStyles from './ingredient-details.module.css'
 import Ingridient from '../ingridient/ingridient.jsx'
@@ -7,11 +7,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { GET_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/ingridients-action'
 import { useParams } from 'react-router-dom'
 import { getIngredients } from '../../services/actions/api-action'
+import { IIngridientDetails } from '../../types/types'
 
-function IngridientDetails(props) {
+export  const  IngridientDetails: FC<IIngridientDetails> = (props) => {
   const dispatch = useDispatch()
   const { id } = useParams()
-  // console.log(props);
 
   return (
     <div className={ingredientDetailsStyles.details__container}>
@@ -55,12 +55,4 @@ function IngridientDetails(props) {
   )
 }
 
-export default IngridientDetails
 
-IngridientDetails.propTypes = {
-  calories: propTypes.number,
-  fat: propTypes.number,
-  proteins: propTypes.number,
-  image_large: propTypes.string,
-  name: propTypes.string,
-}

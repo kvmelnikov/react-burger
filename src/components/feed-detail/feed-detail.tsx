@@ -1,10 +1,11 @@
-import { useMemo } from 'react'
+import { DetailedHTMLProps, FC, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import Style from './feed-detail.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import propTypes from 'prop-types'
+import { IIFeedDetail } from '../../types/types'
 
-export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, feedDetailStrucure }) {
+export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailRequest, feedDetail, feedDetailStrucure }) =>{
   const dispatch = useDispatch()
   const checkStatusBurger = () => {
     if (feedDetail.status === 'done') {
@@ -13,7 +14,7 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
       return 'Не выполнен'
     }
   }
-
+  console.log(feedDetailStrucure)
   const contentDetail =
     Object.keys(feedDetail).length > 0 ? (
       <>
@@ -32,7 +33,7 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
                   <span className={`${Style.currency_text} mr-2 text text_type_digits-default`}>
                     {el.quantity}x{el.price}
                   </span>
-                  <CurrencyIcon className={`${Style.currency_icon}`} type='primary' />
+                  <CurrencyIcon type='primary' />
                 </div>
               </li>
             )
@@ -45,7 +46,7 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
           />
           <div className={`${Style.currency}`}>
             <p className={`text text_type_digits-default mr-2`}>{feedDetailStrucure.sumIngredients}</p>
-            <CurrencyIcon className={`${Style.currency_icon}`} type='primary' />
+            <CurrencyIcon  type='primary' />
           </div>
         </div>
       </>
@@ -66,9 +67,3 @@ export function FeedDetail({ feedDetailFailed, feedDetailRequest, feedDetail, fe
   return <div className={`${Style.container}`}>{content}</div>
 }
 
-FeedDetail.propTypes = {
-  feedDetailFailed: propTypes.bool,
-  feedDetailRequest: propTypes.bool,
-  feedDetail: propTypes.object,
-  feedDetailStrucure: propTypes.object,
-}

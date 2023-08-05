@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import IngridientDetails from "../components/ingredient-details/ingredient-details";
+import {IngridientDetails} from "../components/ingredient-details/ingredient-details";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { getIngredients } from "../services/actions/api-action";

@@ -3,7 +3,6 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { Link, useLocation } from 'react-router-dom'
 import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
 import { useDispatch } from 'react-redux'
-import propTypes from 'prop-types'
 import { FC, MouseEvent } from 'react'
 
 type TImage = {

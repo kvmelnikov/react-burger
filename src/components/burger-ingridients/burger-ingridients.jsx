@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css'
 import Ingridient from '../ingridient/ingridient.jsx'
-import IngridientDetails from '../ingredient-details/ingredient-details.jsx'
+import IngridientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal'
 
 import { useSelector, useDispatch } from 'react-redux'

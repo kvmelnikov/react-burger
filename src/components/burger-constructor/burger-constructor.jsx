@@ -9,7 +9,6 @@ import { useDrop } from 'react-dnd'
 import { getOrderNumber } from '../../services/actions/api-action'
 import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from '../../services/actions/burger-action'
 import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action'
-import { v4 as uuidv4 } from 'uuid'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CLOSE_MODAL } from '../../services/actions/modal-action'
 

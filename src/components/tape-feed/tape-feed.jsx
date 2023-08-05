@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 export function TapeFeed({ feeds, children }) {
   let imagesAndPrice = []
-
+ // console.log(feeds, children)
   const getImagesAndTotalPrice = (ingredients, idsOrder) => {
     const images = []
     let totalPrice = 0

@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { CLOSE_MODAL } from '../../services/actions/modal-action'
 import Modal from '../modal/modal'
-import IngridientDetails from '../ingredient-details/ingredient-details'
+import {IngridientDetails} from '../ingredient-details/ingredient-details'
 import { useNavigate } from 'react-router-dom'
 
 function ModalDetail() {

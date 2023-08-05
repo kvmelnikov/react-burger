@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC, KeyboardEvent } from 'react'
 import modalStyle from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { createPortal } from 'react-dom'
@@ -7,28 +7,19 @@ import { useSelector, useDispatch } from 'react-redux'
 import { CLOSE_MODAL } from '../../services/actions/modal-action'
 import { useNavigate } from 'react-router-dom'
 import propTypes from 'prop-types'
+import { IModal } from '../../types/types-modal'
 const modalSelector = document.querySelector('#modals')
 
-function Modal(props) {
+const Modal:FC<IModal> =(props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  
 
-  // const handleCloseModal = () => {
-  //   dispatch({ type: CLOSE_MODAL })
-  // }
-  const handleEscapeClose = (e) => {
+  const handleEscapeClose = (e: KeyboardEvent<HTMLElement>):void => {
     if (e.key === 'Escape') {
       props.handleCloseModal()
     }
   }
-
-  React.useEffect(() => {
-    document.addEventListener('keydown', handleEscapeClose)
-
-    return () => {
-      document.removeEventListener('keydown', handleEscapeClose)
-    }
-  }, [])
 
   return createPortal(
     <>
@@ -39,9 +30,8 @@ function Modal(props) {
             {props.heading}
             <div className={modalStyle.__close}>
               <CloseIcon
-                onClick={() => {
-                  props.handleCloseModal()
-                }}
+              type="primary" 
+                onClick={ props.handleCloseModal}
               />
             </div>
           </div>
@@ -49,13 +39,9 @@ function Modal(props) {
         </div>
       </div>
     </>,
-    modalSelector,
+    modalSelector  as HTMLElement,
   )
 }
 
 export default Modal
 
-Modal.propTypes = {
-  handleCloseModal: propTypes.function,
-  heading: propTypes.string,
-}
