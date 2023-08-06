@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import {
   ConstructorMain,
-  Login,
-  ForgotPassword,
-  Register,
-  ResetPassword,
-  ProfileForm,
-  Orders,
-  Order,
-  Profile,
+  // Login,
+  // ForgotPassword,
+  // Register,
+  // ResetPassword,
+  // ProfileForm,
+  // Orders,
+  // Order,
+  // Profile,
   MainB,
-  DetailPageIngredient,
-  Feeds,
-  FeedDetailPage,
-  OrderDetailPage,
+  // DetailPageIngredient,
+  // Feeds,
+  // FeedDetailPage,
+  // OrderDetailPage,
 } from './pages'
 import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
@@ -22,13 +22,10 @@ import { OnlyUnAuthRoute } from './components/OnlyUnAuthRoute'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { getUserRequest, RESET_USER_FORM } from './services/actions/form-action'
-import IngridientDetails from './components/ingredient-details/ingredient-details'
-import { getIngredients } from './services/actions/api-action'
-import { FeedDetail } from './components/feed-detail/feed-detail'
+import { getIngredients } from './services/constructor/constructor-api-slice'  
 import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
 
-// const getFormData = (state) => state.form.formProfile;
 
 export default function App() {
   const home = '/'
@@ -47,24 +44,26 @@ export default function App() {
   let location = useLocation()
 
   const background = location.state && location.state.background
+  const  baseUrl = 'https://norma.nomoreparties.space/api/'
 
   useEffect(() => {
-    dispatch(getIngredients())
-    if (localStorage.getItem('accessToken')) {
-      dispatch(getUserRequest())
-    }
+    dispatch(getIngredients(baseUrl))
+    // if (localStorage.getItem('accessToken')) {
+    //   dispatch(getUserRequest())
+    // }
   }, [location])
 
   return (
     <>
-      <Routes location={background || location}>
+      {/* <Routes location={background || location}> */}
+        <Routes>
         <Route path={home} element={<MainB />}>
           <Route path={home} element={<ConstructorMain />} />
-          <Route path={ingredient} element={<DetailPageIngredient />} />
+          {/* <Route path={ingredient} element={<DetailPageIngredient />} />
           <Route path={feed} element={<Feeds />} />
-          <Route path={feedDetail} element={<FeedDetailPage />} />
+          <Route path={feedDetail} element={<FeedDetailPage />} /> */}
         </Route>
-        <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
+        {/* <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
         <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
@@ -72,16 +71,16 @@ export default function App() {
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
           <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} />
-        </Route>
+        </Route> */}
       </Routes>
-
-      {background && (
-        <Routes>
-          <Route path={ingredient} element={<ModalDetail />} />
-          <Route path={feedDetail} element={<ModalFeedDetail />} />
-          <Route path={orderDetail} element={<ModalOrderDetail />} />
-        </Routes>
-      )}
+{/* 
+      // {background && (
+      //   <Routes>
+      //     <Route path={ingredient} element={<ModalDetail />} />
+      //     <Route path={feedDetail} element={<ModalFeedDetail />} />
+      //     <Route path={orderDetail} element={<ModalOrderDetail />} />
+      //   </Routes>
+      // )} */}
     </>
   )
 }

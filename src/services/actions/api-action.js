@@ -31,6 +31,7 @@ export const getIngredients = (id) => {
       .getIngredients()
       .then((data) => {
         data.data.map((el) => {
+          console.log(el)
           return (el.count = 0)
         })
         dispatch({ type: GET_INGREDIENTS_SUCCESS, value: data.data })
