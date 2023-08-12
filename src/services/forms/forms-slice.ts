@@ -1,7 +1,7 @@
 import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { stat } from 'fs'
 import { Writable } from 'stream'
-import { IFormsState, IInputsFormProfile } from '../../types/types-forms-slice'
+import { IFormsState, IInputsFormLogin, IInputsFormProfile, IInputsKeyAccess } from '../../types/types-forms-slice'
 import { RootState } from '../store'
 import thunk from 'redux-thunk'
 
@@ -18,14 +18,44 @@ interface IDictData {
   [key: string]: string
 }
 
-const createBodyFormRequest = (inputs: IInputsFormProfile) => {
+const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin) => {
   let data: IDictData = {}
 
   Object.keys(inputs).forEach((key) => {
-    data[key] = inputs[key].value
+    type ObjectKey = keyof typeof inputs
+    const field = key as ObjectKey
+
+    data[field] = inputs[field].value
   })
   return JSON.stringify(data)
 }
+
+export const LoginUserRequest = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
+  'forms/LoginUserRequest',
+  async (_, thunkAPI) => {
+    const response = await fetch('https://norma.nomoreparties.space/api/auth/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: createBodyFormRequest(thunkAPI.getState().form.formLogin.inputs),
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        if (!res.success) {
+          return thunkAPI.rejectWithValue(res.message)
+        } else {
+          localStorage.setItem('accessToken', res.accessToken)
+          localStorage.setItem('refreshToken', res.refreshToken)
+          return res
+        }
+      })
+
+    return response.user
+  },
+)
 
 export const registrationUser = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
   'forms/registrationUser',
@@ -59,17 +89,18 @@ export const getUserRequest = createAsyncThunk<TUser, undefined, { rejectValue: 
   'forms/getUserRequest',
   async function (_, { rejectWithValue }) {
     try {
-      const res = await fetch('https://norma.nomoreparties.space/api/auth/user', {
+      const response = await fetch('https://norma.nomoreparties.space/api/auth/user', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           authorization: `${localStorage.getItem('accessToken')}`,
         },
       })
-      if (!res.ok) {
-        throw new Error(res.statusText)
+      if (!response.ok) {
+        throw new Error(response.statusText)
       }
-      return res.json()
+      console.log(response, 'responseresponse')
+      return response.json()
     } catch (error: any) {
       return rejectWithValue(error.message)
     }
@@ -142,6 +173,13 @@ const formsSlice = createSlice({
         state.formRegister.inputs[field].value = action.payload.value
       }
     },
+    setFormValueLogin: (state, action: PayloadAction<IFormDict>) => {
+      type ObjectKey = keyof typeof state.formLogin.inputs
+      const field = action.payload.field as ObjectKey
+      if (state.formLogin.inputs[field]) {
+        state.formLogin.inputs[field].value = action.payload.value
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -165,6 +203,15 @@ const formsSlice = createSlice({
       .addCase(registrationUser.rejected, (state, action) => {
         state.formRegister.request = false
         state.formRegister.failed = true
+      })
+      .addCase(LoginUserRequest.pending, (state, action) => {
+        state.formLogin.request = true
+      })
+      .addCase(LoginUserRequest.fulfilled, (state, action) => {
+        state.formLogin.request = false
+        state.formLogin.failed = false
+        state.formProfile.inputs.email.value = action.payload.email
+        state.formProfile.inputs.name.value = action.payload.name
       })
   },
 })
@@ -192,5 +239,5 @@ const formsSlice = createSlice({
 //     return state
 // },
 
-export const { setFormValueRegister } = formsSlice.actions
+export const { setFormValueRegister, setFormValueLogin } = formsSlice.actions
 export default formsSlice.reducer

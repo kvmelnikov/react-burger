@@ -1,49 +1,48 @@
 import { Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import AppHeader from '../components/app-header/app-header'
 import { Form } from '../components/form/form'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import StyleForm from '../components/form/form.module.css'
-import React from 'react'
-// import { useSelector, useDispatch } from "react-redux";
-import { registrationUser, setFormValueRegister } from '../services/forms/forms-slice'
-// import { registrationUser } from "../services/actions/form-action";
-import { Link, Navigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+
+// import { getUserRequest, setFormValue, updateUserRequest } from '../services/actions/form-action'
+
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
+import { LoginUserRequest, setFormValueLogin } from '../services/forms/forms-slice'
 
-// const getFormData = (state) => state.form.;
-// const getFormProfile = (state) => state.form.formProfile;
+// const getFormData = (state) => state.form.formLogin
+// const getFormProfile = (state) => state.form.formProfile
 
-export function Register() {
+export function Login() {
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location.state?.from || '/'
 
   const {
     inputs: {
       email: { value: email },
       password: { value: password },
-      name: { value: name },
     },
-  } = useAppSelector((state) => state.form.formRegister)
+    request,
+    failed,
+  } = useAppSelector((state) => state.form.formLogin)
 
   // const {
   //   inputs: {
   //     name: { value: nameUser },
   //   },
-  // } = useAppSelector(getFormProfile);
+  // } = useAppSelector((state)=> state.form.formProfile)
 
-  const [typePass, setTypePass] = React.useState<'password' | 'text'>('password')
-
-  const onIconClick = () => {
-    setTypePass(() => {
-      return typePass === 'password' ? 'text' : 'password'
-    })
-  }
+  const [typePass, setTypePass] = React.useState<'text' | 'password'>('password')
 
   const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLButtonElement
     dispatch(
-      setFormValueRegister({
+      setFormValueLogin({
         field: target.name,
         value: target.value,
-        form: 'formRegister',
+        form: 'formLogin',
       }),
     )
   }
@@ -51,52 +50,34 @@ export function Register() {
   const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLButtonElement
     dispatch(
-      setFormValueRegister({
+      setFormValueLogin({
         field: target.name,
         value: target.value,
-        form: 'formRegister',
+        form: 'formLogin',
       }),
     )
   }
 
-  const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLButtonElement
-    dispatch(
-      setFormValueRegister({
-        field: target.name,
-        value: target.value,
-        form: 'formRegister',
-      }),
-    )
+  const onIconClick = () => {
+    setTypePass(() => {
+      return typePass === 'password' ? 'text' : 'password'
+    })
   }
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(registrationUser())
+    dispatch(LoginUserRequest())
+    if (!request && !failed) {
+      navigate(from, { replace: true })
+    }
   }
-
-  // if (nameUser) {
-  //   return <Navigate to="/" replace />;
-  // }
 
   return (
     <>
       <AppHeader />
       <form onSubmit={onFormSubmit}>
-        <Form heading='Регистрация'>
-          <Input
-            type={'text'}
-            placeholder={'Имя'}
-            name={'name'}
-            value={name}
-            error={false}
-            errorText={'Ошибка'}
-            size={'default'}
-            extraClass='mt-6'
-            onChange={onChangeName}
-          />
+        <Form heading='Вход'>
           <EmailInput onChange={onChangeEmail} value={email} name={'email'} isIcon={false} extraClass='mt-6' />
-
           <Input
             type={typePass}
             placeholder={'placeholder'}
@@ -110,13 +91,21 @@ export function Register() {
             size={'default'}
             extraClass='mt-6'
           />
+
           <Button htmlType='submit' extraClass='mt-6'>
-            Зарегистрироваться
+            Войти
           </Button>
+
           <p className='text text_type_medium mt-20'>
-            Уже зарегистрированы?
-            <Link to={`/login`} className={`${StyleForm.link} text text_type_medium`}>
-              Войти
+            Вы — новый пользователь?
+            <Link to={`/register`} className={`${StyleForm.link} text text_type_medium`}>
+              Зарегистрироваться
+            </Link>
+          </p>
+          <p className='text text_type_medium mt-4'>
+            Забыли пароль?
+            <Link to={`/forgot-password`} className={`${StyleForm.link} text text_type_medium`}>
+              Восстановить пароль
             </Link>
           </p>
         </Form>
