@@ -8,7 +8,7 @@ import { Form } from "../components/form/form";
 import StyleForm from "../components/form/form.module.css";
 import React from "react";
 // import { useSelector, useDispatch } from "react-redux";
-import { setFormValueRegister } from "../services/forms/forms-slice";
+import { registrationUser, setFormValueRegister } from "../services/forms/forms-slice";
 // import { registrationUser } from "../services/actions/form-action";
 import { Link, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../utils/hooks/hook";
@@ -22,7 +22,7 @@ export function Register() {
   const {
     inputs: {
       email: { value: email },
-      pass: { value: pass },
+      password: { value: password },
       name: { value: name },
     },
   } = useAppSelector((state)=> state.form.formRegister);
@@ -35,7 +35,7 @@ export function Register() {
   //   },
   // } = useAppSelector(getFormProfile);
 
-  const [typePass, setTypePass] = React.useState("password");
+  const [typePass, setTypePass] = React.useState<"password" | "text">("password");
 
   const onIconClick = () => {
     setTypePass(() => {
@@ -78,7 +78,7 @@ export function Register() {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   // dispatch(registrationUser());
+    dispatch(registrationUser());
   };
 
   // if (nameUser) {
@@ -110,12 +110,12 @@ export function Register() {
           />
 
           <Input
-            type={"password"}
+            type={typePass}
             placeholder={"placeholder"}
             onChange={onChangePass}
             icon={"ShowIcon"}
-            value={pass}
-            name={"pass"}
+            value={password}
+            name={"password"}
             error={false}
             onIconClick={onIconClick}
             errorText={"Ошибка"}

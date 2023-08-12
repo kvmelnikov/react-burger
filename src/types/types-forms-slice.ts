@@ -4,7 +4,7 @@ interface IInputsFormForgotPassword {
  }
  
  interface IInputsFormLogin extends IInputsFormForgotPassword {
-     pass: { value: string }
+     password: { value: string }
  
  }
  
@@ -13,7 +13,7 @@ interface IInputsFormForgotPassword {
      token: { value: string }
  }
  
- interface IInputsFormProfile extends IInputsFormLogin {
+ export interface IInputsFormProfile extends IInputsFormLogin {
      [name: string]: { value: string }
  }
  

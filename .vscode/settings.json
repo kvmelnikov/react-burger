@@ -16,7 +16,7 @@
     "cSpell.words": ["antd", "reduxjs"],
   
     // Использование одной темы в проекте)
-    "workbench.colorTheme": "One Dark Pro",
+    "workbench.colorTheme": "Bearded Theme Arc Eggplant",
   
     // Подсветка комментариев с приставкой TODO
     "todohighlight.keywords": [
