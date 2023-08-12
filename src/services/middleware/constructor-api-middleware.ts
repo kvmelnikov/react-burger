@@ -1,13 +1,16 @@
 import Api from "../../utils/api/api"
-import { ActionCreatorWithPayload, ActionCreatorWithoutPayload, Middleware } from "@reduxjs/toolkit"
+import { Action, ActionCreatorWithPayload, ActionCreatorWithoutPayload, AnyAction, Middleware, ThunkMiddleware } from "@reduxjs/toolkit"
 import { RootState } from "../store"
-import { IIngridientDetails } from "../../types/types"
+import { IIngredientDetails } from "../../types/types"
+import { BaseActionCreator } from "@reduxjs/toolkit/dist/createAction"
+// import { constructorApiSliceActions } from "../constructor/constructor-api-slice"
+import { Dispatch } from "react"
 
 const api = new Api({
   baseUrl: 'https://norma.nomoreparties.space/api/',
 })
 
-export interface IConstructorApiMiddleware  {
+type TConstructorApiMiddleware  = {
   getIngredients: ActionCreatorWithPayload<string>
   getIngredientsRequest: ActionCreatorWithoutPayload
   getIngredientsFailed: ActionCreatorWithoutPayload
@@ -18,8 +21,7 @@ export interface IConstructorApiMiddleware  {
 }
 
 
-
-  export const constructorApiMiddleware = (apiActions: IConstructorApiMiddleware): Middleware<{}, RootState> => {
+export const constructorApiMiddleware: any = (apiActions: TConstructorApiMiddleware): Middleware<{}, RootState> => {
     return (store) => {
       return next => action => {
         const { dispatch, getState } = store
@@ -33,14 +35,15 @@ export interface IConstructorApiMiddleware  {
             orderRequestFailed,
             orderRequestSuccess,
         } = apiActions
-        if (getIngredients.type === type) {
+        if (getIngredients.type === type)  {
             dispatch(getIngredientsRequest())
             api.getIngredients()
             .then((data) => {
-              data.data.map((el: IIngridientDetails)=>{
+              data.data.map((el: IIngredientDetails)=>{
                 return (el.count = 0)
               })
-              dispatch(getIngredientsSuccess())
+              
+              dispatch(getIngredientsSuccess(data.data))
             }).catch(() =>{
               dispatch(getIngredientsFailed())
             })

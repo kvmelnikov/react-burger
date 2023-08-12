@@ -1,6 +1,6 @@
 import { type } from "os"
 
-export interface IIngridientDetails {
+export interface IIngredientDetails {
     _id: string
     name: string
     type: string

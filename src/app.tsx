@@ -1,19 +1,19 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import {
-  ConstructorMain,
-  // Login,
-  // ForgotPassword,
-  // Register,
-  // ResetPassword,
-  // ProfileForm,
-  // Orders,
-  // Order,
-  // Profile,
-  MainB,
-  // DetailPageIngredient,
-  // Feeds,
-  // FeedDetailPage,
-  // OrderDetailPage,
+ import {
+//   ConstructorMain,
+//   // Login,
+//   // ForgotPassword,
+       Register,
+//   // ResetPassword,
+//   // ProfileForm,
+//   // Orders,
+//   // Order,
+//   // Profile,
+//   MainB,
+//   // DetailPageIngredient,
+//   // Feeds,
+//   // FeedDetailPage,
+//   // OrderDetailPage,
 } from './pages'
 import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
@@ -21,13 +21,17 @@ import { ForgotRouteElement } from './components/ForgotRouteElement'
 import { OnlyUnAuthRoute } from './components/OnlyUnAuthRoute'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
-import { getUserRequest, RESET_USER_FORM } from './services/actions/form-action'
+// import { getUserRequest } from './services/actions/form-action'
 import { getIngredients } from './services/constructor/constructor-api-slice'  
 import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
+import { useAppDispatch, useAppSelector } from './utils/hooks/hook'
+import { getUserRequest } from './services/forms/forms-slice'
+import { stat } from 'fs'
 
 
 export default function App() {
+    
   const home = '/'
   const ingredient = '/ingredients/:id'
   const login = '/login'
@@ -40,14 +44,18 @@ export default function App() {
   const feedDetail = 'feed/:id'
   const orderDetail = '/profile/orders/:id'
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   let location = useLocation()
 
   const background = location.state && location.state.background
   const  baseUrl = 'https://norma.nomoreparties.space/api/'
 
+  const user = useAppSelector((state) => state.form.formProfile.failed)
+  console.log(user)
+
   useEffect(() => {
-    dispatch(getIngredients(baseUrl))
+    dispatch(getIngredients())
+    dispatch(getUserRequest())
     // if (localStorage.getItem('accessToken')) {
     //   dispatch(getUserRequest())
     // }
@@ -57,21 +65,25 @@ export default function App() {
     <>
       {/* <Routes location={background || location}> */}
         <Routes>
-        <Route path={home} element={<MainB />}>
-          <Route path={home} element={<ConstructorMain />} />
+        {/* <Route path={home} element={<MainB />}>
+          <Route path={home} element={<ConstructorMain />} /> */}
           {/* <Route path={ingredient} element={<DetailPageIngredient />} />
           <Route path={feed} element={<Feeds />} />
           <Route path={feedDetail} element={<FeedDetailPage />} /> */}
-        </Route>
+        {/* </Route> */}
         {/* <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
+        */}
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
+        
+{/*
         <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
         <Route path={reset_password} element={<ResetPassword />} />
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
           <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} />
-        </Route> */}
+        </Route> 
+        */}
       </Routes>
 {/* 
       // {background && (

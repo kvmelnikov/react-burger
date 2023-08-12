@@ -7,30 +7,33 @@ import AppHeader from "../components/app-header/app-header";
 import { Form } from "../components/form/form";
 import StyleForm from "../components/form/form.module.css";
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setFormValue } from "../services/actions/form-action";
-import { registrationUser } from "../services/actions/form-action";
+// import { useSelector, useDispatch } from "react-redux";
+import { setFormValueRegister } from "../services/forms/forms-slice";
+// import { registrationUser } from "../services/actions/form-action";
 import { Link, Navigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../utils/hooks/hook";
 
-const getFormData = (state) => state.form.formRegister;
-const getFormProfile = (state) => state.form.formProfile;
+// const getFormData = (state) => state.form.;
+// const getFormProfile = (state) => state.form.formProfile;
 
 export function Register() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     inputs: {
       email: { value: email },
-      password: { value: password },
+      pass: { value: pass },
       name: { value: name },
     },
-  } = useSelector(getFormData);
+  } = useAppSelector((state)=> state.form.formRegister);
 
-  const {
-    inputs: {
-      name: { value: nameUser },
-    },
-  } = useSelector(getFormProfile);
+
+
+  // const {
+  //   inputs: {
+  //     name: { value: nameUser },
+  //   },
+  // } = useAppSelector(getFormProfile);
 
   const [typePass, setTypePass] = React.useState("password");
 
@@ -40,44 +43,47 @@ export function Register() {
     });
   };
 
-  const onChangeEmail = (e) => {
+  const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLButtonElement
     dispatch(
-      setFormValue({
-        field: e.target.name,
-        value: e.target.value,
+      setFormValueRegister({
+        field: target.name,
+        value: target.value,
         form: "formRegister",
       })
     );
   };
 
-  const onChangePass = (e) => {
+  const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLButtonElement
     dispatch(
-      setFormValue({
-        field: e.target.name,
-        value: e.target.value,
+      setFormValueRegister({
+        field: target.name,
+        value: target.value,
         form: "formRegister",
       })
     );
   };
 
-  const onChangeName = (e) => {
+  const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLButtonElement
     dispatch(
-      setFormValue({
-        field: e.target.name,
-        value: e.target.value,
+      setFormValueRegister({
+        field: target.name,
+        value: target.value,
         form: "formRegister",
       })
     );
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(registrationUser());
+   // dispatch(registrationUser());
   };
 
-  if (nameUser) {
-    return <Navigate to="/" replace />;
-  }
+  // if (nameUser) {
+  //   return <Navigate to="/" replace />;
+  // }
 
   return (
     <>
@@ -104,12 +110,12 @@ export function Register() {
           />
 
           <Input
-            type={typePass}
+            type={"password"}
             placeholder={"placeholder"}
             onChange={onChangePass}
             icon={"ShowIcon"}
-            value={password}
-            name={"password"}
+            value={pass}
+            name={"pass"}
             error={false}
             onIconClick={onIconClick}
             errorText={"Ошибка"}

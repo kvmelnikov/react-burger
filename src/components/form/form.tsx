@@ -1,7 +1,13 @@
 import formStyle from "./form.module.css";
 import propTypes from "prop-types";
+import { FC } from 'react'
 
-export function Form(props) {
+interface IForm {
+  heading: string
+  children?: JSX.Element|JSX.Element[];
+} 
+
+export  const  Form:FC<IForm> = (props) => {
   return (
     <div className={formStyle.container}>
       <h3 className="text text_type_main-medium">{props.heading}</h3>
@@ -10,8 +16,3 @@ export function Form(props) {
   );
 }
 
-Form.propTypes = {
-  heading: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
-  children: propTypes.array.isRequired,
-};

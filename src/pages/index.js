@@ -13,7 +13,7 @@ import { FeedDetailPage } from './feed-detail-page'
 import { OrderDetailPage } from './order-detail-page'
 
 export {
-  ConstructorMain,
+ // ConstructorMain,
   Login,
   Register,
   ForgotPassword,
