@@ -1,111 +1,6 @@
-import { Draft, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { stat } from 'fs'
-import { Writable } from 'stream'
-import { IFormsState, IInputsFormLogin, IInputsFormProfile, IInputsKeyAccess } from '../../types/types-forms-slice'
-import { RootState } from '../store'
-import thunk from 'redux-thunk'
-
-type TUser = {
-  name: string
-}
-
-type TRegister = {
-  name: string
-  email: string
-}
-
-interface IDictData {
-  [key: string]: string
-}
-
-const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin) => {
-  let data: IDictData = {}
-
-  Object.keys(inputs).forEach((key) => {
-    type ObjectKey = keyof typeof inputs
-    const field = key as ObjectKey
-
-    data[field] = inputs[field].value
-  })
-  return JSON.stringify(data)
-}
-
-export const LoginUserRequest = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
-  'forms/LoginUserRequest',
-  async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: createBodyFormRequest(thunkAPI.getState().form.formLogin.inputs),
-    })
-      .then((res) => {
-        return res.json()
-      })
-      .then((res) => {
-        if (!res.success) {
-          return thunkAPI.rejectWithValue(res.message)
-        } else {
-          localStorage.setItem('accessToken', res.accessToken)
-          localStorage.setItem('refreshToken', res.refreshToken)
-          return res
-        }
-      })
-
-    return response.user
-  },
-)
-
-export const registrationUser = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
-  'forms/registrationUser',
-  async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: createBodyFormRequest(thunkAPI.getState().form.formRegister.inputs),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (!res.success) {
-          return thunkAPI.rejectWithValue('Not registration')
-        } else {
-          localStorage.setItem('accessToken', res.accessToken)
-          localStorage.setItem('refreshToken', res.refreshToken)
-          return res
-        }
-      })
-      .catch((err) => {
-        return thunkAPI.rejectWithValue('Server error')
-      })
-
-    return response
-  },
-)
-
-export const getUserRequest = createAsyncThunk<TUser, undefined, { rejectValue: string }>(
-  'forms/getUserRequest',
-  async function (_, { rejectWithValue }) {
-    try {
-      const response = await fetch('https://norma.nomoreparties.space/api/auth/user', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: `${localStorage.getItem('accessToken')}`,
-        },
-      })
-      if (!response.ok) {
-        throw new Error(response.statusText)
-      }
-      console.log(response, 'responseresponse')
-      return response.json()
-    } catch (error: any) {
-      return rejectWithValue(error.message)
-    }
-  },
-)
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { IFormsState } from '../../types/types-forms-slice'
+import { getUserRequest, loginUserRequest, registrationUser } from './forms-thunks'
 
 export const initialState: IFormsState = {
   formProfile: {
@@ -187,10 +82,10 @@ const formsSlice = createSlice({
         state.formProfile.request = true
       })
       .addCase(getUserRequest.fulfilled, (state, action) => {
+        // console.log(action.payload.name)
         state.formProfile.inputs.name.value = action.payload.name
       })
       .addCase(getUserRequest.rejected, (state, action) => {
-        console.log(action.payload)
         state.formProfile.failed = true
       })
       .addCase(registrationUser.pending, (state) => {
@@ -204,40 +99,21 @@ const formsSlice = createSlice({
         state.formRegister.request = false
         state.formRegister.failed = true
       })
-      .addCase(LoginUserRequest.pending, (state, action) => {
+      .addCase(loginUserRequest.pending, (state, action) => {
         state.formLogin.request = true
       })
-      .addCase(LoginUserRequest.fulfilled, (state, action) => {
+      .addCase(loginUserRequest.fulfilled, (state, action) => {
         state.formLogin.request = false
         state.formLogin.failed = false
         state.formProfile.inputs.email.value = action.payload.email
         state.formProfile.inputs.name.value = action.payload.name
       })
+      .addCase(loginUserRequest.rejected, (state, action) => {
+        state.formLogin.failed = true
+        state.formLogin.request = false
+      })
   },
 })
-
-// getUserRequest: (state) => {
-//   return state
-// },
-// setProfileForm: (state, action: PayloadAction<string>)=>{
-//   state.formProfile.inputs.email.value= action.payload
-//   state.formProfile.inputs.name.value= action.payload
-//   state.formProfile.inputs.email.value= ""
-//   return state
-// },
-// profileRequestSubmitSuccess: (state) => {
-//   state.formProfile.request = false
-//   state.formProfile.failed = false
-//   return state
-// }
-
-// getIngredients: (state, action: PayloadAction<string>) => {
-//     return state
-// },
-// getIngredientsRequest: (state) => {
-//     state.ingredients_request = true
-//     return state
-// },
 
 export const { setFormValueRegister, setFormValueLogin } = formsSlice.actions
 export default formsSlice.reducer

@@ -4,10 +4,11 @@ import { Form } from '../components/form/form'
 import StyleForm from '../components/form/form.module.css'
 import React from 'react'
 // import { useSelector, useDispatch } from "react-redux";
-import { registrationUser, setFormValueRegister } from '../services/forms/forms-slice'
+import { setFormValueRegister } from '../services/forms/forms-slice'
 // import { registrationUser } from "../services/actions/form-action";
 import { Link, Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
+import { getUserRequest } from '../services/forms/forms-thunks'
 
 // const getFormData = (state) => state.form.;
 // const getFormProfile = (state) => state.form.formProfile;
@@ -72,7 +73,7 @@ export function Register() {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(registrationUser())
+    dispatch(getUserRequest())
   }
 
   // if (nameUser) {

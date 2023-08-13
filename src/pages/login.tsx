@@ -8,7 +8,8 @@ import React, { useEffect } from 'react'
 // import { getUserRequest, setFormValue, updateUserRequest } from '../services/actions/form-action'
 
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { LoginUserRequest, setFormValueLogin } from '../services/forms/forms-slice'
+import { setFormValueLogin } from '../services/forms/forms-slice'
+import { loginUserRequest } from '../services/forms/forms-thunks'
 
 // const getFormData = (state) => state.form.formLogin
 // const getFormProfile = (state) => state.form.formProfile
@@ -66,7 +67,7 @@ export function Login() {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(LoginUserRequest())
+    dispatch(loginUserRequest())
     if (!request && !failed) {
       navigate(from, { replace: true })
     }

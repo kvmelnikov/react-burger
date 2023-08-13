@@ -26,7 +26,7 @@ import { getIngredients } from './services/constructor/constructor-api-slice'
 import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
 import { useAppDispatch, useAppSelector } from './utils/hooks/hook'
-import { getUserRequest } from './services/forms/forms-slice'
+import { getUserRequest } from './services/forms/forms-thunks'
 import { stat } from 'fs'
 
 export default function App() {
@@ -48,7 +48,8 @@ export default function App() {
   const background = location.state && location.state.background
   const baseUrl = 'https://norma.nomoreparties.space/api/'
 
-  const user = useAppSelector((state) => state.form.formProfile.failed)
+  const user = useAppSelector((state) => state.form.formProfile.inputs.name.value)
+
   console.log(user)
 
   useEffect(() => {
