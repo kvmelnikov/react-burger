@@ -136,7 +136,6 @@ const fetchWithRefresh = async (url: string, options: TBody) => {
       throw new Error(response.message)
     }
   } catch (err: any) {
-    console.log('dafdadkfjahdkjfhdkajhfkj')
     if (err.message === 'jwt expired') {
       const refreshData = await updateToken()
       localStorage.setItem('refreshToken', refreshData.refreshToken)

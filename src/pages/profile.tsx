@@ -7,11 +7,11 @@ import React, { useEffect } from 'react'
 import { wsConnect } from '../services/order/order-slice'
 export const ORDERS_SERVER_URL = 'wss://norma.nomoreparties.space/orders'
 
-export function Profile() {
+export const Profile: React.FC<any> = () => {
   const dispatch = useDispatch()
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken').split(' ')[1]
-    dispatch(wsConnect(`${ORDERS_SERVER_URL}?token=${accessToken}`))
+    const accessToken = localStorage.getItem('accessToken')?.split(' ')[1]
+    //   dispatch(wsConnect(`${ORDERS_SERVER_URL}?token=${accessToken}`))
   }, [])
 
   return (

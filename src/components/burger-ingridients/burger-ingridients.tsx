@@ -1,40 +1,46 @@
-import React, { useMemo } from 'react'
+import React, { RefObject, useMemo } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css'
 import Ingridient from '../ingridient/ingridient.jsx'
-import IngridientDetails from '../ingredient-details/ingredient-details'
+//import IngridientDetails from '../ingredient-details/ingredient-details.jsx'
 import Modal from '../modal/modal'
 
 import { useSelector, useDispatch } from 'react-redux'
-
 import { Link, useLocation } from 'react-router-dom'
+import { useAppSelector } from '../../utils/hooks/hook'
 
 const { ingridients__container, ingridients__list, ingridients__tab } = burgerIngridientsStyle
 
+interface TypesTopping {
+  [key: string]: string
+}
+
 function BurgerIngridients() {
   const dispatch = useDispatch()
-  const [current, setCurrent] = React.useState('bun')
+  const [current, setCurrent] = React.useState<string>('bun')
 
-  const [types] = React.useState({
+  const [types] = React.useState<TypesTopping>({
     bun: 'Булки',
     sauce: 'Соусы',
     main: 'Начинки',
   })
-  const ingredients = useSelector((state) => state.ingredients.ingridients)
+  const ingredients = useAppSelector((state) => state.constructorApi.ingredients)
 
-  const ingredientDataForModal = useSelector((state) => state.ingredients.currentIngridient)
-  const showModalIngridientDetails = useSelector((state) => state.modal.modalIngridientDetail)
+  // const ingredientDataForModal = useSelector((state) => state.ingredients.currentIngridient)
+  // const showModalIngridientDetails = useSelector((state) => state.modal.modalIngridientDetail)
 
-  const typeRefs = React.useRef([])
-  const containerRef = React.useRef()
+  const typeRefs = React.useRef<null | any[]>([])
+  const containerRef = React.useRef<null | any>(null)
 
-  typeRefs.current = Object.keys(types).map((_, i) => typeRefs.current[i] ?? React.createRef())
+  typeRefs.current = Object.keys(types).map((_, i) =>
+    typeRefs.current ? [i] ?? React.createRef<HTMLDivElement>() : null,
+  )
 
-  const calculateMinDistanceTypeToScroll = (scrollDistanceTop, currentType) => {
+  const calculateMinDistanceTypeToScroll = (scrollDistanceTop: number, currentType: string) => {
     let currentTab = currentType
     let minElement = 9999999
 
-    typeRefs.current.forEach((el) => {
+    typeRefs.current?.forEach((el) => {
       const elementDistanceTop = el.current.offsetTop
       const currentDifference = scrollDistanceTop + 40 - elementDistanceTop
       if (currentDifference < minElement && currentDifference >= 0) {
@@ -46,11 +52,11 @@ function BurgerIngridients() {
   }
 
   const handleScroll = React.useCallback(() => {
-    const scrollDistanceTop = containerRef.current.scrollTop
+    const scrollDistanceTop = containerRef.current?.scrollTop
     setCurrent(calculateMinDistanceTypeToScroll(scrollDistanceTop, current))
   }, [types])
 
-  const filterIngridients = (currentType) => {
+  const filterIngridients = (currentType: string) => {
     const filterIngridient = ingredients.filter((el) => el.type === currentType)
     return filterIngridient
   }
@@ -58,12 +64,14 @@ function BurgerIngridients() {
   const content = useMemo(() => {
     return (
       <section ref={containerRef} onScroll={handleScroll} className={`${ingridients__container}`}>
-        {Object.keys(types).map((type, index) => {
+        {Object.keys(types).map((typed, index) => {
           return (
-            <div key={type} data-types={type} ref={typeRefs.current[index]}>
-              <h3 className={`text text_type_main-medium mt-10 mb-4`}>{types[type]}</h3>
+            <div key={typed} data-types={typed} ref={typeRefs.current ? typeRefs.current[index] : null}>
+              {/* type ObjectKey = keyof typeof state.formLogin.inputs
+      const field = action.payload.field as ObjectKey */}
+              <h3 className={`text text_type_main-medium mt-10 mb-4`}>{types[typed]}</h3>
               <ul className={`${ingridients__list}`}>
-                {filterIngridients(type).map((el) => {
+                {filterIngridients(typed).map((el) => {
                   return <Ingridient key={el._id} {...el} />
                 })}
               </ul>

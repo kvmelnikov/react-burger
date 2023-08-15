@@ -75,6 +75,13 @@ const formsSlice = createSlice({
         state.formLogin.inputs[field].value = action.payload.value
       }
     },
+    setFormValueProfile: (state, action: PayloadAction<IFormDict>) => {
+      type ObjectKey = keyof typeof state.formLogin.inputs
+      const field = action.payload.field as ObjectKey
+      if (state.formProfile.inputs[field]) {
+        state.formProfile.inputs[field].value = action.payload.value
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -115,5 +122,5 @@ const formsSlice = createSlice({
   },
 })
 
-export const { setFormValueRegister, setFormValueLogin } = formsSlice.actions
+export const { setFormValueRegister, setFormValueLogin, setFormValueProfile } = formsSlice.actions
 export default formsSlice.reducer

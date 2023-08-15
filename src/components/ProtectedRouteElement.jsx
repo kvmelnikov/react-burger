@@ -1,12 +1,10 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { Route } from 'react-router-dom'
-import { getUserRequest, updateToken } from '../services/actions/form-action'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 import { getCookie, setCookie } from '../utils/cookie'
 import Api from '../utils/api/api'
-
-const getFormData = (state) => state.form.formProfile
+import { useAppSelector } from '../utils/hooks/hook'
 
 export const ProtectedRouteElement = ({ element }) => {
   const location = useLocation()
@@ -16,7 +14,9 @@ export const ProtectedRouteElement = ({ element }) => {
     },
     request,
     failed,
-  } = useSelector(getFormData)
+  } = useAppSelector((state) => state.form.formProfile)
+
+  console.log(nameUser)
 
   if (request) {
     return <p>Загрузка...</p>

@@ -39,7 +39,7 @@ export function Register() {
   }
 
   const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLButtonElement
+    const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
         field: target.name,
@@ -50,7 +50,7 @@ export function Register() {
   }
 
   const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLButtonElement
+    const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
         field: target.name,
@@ -61,7 +61,7 @@ export function Register() {
   }
 
   const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
-    const target = e.target as HTMLButtonElement
+    const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
         field: target.name,
