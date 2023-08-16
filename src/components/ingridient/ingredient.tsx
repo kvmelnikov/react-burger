@@ -1,21 +1,22 @@
-import React from 'react'
+import React, { FC } from 'react'
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingridientStyle from './ingridient.module.css'
 import propTypes from 'prop-types'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
-import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
-import { SET_CURRENT_INGREDIENT } from '../../services/actions/ingridients-action.js'
-import { useDispatch } from 'react-redux'
+import { useAppDispatch } from '../../utils/hooks/hook'
+import { setCurrentIngredient } from '../../services/constructor/ingredient-slice'
+import { showModalIngredientsDetail } from '../../services/modal/modal-slice'
+import { IIngredientDetails } from '../../types/types'
 const { ingridients__ingridient, ingridients__icon, ingridients__text, link } = ingridientStyle
 
-export default function Ingridient(props) {
-  const dispatch = useDispatch()
+export const Ingredient: FC<IIngredientDetails> = (props) => {
+  const dispatch = useAppDispatch()
 
   const hanldleOpenModalIngridientDetails = () => {
-    dispatch({ type: SET_CURRENT_INGREDIENT, value: props._id })
-    dispatch({ type: SHOW_MODAL_INGRIDIENT_DETAILS })
+    dispatch(setCurrentIngredient(props._id))
+    dispatch(showModalIngredientsDetail())
   }
 
   const [{ isDrag }, dragRef] = useDrag({
@@ -47,9 +48,4 @@ export default function Ingridient(props) {
       </li>
     </Link>
   )
-}
-
-Ingridient.propTypes = {
-  image: propTypes.string.isRequired,
-  name: propTypes.string.isRequired,
 }

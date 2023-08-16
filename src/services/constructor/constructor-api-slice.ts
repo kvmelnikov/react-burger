@@ -1,34 +1,41 @@
 import { AnyAction, PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { stat } from 'fs'
 import { IIngredientDetails } from '../../types/types'
-import Ingridient from '../../components/ingridient/ingridient'
 import { RootState } from '../store'
+import { setCurrentIngredient, setIngredients } from './ingredient-slice'
 
-export const getIngredients = createAsyncThunk<IIngredientDetails[], void, { rejectValue: string; state: RootState }>(
-  'constructorApi/getIngredients',
-  async (_, thunkAPI) => {
-    console.log('get ingredients')
-    const response = await fetch('https://norma.nomoreparties.space/api/ingredients', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => {
-        console.log(res)
-        if (res.ok) {
-          return res.json()
-        } else {
-          return thunkAPI.rejectWithValue('Server error')
+export const getIngredients = createAsyncThunk<
+  IIngredientDetails[],
+  string | undefined,
+  { rejectValue: string; state: RootState }
+>('constructorApi/getIngredients', async (id, thunkAPI) => {
+  console.log('get ingredients')
+  const response = await fetch('https://norma.nomoreparties.space/api/ingredients', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((res) => {
+      console.log(res)
+      if (res.ok) {
+        if (id) {
+          thunkAPI.dispatch(setCurrentIngredient(id))
         }
-      })
-      .then((res) => {
-        return res
-      })
-    console.log(response)
-    return response.data
-  },
-)
+        return res.json()
+      } else {
+        return thunkAPI.rejectWithValue('Server error')
+      }
+    })
+    .then((res) => {
+      thunkAPI.dispatch(setIngredients(res.data))
+      if (id) {
+        thunkAPI.dispatch(setCurrentIngredient(id))
+      }
+      return res
+    })
+
+  return response.data
+})
 
 interface IInitialState {
   ingredients: IIngredientDetails[]

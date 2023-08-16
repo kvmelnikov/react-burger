@@ -2,6 +2,9 @@ import { ActionCreatorWithPayload, AnyAction, configureStore } from '@reduxjs/to
 import { constructorApiMiddleware } from './middleware/constructor-api-middleware'
 import constructorApiReducer from './constructor/constructor-api-slice'
 import formsSlice from './forms/forms-slice'
+import IngredientReducer from './constructor/ingredient-slice'
+import ModalReducer from './forms/forms-slice'
+import { Dispatch } from 'react'
 
 // const constructorMiddleware = constructorApiMiddleware ({
 //   getIngredients: getIngredients,
@@ -18,10 +21,13 @@ export const store = configureStore({
   reducer: {
     constructorApi: constructorApiReducer,
     form: formsSlice,
+    ingredients: IngredientReducer,
+    modal: ModalReducer,
     // feed: feedReducer,
     // feedApi: feedApiReducer,
     // orders: orderReducer,
   },
+
   middleware: (getDefaultMiddleware) => {
     return getDefaultMiddleware().concat()
   },

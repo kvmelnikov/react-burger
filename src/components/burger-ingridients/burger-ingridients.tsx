@@ -1,13 +1,13 @@
 import React, { RefObject, useMemo } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css'
-import Ingridient from '../ingridient/ingridient.jsx'
 //import IngridientDetails from '../ingredient-details/ingredient-details.jsx'
 import Modal from '../modal/modal'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../../utils/hooks/hook'
+import { Ingredient } from '../ingridient/ingredient'
 
 const { ingridients__container, ingridients__list, ingridients__tab } = burgerIngridientsStyle
 
@@ -24,10 +24,10 @@ function BurgerIngridients() {
     sauce: 'Соусы',
     main: 'Начинки',
   })
-  const ingredients = useAppSelector((state) => state.constructorApi.ingredients)
+  const ingredients = useAppSelector((state) => state.ingredients.ingredients)
 
   // const ingredientDataForModal = useSelector((state) => state.ingredients.currentIngridient)
-  // const showModalIngridientDetails = useSelector((state) => state.modal.modalIngridientDetail)
+  // const showModal`IngridientDetails` = useSelector((state) => state.modal.modalIngridientDetail)
 
   const typeRefs = React.useRef<null | any[]>([])
   const containerRef = React.useRef<null | any>(null)
@@ -67,12 +67,10 @@ function BurgerIngridients() {
         {Object.keys(types).map((typed, index) => {
           return (
             <div key={typed} data-types={typed} ref={typeRefs.current ? typeRefs.current[index] : null}>
-              {/* type ObjectKey = keyof typeof state.formLogin.inputs
-      const field = action.payload.field as ObjectKey */}
               <h3 className={`text text_type_main-medium mt-10 mb-4`}>{types[typed]}</h3>
               <ul className={`${ingridients__list}`}>
                 {filterIngridients(typed).map((el) => {
-                  return <Ingridient key={el._id} {...el} />
+                  return <Ingredient key={el._id} {...el} />
                 })}
               </ul>
             </div>

@@ -10,7 +10,7 @@ import {
   //   // Order,
   Profile,
   MainB,
-  //   // DetailPageIngredient,
+  DetailPageIngredient,
   //   // Feeds,
   //   // FeedDetailPage,
   //   // OrderDetailPage,
@@ -50,7 +50,6 @@ export default function App() {
 
   const user = useAppSelector((state) => state.form.formProfile.inputs.name.value)
   const ingredients = useAppSelector((state) => state.constructorApi.ingredients)
-  console.log(ingredients)
 
   useEffect(() => {
     dispatch(getIngredients())
@@ -61,29 +60,15 @@ export default function App() {
 
   return (
     <>
-      {/* <Routes location={background || location}> */}
       <Routes>
         <Route path={home} element={<MainB />}>
           <Route path={home} element={<ConstructorMain />} />
+          <Route path={ingredient} element={<DetailPageIngredient />} />
         </Route>
-        {/*  <Route path={ingredient} element={<DetailPageIngredient />} />
-          <Route path={feed} element={<Feeds />} />
-          <Route path={feedDetail} element={<FeedDetailPage />} /> */}
-
-        {/* <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
-         */}
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
-
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
-
-        {/*
-        <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
-        <Route path={reset_password} element={<ResetPassword />} />
-
-        */}
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
-          {/* <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} /> */}
         </Route>
       </Routes>
 
