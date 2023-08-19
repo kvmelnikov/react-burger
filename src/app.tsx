@@ -60,7 +60,7 @@ export default function App() {
 
   return (
     <>
-      <Routes>
+      <Routes location={background || location}>
         <Route path={home} element={<MainB />}>
           <Route path={home} element={<ConstructorMain />} />
           <Route path={ingredient} element={<DetailPageIngredient />} />
@@ -72,14 +72,14 @@ export default function App() {
         </Route>
       </Routes>
 
-      {/* 
-      // {background && (
-      //   <Routes>
-      //     <Route path={ingredient} element={<ModalDetail />} />
-      //     <Route path={feedDetail} element={<ModalFeedDetail />} />
-      //     <Route path={orderDetail} element={<ModalOrderDetail />} />
-      //   </Routes>
-      // )} */}
+      {background && (
+        <Routes>
+          <Route path={ingredient} element={<ModalDetail />} />
+
+          {/* <Route path={feedDetail} element={<ModalFeedDetail />} />
+          <Route path={orderDetail} element={<ModalOrderDetail />} /> */}
+        </Routes>
+      )}
     </>
   )
 }

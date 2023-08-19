@@ -1,20 +1,20 @@
-import { type } from "os"
+import { type } from 'os'
 
 export interface IIngredientDetails {
-    _id: string
-    name: string
-    type: string
-    proteins: number
-    fat: number
-    carbohydrates: number
-    calories: number
-    price: number
-    image: string
-    image_mobile: string
-    image_large: string
-    __v: 0,
-    count: 0
-  }
+  _id: string
+  name: string
+  type: string
+  proteins: number
+  fat: number
+  carbohydrates: number
+  calories: number
+  price: number
+  image: string
+  image_mobile: string
+  image_large: string
+  __v: number
+  count: number
+}
 
 export interface IFeed {
   _id: string
@@ -24,8 +24,7 @@ export interface IFeed {
   createdAt: Date
   updatedAt: Date
   number: number
-
-}  
+}
 
 interface IStatusReport {
   done?: number[]
@@ -38,27 +37,23 @@ export interface IReportFeeds {
   totalToday?: number
 }
 
-
-
-
 interface IFeedDetailObject extends IFeed {
   owner: string
   __v: number
-} 
-
-interface IIngredientFeedDetailStructure {
-      image: string 
-      name: string
-      price: number
-      id: string
-      quantity: number
-      sumPrice: number
 }
 
+interface IIngredientFeedDetailStructure {
+  image: string
+  name: string
+  price: number
+  id: string
+  quantity: number
+  sumPrice: number
+}
 
 interface IFeedDetailStructure {
-    ingredients: IIngredientFeedDetailStructure[]
-    sumIngredients: number
+  ingredients: IIngredientFeedDetailStructure[]
+  sumIngredients: number
 }
 
 export interface IIFeedDetail {
@@ -67,6 +62,3 @@ export interface IIFeedDetail {
   feedDetail: IFeedDetailObject
   feedDetailStrucure: IFeedDetailStructure
 }
-
-
-

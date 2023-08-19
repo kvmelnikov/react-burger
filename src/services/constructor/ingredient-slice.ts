@@ -28,8 +28,27 @@ const IngredientSlice = createSlice({
       state.currentIngridient = state.ingredients.filter((el) => el._id === action.payload)[0]
       return state
     },
+    deacreaseCounterIngredient: (state, action: PayloadAction<string>) => {
+      let modificedIngredients = [...state.ingredients]
+      state.ingredients = modificedIngredients.map((ingredient) => {
+        return ingredient._id === action.payload && ingredient.count > 0
+          ? { ...ingredient, count: --ingredient.count }
+          : ingredient
+      })
+      return state
+    },
+    clearCountIngredients: (state, action: PayloadAction<string>) => {
+      const modificedIngredients = [...state.ingredients]
+      state.ingredients = modificedIngredients.map((ingredient) => {
+        ingredient.count = 0
+        return ingredient
+      })
+
+      return state
+    },
   },
 })
 
-export const { setIngredients, setCurrentIngredient } = IngredientSlice.actions
+export const { setIngredients, setCurrentIngredient, deacreaseCounterIngredient, clearCountIngredients } =
+  IngredientSlice.actions
 export default IngredientSlice.reducer

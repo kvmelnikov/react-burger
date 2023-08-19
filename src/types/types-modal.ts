@@ -1,14 +1,12 @@
-
 interface IhandleCloseModal {
-    ():never
+  (): void
 }
 
 export interface IModalOverlay {
-    handleCloseModal: IhandleCloseModal,
+  handleCloseModal: IhandleCloseModal
 }
 
 export interface IModal extends IModalOverlay {
-   
-    heading?: string
-    children?: React.ReactNode
+  heading?: string
+  children?: React.ReactNode
 }

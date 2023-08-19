@@ -19,6 +19,7 @@ export function ConstructorMain() {
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [dispatch])
+
   return (
     <DndProvider backend={HTML5Backend}>
       <BurgerIngridients />

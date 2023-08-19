@@ -27,6 +27,7 @@ export const Ingredient: FC<IIngredientDetails> = (props) => {
     }),
   })
   let location = useLocation()
+
   return (
     <Link
       className={`${link}`}

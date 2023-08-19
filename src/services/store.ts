@@ -3,7 +3,8 @@ import { constructorApiMiddleware } from './middleware/constructor-api-middlewar
 import constructorApiReducer from './constructor/constructor-api-slice'
 import formsSlice from './forms/forms-slice'
 import IngredientReducer from './constructor/ingredient-slice'
-import ModalReducer from './forms/forms-slice'
+import ModalReducer from './modal/modal-slice'
+import BurgerReducer from './constructor/burger-slice'
 import { Dispatch } from 'react'
 
 // const constructorMiddleware = constructorApiMiddleware ({
@@ -23,6 +24,7 @@ export const store = configureStore({
     form: formsSlice,
     ingredients: IngredientReducer,
     modal: ModalReducer,
+    burger: BurgerReducer,
     // feed: feedReducer,
     // feedApi: feedApiReducer,
     // orders: orderReducer,

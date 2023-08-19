@@ -23,7 +23,7 @@ const modalSlice = createSlice({
       return state
     },
     showModalIngredientsDetail: (state) => {
-      state.modalIngridientDetail = true
+      state.showModalOrderDetails = true
       return state
     },
   },

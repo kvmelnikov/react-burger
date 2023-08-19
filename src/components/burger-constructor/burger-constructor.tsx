@@ -4,83 +4,85 @@ import burgerConstructorStyle from './burger-constructor.module.css'
 import Modal from '../modal/modal'
 import Topping from '../topping/topping'
 import OrderDetails from '../order-details/order-details'
-import { useSelector, useDispatch } from 'react-redux'
 import { useDrop } from 'react-dnd'
-import { getOrderNumber } from '../../services/actions/api-action'
-import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from '../../services/actions/burger-action'
-import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action'
+// import { getOrderNumber } from '../../services/actions/api-action'
+// import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from '../../services/actions/burger-action'
+// import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { CLOSE_MODAL } from '../../services/actions/modal-action'
+//import { CLOSE_MODAL } from '../../services/actions/modal-action'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { IIngredientDetails } from '../../types/types'
+import {
+  addBunToBurgerConstructor,
+  addToppingToBurgerConstructor,
+  requestOrder,
+} from '../../services/constructor/burger-slice'
+import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
+import { closeModal } from '../../services/modal/modal-slice'
+import { request } from 'http'
 
 const { container, bun, toppings, info } = burgerConstructorStyle
 
-const getFormData = (state) => state.form.formProfile
-
 function BurgerConstructor() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const numberOrder = useSelector((state) => state.burger.numberOrder)
+  const numberOrder = useAppSelector((state) => state.burger.numberOrder)
   const location = useLocation()
-  const showModalOrderDetails = useSelector((state) => state.modal.showModalOrderDetails)
+  const showModalOrderDetails = useAppSelector((state) => state.modal.showModalOrderDetails)
   const {
     inputs: {
       email: { value: email },
     },
-  } = useSelector(getFormData)
+  } = useAppSelector((state) => state.form.formProfile)
 
-  const ingredientsConstructor = useSelector((state) => state.burger.ingridientsForConstructor)
+  const ingredientsConstructor = useAppSelector((state) => state.burger.ingridientsForConstructor)
 
   const [, drop] = useDrop({
     accept: 'ingredient',
-    drop(ingredient) {
+    drop(ingredient: IIngredientDetails[]) {
+      console.log(ingredient)
       if (ingredient[0].type === 'bun') {
-        dispatch({ type: ADD_BUN_TO_BURGER_CONSTRUCTOR, bun: ingredient[0] })
+        dispatch(addBunToBurgerConstructor(ingredient[0]))
 
-        if (ingredientsConstructor.bun._id) {
-          dispatch({
-            type: DECREASE_COUNTER_INGREDIENT,
-            id: ingredientsConstructor.bun._id,
-          })
+        if (ingredientsConstructor.bun) {
+          dispatch(deacreaseCounterIngredient(ingredientsConstructor.bun._id))
         }
       } else {
-        dispatch({
-          type: ADD_TOPPING_TO_BURGER_CONSTRUCTOR,
-          topping: ingredient[0],
-        })
+        dispatch(addToppingToBurgerConstructor(ingredient[0]))
       }
     },
   })
 
   const handleCloseModal = () => {
-    dispatch({ type: CLOSE_MODAL })
+    dispatch(closeModal())
     navigate('/')
   }
 
-  const handleEscapeClose = (e) => {
-    if (e.key === 'Escape') {
-      handleCloseModal()
-    }
-  }
+  // const handleEscapeClose = (e) => {
+  //   if (e.key === 'Escape') {
+  //     handleCloseModal()
+  //   }
+  // }
 
   function calculateAmount() {
-    if (
-      Object.keys(ingredientsConstructor.bun).length === 0 &&
-      Object.keys(ingredientsConstructor.toppings).length === 0
-    ) {
+    if (ingredientsConstructor.bun === undefined && Object.keys(ingredientsConstructor.toppings).length === 0) {
       return '0'
     } else {
       const summToppings = ingredientsConstructor.toppings.reduce((accumulator, next) => {
         return accumulator + Number(next.price)
       }, 0)
-      const priceBun = Number(ingredientsConstructor.bun.price) ? Number(ingredientsConstructor.bun.price) : 0
-      return summToppings + priceBun
+      if (ingredientsConstructor.bun) {
+        const priceBun = Number(ingredientsConstructor.bun.price) ? Number(ingredientsConstructor.bun.price) : 0
+        return summToppings + priceBun
+      }
     }
   }
 
   const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0)
 
   const hanldleOpenModalOrderDetails = () => {
-    dispatch(getOrderNumber(ingredientsConstructor))
+    dispatch(requestOrder)
+    // dispatch(getOrderNumber(ingredientsConstructor))
   }
 
   React.useEffect(() => {
@@ -88,7 +90,7 @@ function BurgerConstructor() {
   }, [ingredientsConstructor])
 
   const bunUp =
-    Object.keys(ingredientsConstructor.bun).length > 0 ? (
+    ingredientsConstructor.bun !== undefined ? (
       <ConstructorElement
         type='top'
         isLocked={true}
@@ -99,8 +101,9 @@ function BurgerConstructor() {
     ) : (
       <div></div>
     )
+
   const bunDown =
-    Object.keys(ingredientsConstructor.bun).length > 0 ? (
+    ingredientsConstructor.bun !== undefined ? (
       <ConstructorElement
         type='bottom'
         isLocked={true}
@@ -114,7 +117,7 @@ function BurgerConstructor() {
 
   const button = useMemo(() => {
     let disabled = true
-    if (email && ingredientsConstructor.bun.name) {
+    if (email && ingredientsConstructor.bun !== undefined) {
       disabled = false
     }
     return (

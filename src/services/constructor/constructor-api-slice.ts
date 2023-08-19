@@ -8,7 +8,6 @@ export const getIngredients = createAsyncThunk<
   string | undefined,
   { rejectValue: string; state: RootState }
 >('constructorApi/getIngredients', async (id, thunkAPI) => {
-  console.log('get ingredients')
   const response = await fetch('https://norma.nomoreparties.space/api/ingredients', {
     method: 'GET',
     headers: {
@@ -16,7 +15,6 @@ export const getIngredients = createAsyncThunk<
     },
   })
     .then((res) => {
-      console.log(res)
       if (res.ok) {
         if (id) {
           thunkAPI.dispatch(setCurrentIngredient(id))
@@ -27,7 +25,14 @@ export const getIngredients = createAsyncThunk<
       }
     })
     .then((res) => {
-      thunkAPI.dispatch(setIngredients(res.data))
+      thunkAPI.dispatch(
+        setIngredients(
+          res.data.map((el: any) => {
+            el.count = 0
+            return el
+          }),
+        ),
+      )
       if (id) {
         thunkAPI.dispatch(setCurrentIngredient(id))
       }
