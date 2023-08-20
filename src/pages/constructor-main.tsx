@@ -23,7 +23,7 @@ export function ConstructorMain() {
   return (
     <DndProvider backend={HTML5Backend}>
       <BurgerIngridients />
-      {/* <BurgerConstuctor /> */}
+      <BurgerConstuctor />
     </DndProvider>
   )
 }

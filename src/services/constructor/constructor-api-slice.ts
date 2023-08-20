@@ -75,7 +75,6 @@ const constructorApiSlice = createSlice({
         state.ingredients_request = false
         state.ingredients_sucess = true
         state.ingredients_failed = false
-        console.log(action.payload)
         state.ingredients = action.payload
       })
       .addCase(getIngredients.rejected, (state) => {

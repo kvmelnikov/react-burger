@@ -1,7 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IIngredientDetails } from '../../types/types'
 import { RootState } from '../store'
-import { stat } from 'fs'
+import { v4 as uuidv4 } from 'uuid'
+
+export interface ITopping extends IIngredientDetails {
+  index: number
+  uuid: string
+}
 
 interface IBurgerState {
   numberOrder: number
@@ -9,8 +14,8 @@ interface IBurgerState {
   failed: boolean
   success: boolean
   ingridientsForConstructor: {
-    bun?: IIngredientDetails
-    toppings: IIngredientDetails[]
+    bun?: ITopping
+    toppings: ITopping[]
   }
 }
 
@@ -64,12 +69,36 @@ const burgerSlice = createSlice({
       const newArray = [...state.ingridientsForConstructor.toppings]
       newArray.splice(action.payload.dragIndex, 0, newArray.splice(action.payload.hoverIndex, 1)[0])
       state.ingridientsForConstructor.toppings = newArray
+      return state
     },
-    addToppingToBurgerConstructor: (state, action: PayloadAction<IIngredientDetails>) => {
-      state.ingridientsForConstructor.toppings.push(action.payload)
+    deleteIngredientInConstructor: (state, action: PayloadAction<number>) => {
+      const newArray =
+        state.ingridientsForConstructor.toppings.length === 1
+          ? []
+          : [
+              ...state.ingridientsForConstructor.toppings.slice(0, action.payload),
+              ...state.ingridientsForConstructor.toppings.slice(action.payload + 1),
+            ]
+      console.log(newArray)
+      state.ingridientsForConstructor.toppings = newArray
+      return state
     },
-    addBunToBurgerConstructor: (state, action: PayloadAction<IIngredientDetails>) => {
+    addToppingToBurgerConstructor: (state, action: PayloadAction<ITopping>) => {
+      //
+      // const lengthCurrentToppings = state.ingridientsForConstructor.toppings.length
+      // if (lengthCurrentToppings > 0) {
+      //   newTopping.index = lengthCurrentToppings + 1
+      // } else {
+      //   newTopping.index = 0
+      // }
+      const newTopping = { ...action.payload }
+      // newTopping.uuid = uuidv4()
+      state.ingridientsForConstructor.toppings.push(newTopping)
+      return state
+    },
+    addBunToBurgerConstructor: (state, action: PayloadAction<ITopping>) => {
       state.ingridientsForConstructor.bun = action.payload
+      return state
     },
   },
   extraReducers: (builder) => {
@@ -88,7 +117,11 @@ const burgerSlice = createSlice({
   },
 })
 
-export const { insertIngredientInConstructor, addToppingToBurgerConstructor, addBunToBurgerConstructor } =
-  burgerSlice.actions
+export const {
+  deleteIngredientInConstructor,
+  insertIngredientInConstructor,
+  addToppingToBurgerConstructor,
+  addBunToBurgerConstructor,
+} = burgerSlice.actions
 
 export default burgerSlice.reducer

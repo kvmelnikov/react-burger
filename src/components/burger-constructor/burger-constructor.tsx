@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { ConstructorElement, CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyle from './burger-constructor.module.css'
 import Modal from '../modal/modal'
-import Topping from '../topping/topping'
+import { Topping } from '../topping/topping'
 import OrderDetails from '../order-details/order-details'
 import { useDrop } from 'react-dnd'
 // import { getOrderNumber } from '../../services/actions/api-action'
@@ -20,7 +20,7 @@ import {
 import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
 import { closeModal } from '../../services/modal/modal-slice'
 import { request } from 'http'
-
+import { ITopping } from '../../services/constructor/burger-slice'
 const { container, bun, toppings, info } = burgerConstructorStyle
 
 function BurgerConstructor() {
@@ -39,8 +39,8 @@ function BurgerConstructor() {
 
   const [, drop] = useDrop({
     accept: 'ingredient',
-    drop(ingredient: IIngredientDetails[]) {
-      console.log(ingredient)
+
+    drop(ingredient: ITopping[]) {
       if (ingredient[0].type === 'bun') {
         dispatch(addBunToBurgerConstructor(ingredient[0]))
 
@@ -141,8 +141,8 @@ function BurgerConstructor() {
           <div className={`${bun} ml-8 mr-2`}>{bunUp}</div>
           <ul className={`${toppings}`}>
             {ingredientsConstructor.toppings ? (
-              ingredientsConstructor.toppings.map((topping, index) => {
-                return <Topping key={index} item={topping} index={index} {...topping} />
+              ingredientsConstructor.toppings.map((topping, indx) => {
+                return <Topping key={indx} currentIndex={indx} item={topping} {...topping} />
               })
             ) : (
               <div></div>

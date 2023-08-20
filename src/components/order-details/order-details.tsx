@@ -2,10 +2,11 @@ import { useSelector } from 'react-redux'
 import orderDetailsStyles from './order-details.module.css'
 import propTypes from 'prop-types'
 import { useMemo } from 'react'
+import { useAppSelector } from '../../utils/hooks/hook'
 
-function OrderDetails({ numberOrder }) {
-  const orderRequest = useSelector((state) => state.api.orderRequest)
-
+function OrderDetails() {
+  const orderRequest = useAppSelector((state) => state.burger.request)
+  const numberOrder = useAppSelector((state) => state.burger.numberOrder)
   const numberContent = useMemo(() => {
     if (orderRequest) {
       return <p className='text text_type_main-medium mt-15'>формируется</p>
