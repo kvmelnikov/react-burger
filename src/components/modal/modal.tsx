@@ -13,12 +13,7 @@ const modalSelector = document.querySelector('#modals')
 const Modal: FC<IModal> = (props) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
-  const handleEscapeClose = (e: KeyboardEvent<HTMLElement>): void => {
-    if (e.key === 'Escape') {
-      props.handleCloseModal()
-    }
-  }
+  // FIXME: TWO BUTTON CLOSE
 
   return createPortal(
     <>

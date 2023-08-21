@@ -25,30 +25,26 @@ export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentI
 
   // item.index = index
 
-  const [{ isDragging }, drag] = useDrag({
+  const [, drag] = useDrag({
     type: 'item',
     item: { index, currentIndex },
-    collect: (monitor) => {
-      const result = {
-        isDragging: monitor.isDragging(),
-      }
-      return result
-    },
+    // collect: (monitor) => {
+    //   const result = {
+    //     isDragging: monitor.isDragging(),
+    //   }
+    //   return result
+    // },
   })
 
   const [, drop] = useDrop({
     accept: 'item',
     hover(item: any, monitor) {
-      if (!dropRef.current) {
+      if (!dragRef.current) {
         return
       }
 
       const hoverIndex = currentIndex
       const dragIndex = item.index
-
-      if (dragIndex === hoverIndex) {
-        return
-      }
 
       dispatch(insertIngredientInConstructor({ dragIndex: dragIndex, hoverIndex: hoverIndex }))
 
@@ -56,8 +52,7 @@ export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentI
     },
   })
 
-  drag(dragRef)
-  drop(dropRef)
+  drag(drop(dragRef))
 
   const handleDeleteTopping = (e: any, index: number) => {
     if (e.target.parentElement.parentElement.classList.contains('pr-2')) {
@@ -70,14 +65,12 @@ export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentI
   const content = useMemo(() => {
     return (
       <li
-        className={`${toppingStyles.topping__list_element}`}
-        ref={dropRef}
+        ref={dragRef}
+        className={`${toppingStyles.topping__item}`}
         onClick={(e) => handleDeleteTopping(e, currentIndex)}
       >
-        <div className={`${toppingStyles.topping__item}`} ref={dragRef}>
-          <DragIcon type='primary' />
-          <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
-        </div>
+        <DragIcon type='primary' />
+        <ConstructorElement text={item.name} price={item.price} thumbnail={item.image} />
       </li>
     )
   }, [item])

@@ -1,7 +1,7 @@
 import React from 'react'
 import mainConstructorStyle from './constructor-main.module.css'
 // import AppHeader from '../components/app-header/app-header.jsx'
-import BurgerIngridients from '../components/burger-ingridients/burger-ingridients'
+import BurgerIngridients from '../components/burger-ingridients/burger-ingredients'
 import BurgerConstuctor from '../components/burger-constructor/burger-constructor'
 import { useDispatch } from 'react-redux'
 //import { SET_MODAL_SELECTOR } from '../services/actions/modal-action'

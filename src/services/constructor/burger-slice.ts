@@ -2,10 +2,18 @@ import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IIngredientDetails } from '../../types/types'
 import { RootState } from '../store'
 import { v4 as uuidv4 } from 'uuid'
+import { stat } from 'fs'
+import { showModalOrderDetails } from '../modal/modal-slice'
+import { constants } from 'buffer'
 
 export interface ITopping extends IIngredientDetails {
   index: number
   uuid: string
+}
+
+interface IingridientsForConstructor {
+  bun?: ITopping
+  toppings: ITopping[]
 }
 
 interface IBurgerState {
@@ -13,10 +21,7 @@ interface IBurgerState {
   request: boolean
   failed: boolean
   success: boolean
-  ingridientsForConstructor: {
-    bun?: ITopping
-    toppings: ITopping[]
-  }
+  ingridientsForConstructor: IingridientsForConstructor
 }
 
 interface IinsertPayload {
@@ -24,31 +29,46 @@ interface IinsertPayload {
   hoverIndex: number
 }
 
-// const makeCheckout = (consrtuctorIngridients) => {
-//   const idToppings = consrtuctorIngridients.toppings.map((el) => {
-//     return el._id
-//   })
-//   idToppings.push(consrtuctorIngridients.bun._id)
-//   return idToppings
-// }
+const makeCheckout = (consrtuctorIngridients: IingridientsForConstructor) => {
+  const idToppings = consrtuctorIngridients.toppings.map((el) => {
+    return el._id
+  })
+  if (consrtuctorIngridients.bun) {
+    idToppings.push(consrtuctorIngridients.bun._id)
+  }
 
-export const requestOrder = createAsyncThunk<number, void, { rejectValue: string; state: RootState }>(
-  'constructorApi/getIngredients',
-  async (_, thunkAPI) => {
-    const accessToken = localStorage.getItem('accessToken')
-    const response = await fetch('https://norma.nomoreparties.space/api/orders', {
-      method: 'POST',
-      headers: {
-        authorization: `${localStorage.getItem('accessToken')}`,
-        'Content-Type': 'application/json',
-      },
-    }).then((res) => {
-      console.log(res)
+  return idToppings
+}
+
+export const requestOrder = createAsyncThunk<
+  number,
+  IingridientsForConstructor,
+  { rejectValue: string; state: RootState }
+>('constructorApi/getIngredients', async (ingredients, thunkAPI) => {
+  const accessToken = localStorage.getItem('accessToken')
+  const prepareIngredients = makeCheckout(ingredients)
+  thunkAPI.dispatch(showModalOrderDetails())
+  const response = await fetch(`https://norma.nomoreparties.space/api/orders?token=${accessToken?.split(' ')[1]}`, {
+    method: 'POST',
+    headers: {
+      authorization: `${localStorage.getItem('accessToken')}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      ingredients: prepareIngredients,
+    }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        return thunkAPI.rejectWithValue('Server error')
+      }
     })
-
-    return 1
-  },
-)
+    .catch((err) => thunkAPI.rejectWithValue('Server error'))
+  console.log(response)
+  return response.order.number
+})
 
 const initialState: IBurgerState = {
   request: false,
@@ -79,7 +99,6 @@ const burgerSlice = createSlice({
               ...state.ingridientsForConstructor.toppings.slice(0, action.payload),
               ...state.ingridientsForConstructor.toppings.slice(action.payload + 1),
             ]
-      console.log(newArray)
       state.ingridientsForConstructor.toppings = newArray
       return state
     },
@@ -106,9 +125,10 @@ const burgerSlice = createSlice({
       .addCase(requestOrder.pending, (state) => {
         state.request = true
       })
-      .addCase(requestOrder.fulfilled, (state) => {
+      .addCase(requestOrder.fulfilled, (state, action) => {
         state.request = false
         state.failed = false
+        state.numberOrder = action.payload
       })
       .addCase(requestOrder.rejected, (state) => {
         state.request = false

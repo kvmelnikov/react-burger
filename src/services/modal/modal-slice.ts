@@ -23,11 +23,14 @@ const modalSlice = createSlice({
       return state
     },
     showModalIngredientsDetail: (state) => {
-      state.showModalOrderDetails = true
+      state.modalIngridientDetail = true
       return state
+    },
+    showModalOrderDetails: (state) => {
+      state.showModalOrderDetails = true
     },
   },
 })
 
-export const { closeModal, showModalIngredientsDetail } = modalSlice.actions
+export const { showModalOrderDetails, closeModal, showModalIngredientsDetail } = modalSlice.actions
 export default modalSlice.reducer

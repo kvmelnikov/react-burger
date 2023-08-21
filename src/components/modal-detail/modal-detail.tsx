@@ -12,31 +12,23 @@ function ModalDetail() {
   const navigate = useNavigate()
 
   const ingredientDataForModal = useAppSelector((state) => state.ingredients.currentIngridient)
-
-  const showModalIngridientDetails = useAppSelector((state) => state.modal.showModalOrderDetails)
-
+  const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
+  console.log('dfdf')
   const handleCloseModal = () => {
     dispatch(closeModal())
     navigate('/')
   }
 
-  const handleEscapeClose = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      handleCloseModal()
-    }
-  }
-
-  React.useEffect(() => {
-    document.addEventListener('keydown', handleEscapeClose)
-
-    return () => {
-      document.removeEventListener('keydown', handleEscapeClose)
-    }
-  }, [])
-
   return showModalIngridientDetails && ingredientDataForModal ? (
     <Modal handleCloseModal={handleCloseModal} heading='Детали ингридиента'>
-      <IngredientDetails {...ingredientDataForModal} />
+      <IngredientDetails
+        image_large={ingredientDataForModal.image_large}
+        name={ingredientDataForModal.name}
+        calories={ingredientDataForModal.calories}
+        proteins={ingredientDataForModal.proteins}
+        fat={ingredientDataForModal.fat}
+        carbohydrates={ingredientDataForModal.carbohydrates}
+      />
     </Modal>
   ) : (
     <div>нет данных дива</div>

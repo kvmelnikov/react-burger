@@ -128,8 +128,6 @@ const fetchWithRefresh = async (url: string, options: TBody) => {
         Promise.reject(err)
       })
 
-    console.log(response)
-
     if (response.success) {
       return response
     } else {

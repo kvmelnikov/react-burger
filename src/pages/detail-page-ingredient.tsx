@@ -17,8 +17,18 @@ export function DetailPageIngredient() {
   }, [path])
 
   const ingredientDataForModal = useAppSelector((state) => state.ingredients.currentIngridient)
+
   if (ingredientDataForModal) {
-    return <IngredientDetails {...ingredientDataForModal} />
+    return (
+      <IngredientDetails
+        image_large={ingredientDataForModal.image_large}
+        name={ingredientDataForModal.name}
+        calories={ingredientDataForModal.calories}
+        proteins={ingredientDataForModal.proteins}
+        fat={ingredientDataForModal.fat}
+        carbohydrates={ingredientDataForModal.carbohydrates}
+      />
+    )
   } else {
     return <div></div>
   }

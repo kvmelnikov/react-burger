@@ -7,7 +7,7 @@ import Modal from '../modal/modal'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppSelector } from '../../utils/hooks/hook'
-import { Ingredient } from '../ingridient/ingredient'
+import { Ingredient } from '../ingredient/ingredient'
 
 const { ingridients__container, ingridients__list, ingridients__tab } = burgerIngridientsStyle
 

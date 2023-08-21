@@ -18,7 +18,7 @@ import {
   requestOrder,
 } from '../../services/constructor/burger-slice'
 import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
-import { closeModal } from '../../services/modal/modal-slice'
+import { closeModal, showModalIngredientsDetail, showModalOrderDetails } from '../../services/modal/modal-slice'
 import { request } from 'http'
 import { ITopping } from '../../services/constructor/burger-slice'
 const { container, bun, toppings, info } = burgerConstructorStyle
@@ -31,7 +31,7 @@ function BurgerConstructor() {
   const showModalOrderDetails = useAppSelector((state) => state.modal.showModalOrderDetails)
   const {
     inputs: {
-      email: { value: email },
+      name: { value: name },
     },
   } = useAppSelector((state) => state.form.formProfile)
 
@@ -58,11 +58,19 @@ function BurgerConstructor() {
     navigate('/')
   }
 
-  // const handleEscapeClose = (e) => {
-  //   if (e.key === 'Escape') {
-  //     handleCloseModal()
-  //   }
-  // }
+  const handleEscapeClose = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      handleCloseModal()
+    }
+  }
+
+  React.useEffect(() => {
+    document.addEventListener('keydown', handleEscapeClose)
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeClose)
+    }
+  }, [])
 
   function calculateAmount() {
     if (ingredientsConstructor.bun === undefined && Object.keys(ingredientsConstructor.toppings).length === 0) {
@@ -81,8 +89,7 @@ function BurgerConstructor() {
   const [summBurger, setSummBurger] = React.useReducer(calculateAmount, 0)
 
   const hanldleOpenModalOrderDetails = () => {
-    dispatch(requestOrder)
-    // dispatch(getOrderNumber(ingredientsConstructor))
+    dispatch(requestOrder(ingredientsConstructor))
   }
 
   React.useEffect(() => {
@@ -117,7 +124,8 @@ function BurgerConstructor() {
 
   const button = useMemo(() => {
     let disabled = true
-    if (email && ingredientsConstructor.bun !== undefined) {
+    console.log(ingredientsConstructor)
+    if (name && ingredientsConstructor.bun?._id !== undefined) {
       disabled = false
     }
     return (
@@ -132,7 +140,7 @@ function BurgerConstructor() {
         Оформить заказ
       </Button>
     )
-  }, [ingredientsConstructor, email, location])
+  }, [ingredientsConstructor, name, location])
 
   return (
     <>
@@ -159,7 +167,7 @@ function BurgerConstructor() {
       {showModalOrderDetails && (
         <>
           <Modal handleCloseModal={handleCloseModal} heading=''>
-            <OrderDetails numberOrder={numberOrder} />
+            <OrderDetails />
           </Modal>
         </>
       )}
