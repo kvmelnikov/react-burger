@@ -44,6 +44,11 @@ interface IformRegister extends Ilogout {
 interface IformLogin extends Ilogout {
   inputs: IInputsFormLogin
 }
+interface IlogoutUser {
+  request: boolean
+  failed: boolean
+  success: boolean
+}
 
 export interface IFormsState {
   formProfile: IFormProfile
@@ -52,4 +57,5 @@ export interface IFormsState {
   formRegister: IformRegister
   formLogin: IformLogin
   logout: Ilogout
+  logoutUser: IlogoutUser
 }

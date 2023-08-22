@@ -11,8 +11,8 @@ import {
   Profile,
   MainB,
   DetailPageIngredient,
-  //   // Feeds,
-  //   // FeedDetailPage,
+  Feeds,
+  FeedDetailPage,
   //   // OrderDetailPage,
 } from './pages'
 import ModalDetail from './components/modal-detail/modal-detail'
@@ -64,6 +64,8 @@ export default function App() {
         <Route path={home} element={<MainB />}>
           <Route path={home} element={<ConstructorMain />} />
           <Route path={ingredient} element={<DetailPageIngredient />} />
+          <Route path={feed} element={<Feeds />} />
+          <Route path={feedDetail} element={<FeedDetailPage />} />
         </Route>
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />

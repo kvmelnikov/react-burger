@@ -27,6 +27,34 @@ const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin) =>
   return JSON.stringify(data)
 }
 
+export const logoutUserRequest = createAsyncThunk<number, void, { rejectValue: string }>(
+  'forms/logoutUserRequest',
+  async (_, thunkAPI) => {
+    const response = await fetch('https://norma.nomoreparties.space/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ token: `${localStorage.getItem('refreshToken')}` }),
+    })
+      .then((res) => {
+        return res.json()
+      })
+      .then((res) => {
+        if (res.success) {
+          return res
+        } else {
+          return thunkAPI.rejectWithValue('Server error')
+        }
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue('Server error')
+      })
+    console.log(response)
+    return 2
+  },
+)
+
 export const loginUserRequest = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
   'forms/LoginUserRequest',
   async (_, thunkAPI) => {

@@ -5,13 +5,14 @@ import { ProfileMenu } from '../components/profile-menu/profile-menu'
 import { useDispatch } from 'react-redux'
 import React, { useEffect } from 'react'
 import { wsConnect } from '../services/order/order-slice'
+import { useAppDispatch } from '../utils/hooks/hook'
 export const ORDERS_SERVER_URL = 'wss://norma.nomoreparties.space/orders'
 
 export const Profile: React.FC<any> = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken')?.split(' ')[1]
-    //   dispatch(wsConnect(`${ORDERS_SERVER_URL}?token=${accessToken}`))
+    dispatch(wsConnect(`${ORDERS_SERVER_URL}?token=${accessToken}`))
   }, [])
 
   return (

@@ -6,6 +6,8 @@ import IngredientReducer from './constructor/ingredient-slice'
 import ModalReducer from './modal/modal-slice'
 import BurgerReducer from './constructor/burger-slice'
 import { Dispatch } from 'react'
+import orderReducer from './order/order-slice'
+import feedReducer from './feed/feed-slice'
 
 // const constructorMiddleware = constructorApiMiddleware ({
 //   getIngredients: getIngredients,
@@ -18,6 +20,48 @@ import { Dispatch } from 'react'
 // }
 // )
 
+import {
+  wsConnect as FeedWsConnect,
+  wsConnecting as FeedWsConnecting,
+  wsClose as FeedWsClose,
+  wssError as FeedWsError,
+  wssMessage as FeedWsMessage,
+  wsDisconnect as FeedWsDisconnect,
+  wsOpen as FeedWsOpen,
+} from './feed/feed-slice'
+
+import {
+  wsConnecting as OrderWsConnecting,
+  wsConnect as OrderWsConnect,
+  wsOpen as OrderWsOpen,
+  wsClose as OrderWsClose,
+  wssError as OrderWsError,
+  wssMessage as OrderWsMessage,
+  wsDisconnect as OrderWsDisconnect,
+} from './order/order-slice'
+
+import { websocketMiddleware } from './middleware/websocket-middleware'
+
+const FeedMiddleware: any = websocketMiddleware({
+  wsConnect: FeedWsConnect,
+  wsDisconnect: FeedWsDisconnect,
+  wsConnecting: FeedWsConnecting,
+  onOpen: FeedWsOpen,
+  onClose: FeedWsClose,
+  onError: FeedWsError,
+  onMessage: FeedWsMessage,
+})
+
+const OrderMiddleware: any = websocketMiddleware({
+  wsConnect: OrderWsConnect,
+  wsDisconnect: OrderWsDisconnect,
+  wsConnecting: OrderWsConnecting,
+  onOpen: OrderWsOpen,
+  onClose: OrderWsClose,
+  onError: OrderWsError,
+  onMessage: OrderWsMessage,
+})
+
 export const store = configureStore({
   reducer: {
     constructorApi: constructorApiReducer,
@@ -25,13 +69,13 @@ export const store = configureStore({
     ingredients: IngredientReducer,
     modal: ModalReducer,
     burger: BurgerReducer,
-    // feed: feedReducer,
+    feed: feedReducer,
     // feedApi: feedApiReducer,
-    // orders: orderReducer,
+    orders: orderReducer,
   },
 
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat()
+    return getDefaultMiddleware().concat(OrderMiddleware, FeedMiddleware)
   },
   devTools: process.env.NODE_ENV !== 'production',
 })

@@ -1,8 +1,14 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, isAction } from '@reduxjs/toolkit'
 import { IFormsState } from '../../types/types-forms-slice'
-import { getUserRequest, loginUserRequest, registrationUser } from './forms-thunks'
+import { getUserRequest, loginUserRequest, logoutUserRequest, registrationUser } from './forms-thunks'
+import { stat } from 'fs'
 
 export const initialState: IFormsState = {
+  logoutUser: {
+    request: false,
+    failed: false,
+    success: false,
+  },
   formProfile: {
     inputs: {
       email: { value: '' },
@@ -89,7 +95,9 @@ const formsSlice = createSlice({
         state.formProfile.request = true
       })
       .addCase(getUserRequest.fulfilled, (state, action) => {
-        // console.log(action.payload.name)
+        state.formProfile.request = false
+        state.formProfile.failed = false
+        state.formProfile.inputs.email.value = action.payload.email
         state.formProfile.inputs.name.value = action.payload.name
       })
       .addCase(getUserRequest.rejected, (state, action) => {
@@ -118,6 +126,23 @@ const formsSlice = createSlice({
       .addCase(loginUserRequest.rejected, (state, action) => {
         state.formLogin.failed = true
         state.formLogin.request = false
+      })
+      .addCase(logoutUserRequest.pending, (state, action) => {
+        state.logoutUser.request = true
+      })
+      .addCase(logoutUserRequest.fulfilled, (state, action) => {
+        state.formProfile.inputs.email.value = ''
+        state.formProfile.inputs.name.value = ''
+        localStorage.setItem('accessToken', '')
+        localStorage.setItem('refreshToken', '')
+        state.logoutUser.failed = false
+        state.logoutUser.success = true
+        state.logoutUser.request = false
+      })
+      .addCase(logoutUserRequest.rejected, (state, action) => {
+        state.logoutUser.request = false
+        state.logoutUser.success = false
+        state.logoutUser.failed = true
       })
   },
 })

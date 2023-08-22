@@ -14,9 +14,7 @@ export const ProtectedRouteElement = ({ element }) => {
     },
     request,
     failed,
-  } = useAppSelector((state) => state.form.formProfile)
-
-  console.log(nameUser)
+  } = useSelector((state) => state.form.formProfile)
 
   if (request) {
     return <p>Загрузка...</p>

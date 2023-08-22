@@ -124,7 +124,6 @@ function BurgerConstructor() {
 
   const button = useMemo(() => {
     let disabled = true
-    console.log(ingredientsConstructor)
     if (name && ingredientsConstructor.bun?._id !== undefined) {
       disabled = false
     }
