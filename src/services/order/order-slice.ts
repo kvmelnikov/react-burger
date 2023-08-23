@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { WebsocketStatus } from '../../types/websocket'
 import { PayloadAction } from '@reduxjs/toolkit'
 
-interface IOrrder {
+export interface IOrrder {
   _id: string
   ingredients: string[]
   status: string

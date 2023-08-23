@@ -23,11 +23,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import React, { useEffect } from 'react'
 // import { getUserRequest } from './services/actions/form-action'
 import { getIngredients } from './services/constructor/constructor-api-slice'
-import ModalFeedDetail from './components/modal-feed-detail/modal-feed-detail'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
 import { useAppDispatch, useAppSelector } from './utils/hooks/hook'
 import { getUserRequest } from './services/forms/forms-thunks'
 import { stat } from 'fs'
+import { ModalFeedDetail } from './components/modal-feed-detail/modal-feed-detail'
 
 export default function App() {
   const home = '/'
@@ -78,8 +78,8 @@ export default function App() {
         <Routes>
           <Route path={ingredient} element={<ModalDetail />} />
 
-          {/* <Route path={feedDetail} element={<ModalFeedDetail />} />
-          <Route path={orderDetail} element={<ModalOrderDetail />} /> */}
+          <Route path={feedDetail} element={<ModalFeedDetail />} />
+          {/* <Route path={orderDetail} element={<ModalOrderDetail />} /> */}
         </Routes>
       )}
     </>

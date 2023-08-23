@@ -38,8 +38,6 @@ export const websocketMiddleware = (wsActions: TwsActionTypes): Middleware<{}, R
         socket.onmessage = (event) => {
           const { data } = event
           const parsedData = JSON.parse(data)
-
-          console.log(parsedData)
           dispatch(onMessage(parsedData))
         }
 

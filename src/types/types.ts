@@ -1,4 +1,6 @@
 import { type } from 'os'
+import { IOrrder } from '../services/order/order-slice'
+import { IIngredientsFeedDetail } from '../services/feed/feed-utils'
 
 export interface IIngredientDetails {
   _id: string
@@ -59,6 +61,7 @@ interface IFeedDetailStructure {
 export interface IIFeedDetail {
   feedDetailFailed: boolean
   feedDetailRequest: boolean
-  feedDetail: IFeedDetailObject
-  feedDetailStrucure: IFeedDetailStructure
+  feedDetail: IOrrder
+  feedDetailStrucure: IIngredientsFeedDetail[]
+  sumIngredients: number
 }

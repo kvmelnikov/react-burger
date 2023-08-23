@@ -4,9 +4,17 @@ import Style from './feed-detail.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import propTypes from 'prop-types'
 import { IIFeedDetail } from '../../types/types'
+import { useAppDispatch } from '../../utils/hooks/hook'
 
-export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailRequest, feedDetail, feedDetailStrucure }) =>{
-  const dispatch = useDispatch()
+export const FeedDetail: FC<IIFeedDetail> = ({
+  feedDetailFailed,
+  feedDetailRequest,
+  feedDetail,
+  feedDetailStrucure,
+  sumIngredients,
+}) => {
+  const dispatch = useAppDispatch()
+
   const checkStatusBurger = () => {
     if (feedDetail.status === 'done') {
       return 'Выполнен'
@@ -14,7 +22,7 @@ export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailReq
       return 'Не выполнен'
     }
   }
-  console.log(feedDetailStrucure)
+
   const contentDetail =
     Object.keys(feedDetail).length > 0 ? (
       <>
@@ -22,9 +30,9 @@ export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailReq
         <p className={`${Style.line} mb-3 text text_type_main-medium`}>{feedDetail.name}</p>
         <span className={`${Style.line} mb-6 text text_type_main-medium`}>Состав:</span>
         <ul className={`${Style.list}`}>
-          {feedDetailStrucure.ingredients.map((el) => {
+          {feedDetailStrucure.map((el, index) => {
             return (
-              <li className={`${Style.list_element} mb-4`}>
+              <li key={index} className={`${Style.list_element} mb-4`}>
                 <div className={`${Style.image_name}`}>
                   <img className={`${Style.image_ingredient}`} src={el.image} alt={el.name} />
                   <p className={`${Style.name_ingredient} ml-4 text text_type_main-default`}>{el.name}</p>
@@ -45,8 +53,8 @@ export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailReq
             date={new Date(feedDetail.createdAt)}
           />
           <div className={`${Style.currency}`}>
-            <p className={`text text_type_digits-default mr-2`}>{feedDetailStrucure.sumIngredients}</p>
-            <CurrencyIcon  type='primary' />
+            <p className={`text text_type_digits-default mr-2`}>{sumIngredients}</p>
+            <CurrencyIcon type='primary' />
           </div>
         </div>
       </>
@@ -66,4 +74,3 @@ export const  FeedDetail: FC<IIFeedDetail>  = ({ feedDetailFailed, feedDetailReq
 
   return <div className={`${Style.container}`}>{content}</div>
 }
-

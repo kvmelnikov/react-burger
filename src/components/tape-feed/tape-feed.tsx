@@ -41,7 +41,6 @@ export const TapeFeed: FC<ITapeFeedProps> = ({ feeds, children }) => {
     })
     return { images: images, price: totalPrice }
   }
-  console.log(feeds)
 
   return (
     <div>
