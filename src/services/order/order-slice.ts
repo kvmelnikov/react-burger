@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { WebsocketStatus } from '../../types/websocket'
 import { PayloadAction } from '@reduxjs/toolkit'
+import { IResponseWs } from '../feed/feed-slice'
 
 export interface IOrrder {
   _id: string
@@ -47,8 +48,8 @@ const orderSlice = createSlice({
     wssError(state, action) {
       state.connectionError = action.payload
     },
-    wssMessage(state, action: PayloadAction<IOrrder[]>) {
-      state.orders = action.payload
+    wssMessage(state, action: PayloadAction<IResponseWs>) {
+      state.orders = action.payload.orders
     },
   },
 })

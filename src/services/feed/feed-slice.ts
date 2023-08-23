@@ -17,7 +17,7 @@ export interface IOrrder {
   number: number
 }
 
-interface IResponseWs {
+export interface IResponseWs {
   orders: IOrrder[]
   succcess: boolean
   total: number
@@ -162,6 +162,7 @@ const feedSlice = createSlice({
         state.succcessDetail = true
         state.failedDetail = false
         state.requestDetail = false
+        console.log(action.payload)
         state.feedDetail = action.payload.order
         state.feedDetailStrucure = action.payload.ingredients
         state.sumIngredients = action.payload.sumIngredients

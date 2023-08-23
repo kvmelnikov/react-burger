@@ -6,7 +6,7 @@ import {
   Register,
   //   // ResetPassword,
   ProfileForm,
-  //   // Orders,
+  Orders,
   //   // Order,
   Profile,
   MainB,
@@ -71,15 +71,15 @@ export default function App() {
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
+          <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} />
         </Route>
       </Routes>
 
       {background && (
         <Routes>
           <Route path={ingredient} element={<ModalDetail />} />
-
           <Route path={feedDetail} element={<ModalFeedDetail />} />
-          {/* <Route path={orderDetail} element={<ModalOrderDetail />} /> */}
+          <Route path={orderDetail} element={<ModalOrderDetail />} />
         </Routes>
       )}
     </>

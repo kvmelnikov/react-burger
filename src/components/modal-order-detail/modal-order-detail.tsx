@@ -2,14 +2,13 @@ import React, { useEffect, useMemo } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../modal/modal'
 import { FeedDetail } from '../feed-detail/feed-detail'
-import { useNavigate, useParams } from 'react-router-dom'
 import { getDetailFeed } from '../../services/feed/feed-api-slice'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
-import { stat } from 'fs'
 import { closeModal } from '../../services/modal/modal-slice'
 
-export function ModalFeedDetail() {
+function ModalOrderDetail() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const params = useParams()
@@ -18,19 +17,21 @@ export function ModalFeedDetail() {
   const feedDetailRequest = useAppSelector((state) => state.feed.requestDetail)
   const feedDetailFailed = useAppSelector((state) => state.feed.failedDetail)
   const sumIngredients = useAppSelector((state) => state.feed.sumIngredients)
-  const feeds = useAppSelector((state) => state.feed.feeds)
-  console.log(feeds, 'feeds')
+  const orders = useAppSelector((state) => state.orders.orders)
+  console.log(orders, 'orders')
+
   useEffect(() => {
     if (params.id) {
-      dispatch(getDetaiFeedlRequest({ feeds: feeds, id: params.id }))
+      console.log(params)
+      dispatch(getDetaiFeedlRequest({ feeds: orders, id: params.id }))
     }
-  }, [feeds])
+  }, [])
 
   const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
 
   const handleCloseModal = () => {
     dispatch(closeModal())
-    navigate('/feed')
+    navigate('/profile/orders')
   }
 
   const handleEscapeClose = (e: KeyboardEvent) => {
@@ -48,6 +49,8 @@ export function ModalFeedDetail() {
   }, [])
 
   const content = useMemo(() => {
+    console.log(showModalIngridientDetails, feedDetailStrucure, showModalIngridientDetails)
+
     if (feedDetail && feedDetailStrucure && showModalIngridientDetails) {
       return (
         <Modal handleCloseModal={handleCloseModal} heading=''>
@@ -67,3 +70,5 @@ export function ModalFeedDetail() {
 
   return content
 }
+
+export default ModalOrderDetail
