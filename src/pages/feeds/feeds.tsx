@@ -4,18 +4,18 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addStatusOrders, wsConnect } from '../../services/feed/feed-slice'
 import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { stat } from 'fs'
 
 export function Feeds() {
   const dispatch = useAppDispatch()
   const feeds = useAppSelector((state) => state.feed.feeds)
+  const sumIngredients = useAppSelector((state) => state.feed.sumIngredients)
   const statusOrders = useAppSelector((state) => state.feed.statusOrders)
   const total = useAppSelector((state) => state.feed.total)
   const totalToday = useAppSelector((state) => state.feed.totalToday)
   useEffect(() => {
     dispatch(addStatusOrders(feeds))
   }, [feeds])
-
-  console.log(feeds)
 
   return (
     <>
