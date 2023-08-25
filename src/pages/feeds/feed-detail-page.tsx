@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import { FeedDetail } from '../components/feed-detail/feed-detail'
-import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { getDetaiFeedlRequest } from '../services/feed/feed-slice'
+import { FeedDetail } from '../../components/feed-detail/feed-detail'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
 
 export function FeedDetailPage() {
   const dispatch = useAppDispatch()

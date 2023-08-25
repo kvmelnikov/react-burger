@@ -1,8 +1,8 @@
 import { Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
-import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { getUserRequest } from '../services/forms/forms-thunks'
-import { setFormValueProfile } from '../services/forms/forms-slice'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { getUserRequest } from '../../services/forms/forms-thunks'
+import { setFormValueProfile } from '../../services/forms/forms-slice'
 
 export const ProfileForm = () => {
   const dispatch = useAppDispatch()

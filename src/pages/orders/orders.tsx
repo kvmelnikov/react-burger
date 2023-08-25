@@ -1,5 +1,5 @@
-import { TapeFeed } from '../components/tape-feed/tape-feed'
-import { useAppSelector } from '../utils/hooks/hook'
+import { TapeFeed } from '../../components/tape-feed/tape-feed'
+import { useAppSelector } from '../../utils/hooks/hook'
 
 export const Orders = () => {
   const orders = useAppSelector((state) => state.orders.orders)

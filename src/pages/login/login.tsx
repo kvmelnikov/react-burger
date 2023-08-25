@@ -1,13 +1,13 @@
 import { Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import AppHeader from '../components/app-header/app-header'
-import { Form } from '../components/form/form'
+import AppHeader from '../../components/app-header/app-header'
+import { Form } from '../../components/form/form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import StyleForm from '../components/form/form.module.css'
 import React from 'react'
 
-import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { setFormValueLogin } from '../services/forms/forms-slice'
-import { loginUserRequest } from '../services/forms/forms-thunks'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { setFormValueLogin } from '../../services/forms/forms-slice'
+import { loginUserRequest } from '../../services/forms/forms-thunks'
 
 export function Login() {
   const dispatch = useAppDispatch()

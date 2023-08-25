@@ -54,12 +54,16 @@ export const resetPassRequest = createAsyncThunk<boolean, void, { rejectValue: s
         'Content-Type': 'application/json',
       },
       body: createBodyFormRequestReset(thunkAPI.getState().form.formResetPassword.inputs),
-    }).then((res) => {
-      if (res.ok) {
-        return res.ok
-      }
-      return thunkAPI.rejectWithValue('Server error')
     })
+      .then((res) => {
+        if (res.ok) {
+          return res.ok
+        }
+        return thunkAPI.rejectWithValue('Server error')
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue('Server error')
+      })
 
     return response
   },
@@ -74,12 +78,16 @@ export const forgotPassRequest = createAsyncThunk<boolean, void, { rejectValue: 
         'Content-Type': 'application/json',
       },
       body: createBodyFormRequest(thunkAPI.getState().form.formForgotPassword.inputs),
-    }).then((res) => {
-      if (res.ok) {
-        return res.ok
-      }
-      return thunkAPI.rejectWithValue('Server error')
     })
+      .then((res) => {
+        if (res.ok) {
+          return res.ok
+        }
+        return thunkAPI.rejectWithValue('Server error')
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue('Server error')
+      })
 
     return response
   },
@@ -133,6 +141,9 @@ export const loginUserRequest = createAsyncThunk<TRegister, void, { rejectValue:
           localStorage.setItem('refreshToken', res.refreshToken)
           return res
         }
+      })
+      .catch((err) => {
+        return thunkAPI.rejectWithValue('Server error')
       })
 
     return response.user
@@ -189,10 +200,6 @@ const updateToken = async () => {
       return err
     })
 }
-
-// const checkReponse = (res) => {
-//   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err))
-// }
 
 interface Theaders {
   [key: string]: string
