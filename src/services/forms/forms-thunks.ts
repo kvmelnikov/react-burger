@@ -1,6 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { IInputsFormLogin, IInputsFormProfile } from '../../types/types-forms-slice'
+import {
+  IInputsFormForgotPassword,
+  IInputsFormLogin,
+  IInputsFormProfile,
+  IInputsResetPassword,
+} from '../../types/types-forms-slice'
 import { RootState } from '../store'
+import thunk from 'redux-thunk'
 
 type TUser = {
   name: string
@@ -15,7 +21,7 @@ interface IDictData {
   [key: string]: string
 }
 
-const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin) => {
+const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin | IInputsFormForgotPassword) => {
   let data: IDictData = {}
 
   Object.keys(inputs).forEach((key) => {
@@ -26,6 +32,58 @@ const createBodyFormRequest = (inputs: IInputsFormProfile | IInputsFormLogin) =>
   })
   return JSON.stringify(data)
 }
+
+const createBodyFormRequestReset = (inputs: IInputsResetPassword) => {
+  let data: IDictData = {}
+
+  Object.keys(inputs).forEach((key) => {
+    type ObjectKey = keyof typeof inputs
+    const field = key as ObjectKey
+
+    data[field] = inputs[field].value
+  })
+  return JSON.stringify(data)
+}
+
+export const resetPassRequest = createAsyncThunk<boolean, void, { rejectValue: string; state: RootState }>(
+  'forms/resetPassRequest',
+  async (_, thunkAPI) => {
+    const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: createBodyFormRequestReset(thunkAPI.getState().form.formResetPassword.inputs),
+    }).then((res) => {
+      if (res.ok) {
+        return res.ok
+      }
+      return thunkAPI.rejectWithValue('Server error')
+    })
+
+    return response
+  },
+)
+
+export const forgotPassRequest = createAsyncThunk<boolean, void, { rejectValue: string; state: RootState }>(
+  'forms/forgotPassRequest',
+  async (_, thunkAPI) => {
+    const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: createBodyFormRequest(thunkAPI.getState().form.formForgotPassword.inputs),
+    }).then((res) => {
+      if (res.ok) {
+        return res.ok
+      }
+      return thunkAPI.rejectWithValue('Server error')
+    })
+
+    return response
+  },
+)
 
 export const logoutUserRequest = createAsyncThunk<number, void, { rejectValue: string }>(
   'forms/logoutUserRequest',
@@ -50,7 +108,6 @@ export const logoutUserRequest = createAsyncThunk<number, void, { rejectValue: s
       .catch((err) => {
         return thunkAPI.rejectWithValue('Server error')
       })
-    console.log(response)
     return 2
   },
 )

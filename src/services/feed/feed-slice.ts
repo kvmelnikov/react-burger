@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { compose, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { WebsocketStatus } from '../../types/websocket'
 import { IIngredientsFeedDetail, addStatus, modificateOrder } from './feed-utils'
 import { PayloadAction } from '@reduxjs/toolkit'
@@ -80,11 +80,11 @@ export const getDetaiFeedlRequest = createAsyncThunk<IResp, IGetDetailData, { re
   async (data, thunkAPI) => {
     const elementFeeds = data.feeds.filter((el) => data.id === el._id)
     const orderNumber = elementFeeds[0].number
-
     const response = await fetch(`https://norma.nomoreparties.space/api/orders/${orderNumber}`, {
       method: 'GET',
     })
       .then((res) => {
+        console.log(res)
         if (res.ok) {
           return res.json()
         }
@@ -101,7 +101,6 @@ export const getDetaiFeedlRequest = createAsyncThunk<IResp, IGetDetailData, { re
       .catch((err) => {
         return thunkAPI.rejectWithValue('Server error')
       })
-
     return response
   },
 )

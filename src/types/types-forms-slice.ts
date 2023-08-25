@@ -1,4 +1,4 @@
-interface IInputsFormForgotPassword {
+export interface IInputsFormForgotPassword {
   email: { value: string }
 }
 
@@ -6,8 +6,8 @@ export interface IInputsFormLogin extends IInputsFormForgotPassword {
   password: { value: string }
 }
 
-interface IInputsFormResetPassword {
-  pass: { value: string }
+export interface IInputsResetPassword {
+  password: { value: string }
   token: { value: string }
 }
 
@@ -15,9 +15,9 @@ export interface IInputsFormProfile extends IInputsFormLogin {
   name: { value: string }
 }
 
-export interface IInputsKeyAccess extends IInputsFormLogin {
-  [name: string]: { value: string }
-}
+// export interface IInputsKeyAccess extends IInputsFormLogin {
+//   [name: string]: { value: string }
+// }
 
 interface Ilogout {
   request: boolean
@@ -34,7 +34,7 @@ interface IformForgotPassword extends Ilogout {
 }
 
 interface IformResetPassword extends Ilogout {
-  inputs: IInputsFormResetPassword
+  inputs: IInputsResetPassword
 }
 
 interface IformRegister extends Ilogout {

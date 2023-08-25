@@ -5,7 +5,7 @@ import { FeedDetail } from '../feed-detail/feed-detail'
 import { useNavigate, useParams } from 'react-router-dom'
 import { getDetailFeed } from '../../services/feed/feed-api-slice'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
-import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
+import { getDetaiFeedlRequest, wsConnect } from '../../services/feed/feed-slice'
 import { stat } from 'fs'
 import { closeModal } from '../../services/modal/modal-slice'
 
@@ -19,12 +19,12 @@ export function ModalFeedDetail() {
   const feedDetailFailed = useAppSelector((state) => state.feed.failedDetail)
   const sumIngredients = useAppSelector((state) => state.feed.sumIngredients)
   const feeds = useAppSelector((state) => state.feed.feeds)
-  console.log(feeds, 'feeds')
+
   useEffect(() => {
     if (params.id) {
       dispatch(getDetaiFeedlRequest({ feeds: feeds, id: params.id }))
     }
-  }, [feeds])
+  }, [])
 
   const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
 

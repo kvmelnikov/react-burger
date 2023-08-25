@@ -1,7 +1,15 @@
 import { PayloadAction, createSlice, isAction } from '@reduxjs/toolkit'
 import { IFormsState } from '../../types/types-forms-slice'
-import { getUserRequest, loginUserRequest, logoutUserRequest, registrationUser } from './forms-thunks'
+import {
+  forgotPassRequest,
+  getUserRequest,
+  loginUserRequest,
+  logoutUserRequest,
+  registrationUser,
+  resetPassRequest,
+} from './forms-thunks'
 import { stat } from 'fs'
+import { stateForms } from '../reducers/form-reducer'
 
 export const initialState: IFormsState = {
   logoutUser: {
@@ -28,7 +36,7 @@ export const initialState: IFormsState = {
   },
   formResetPassword: {
     inputs: {
-      pass: { value: '' },
+      password: { value: '' },
       token: { value: '' },
     },
     request: false,
@@ -88,9 +96,44 @@ const formsSlice = createSlice({
         state.formProfile.inputs[field].value = action.payload.value
       }
     },
+    setformForgotPassword: (state, action: PayloadAction<IFormDict>) => {
+      type ObjectKey = keyof typeof state.formForgotPassword.inputs
+      const field = action.payload.field as ObjectKey
+      if (state.formForgotPassword.inputs[field]) {
+        state.formForgotPassword.inputs[field].value = action.payload.value
+      }
+    },
+    setformResetPassword: (state, action: PayloadAction<IFormDict>) => {
+      type ObjectKey = keyof typeof state.formResetPassword.inputs
+      const field = action.payload.field as ObjectKey
+      if (state.formResetPassword.inputs[field]) {
+        state.formResetPassword.inputs[field].value = action.payload.value
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
+      .addCase(resetPassRequest.pending, (state) => {
+        state.formResetPassword.request = true
+      })
+      .addCase(resetPassRequest.fulfilled, (state) => {
+        state.formResetPassword.request = false
+        state.formResetPassword.failed = false
+      })
+      .addCase(resetPassRequest.rejected, (state) => {
+        state.formResetPassword.failed = true
+      })
+      .addCase(forgotPassRequest.pending, (state) => {
+        state.formForgotPassword.request = true
+      })
+      .addCase(forgotPassRequest.fulfilled, (state) => {
+        state.formForgotPassword.request = false
+        state.formForgotPassword.failed = false
+        state.formForgotPassword.redirect = true
+      })
+      .addCase(forgotPassRequest.rejected, (state) => {
+        state.formForgotPassword.failed = true
+      })
       .addCase(getUserRequest.pending, (state) => {
         state.formProfile.request = true
       })
@@ -147,5 +190,11 @@ const formsSlice = createSlice({
   },
 })
 
-export const { setFormValueRegister, setFormValueLogin, setFormValueProfile } = formsSlice.actions
+export const {
+  setformResetPassword,
+  setFormValueRegister,
+  setformForgotPassword,
+  setFormValueLogin,
+  setFormValueProfile,
+} = formsSlice.actions
 export default formsSlice.reducer

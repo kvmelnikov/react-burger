@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import {
   ConstructorMain,
   Login,
-  //   // ForgotPassword,
+  ForgotPassword,
   Register,
   //   // ResetPassword,
   ProfileForm,
@@ -13,7 +13,8 @@ import {
   DetailPageIngredient,
   Feeds,
   FeedDetailPage,
-  //   // OrderDetailPage,
+  OrderDetailPage,
+  ResetPassword,
 } from './pages'
 import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
@@ -67,8 +68,11 @@ export default function App() {
           <Route path={feed} element={<Feeds />} />
           <Route path={feedDetail} element={<FeedDetailPage />} />
         </Route>
+        <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
         <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
         <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
+        <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
+        <Route path={reset_password} element={<ResetPassword />} />
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
           <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} />
