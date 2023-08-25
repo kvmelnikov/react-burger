@@ -2,11 +2,9 @@ import { Navigate, useLocation } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import React, { FC, useEffect } from 'react'
-import { getCookie, setCookie } from '../utils/cookie'
-import Api from '../utils/api/api'
 import { useAppSelector } from '../utils/hooks/hook'
 
-export const ProtectedRouteElement = ({ element }) => {
+export const ProtectedRouteElement: FC<any | null> = ({ element }) => {
   const location = useLocation()
   const {
     inputs: {
@@ -14,7 +12,7 @@ export const ProtectedRouteElement = ({ element }) => {
     },
     request,
     failed,
-  } = useSelector((state) => state.form.formProfile)
+  } = useAppSelector((state) => state.form.formProfile)
 
   if (request) {
     return <p>Загрузка...</p>

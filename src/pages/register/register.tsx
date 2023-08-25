@@ -1,7 +1,7 @@
 import { Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import AppHeader from '../../components/app-header/app-header'
 import { Form } from '../../components/form/form'
-import StyleForm from '../components/form/form.module.css'
+import StyleForm from '../../components/form/form.module.css'
 import React from 'react'
 import { setFormValueRegister } from '../../services/forms/forms-slice'
 import { Link, Navigate } from 'react-router-dom'

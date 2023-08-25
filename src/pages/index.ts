@@ -9,7 +9,7 @@ import { Profile } from './profile/profile'
 import { MainB } from './main-b/main-b'
 import { DetailPageIngredient } from './detail-page-ingredient/detail-page-ingredient'
 import { Feeds } from './feeds/feeds'
-import { FeedDetailPage } from './feeds/feed-detail-page'
+import { FeedDetailPage } from './feed-detail-page/feed-detail-page'
 import { OrderDetailPage } from './order-detail-page/order-detail-page'
 
 export {

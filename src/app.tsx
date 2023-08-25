@@ -17,7 +17,6 @@ import {
 import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
 import { ForgotRouteElement } from './components/ForgotRouteElement'
-import { OnlyUnAuthRoute } from './components/OnlyUnAuthRoute'
 import { useEffect } from 'react'
 import { getIngredients } from './services/constructor/constructor-api-slice'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
@@ -60,8 +59,8 @@ export default function App() {
           <Route path={feedDetail} element={<FeedDetailPage />} />
         </Route>
         <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
-        <Route path={login} element={<OnlyUnAuthRoute element={<Login />} />} />
-        <Route path={register} element={<OnlyUnAuthRoute element={<Register />} />} />
+        <Route path={login} element={<Login />} />
+        <Route path={register} element={<Register />} />
         <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
         <Route path={reset_password} element={<ResetPassword />} />
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>

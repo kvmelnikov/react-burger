@@ -2,7 +2,7 @@ import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-comp
 import AppHeader from '../../components/app-header/app-header'
 import { Form } from '../../components/form/form'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import StyleForm from '../components/form/form.module.css'
+import StyleForm from '../../components/form/form.module.css'
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { setformForgotPassword } from '../../services/forms/forms-slice'
