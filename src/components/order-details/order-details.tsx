@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux'
 import orderDetailsStyles from './order-details.module.css'
 import { useMemo } from 'react'
 import { useAppSelector } from '../../utils/hooks/hook'

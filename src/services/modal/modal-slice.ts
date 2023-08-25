@@ -1,7 +1,4 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { IIngredientDetails } from '../../types/types'
-import { act } from 'react-dom/test-utils'
-import { stat } from 'fs'
+import { createSlice } from '@reduxjs/toolkit'
 
 interface IModalState {
   modalIngridientDetail: boolean

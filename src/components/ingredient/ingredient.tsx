@@ -2,7 +2,6 @@ import React, { FC } from 'react'
 
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingridientStyle from './ingridient.module.css'
-import propTypes from 'prop-types'
 import { useDrag } from 'react-dnd'
 import { Link, useLocation } from 'react-router-dom'
 import { useAppDispatch } from '../../utils/hooks/hook'

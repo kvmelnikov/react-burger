@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { FeedDetail } from '../components/feed-detail/feed-detail'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
@@ -20,14 +19,13 @@ export function OrderDetailPage() {
     if (localStorage.getItem('accessToken')) {
       dispatch(getUserRequest())
     }
-  }, [])
+  }, [params])
 
   useEffect(() => {
     if (params.id) {
-      console.log(params)
       dispatch(getDetaiFeedlRequest({ feeds: orders, id: params.id }))
     }
-  }, [])
+  }, [orders, params.id])
 
   const content = useMemo(() => {
     if (feedDetail && feedDetailStrucure) {
@@ -43,7 +41,7 @@ export function OrderDetailPage() {
     } else {
       return <div></div>
     }
-  }, [feedDetail, feedDetailStrucure])
+  }, [feedDetail, feedDetailStrucure, sumIngredients, feedDetailFailed, feedDetailRequest])
 
   return content
 }

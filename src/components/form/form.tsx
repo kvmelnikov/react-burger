@@ -1,5 +1,4 @@
 import formStyle from './form.module.css'
-import propTypes from 'prop-types'
 import { FC } from 'react'
 
 interface IForm {

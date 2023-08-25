@@ -1,7 +1,6 @@
 import FeedElementStyle from './feed-element.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
-// import { SHOW_MODAL_INGRIDIENT_DETAILS } from '../../services/actions/modal-action'
 import { useDispatch } from 'react-redux'
 import { FC, MouseEvent } from 'react'
 import { showModalIngredientsDetail } from '../../services/modal/modal-slice'

@@ -1,24 +1,11 @@
-import { ActionCreatorWithPayload, AnyAction, configureStore } from '@reduxjs/toolkit'
-import { constructorApiMiddleware } from './middleware/constructor-api-middleware'
+import { configureStore } from '@reduxjs/toolkit'
 import constructorApiReducer from './constructor/constructor-api-slice'
 import formsSlice from './forms/forms-slice'
 import IngredientReducer from './constructor/ingredient-slice'
 import ModalReducer from './modal/modal-slice'
 import BurgerReducer from './constructor/burger-slice'
-import { Dispatch } from 'react'
 import orderReducer from './order/order-slice'
 import feedReducer from './feed/feed-slice'
-
-// const constructorMiddleware = constructorApiMiddleware ({
-//   getIngredients: getIngredients,
-//   getIngredientsRequest: getIngredientsRequest,
-//   getIngredientsFailed: getIngredientsFailed,
-//   getIngredientsSuccess: getIngredientsSuccess,
-//   orderRequest: orderRequest,
-//   orderRequestFailed: orderRequestFailed,
-//   orderRequestSuccess: orderRequestSuccess,
-// }
-// )
 
 import {
   wsConnect as FeedWsConnect,

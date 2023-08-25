@@ -1,12 +1,8 @@
-import React, { RefObject, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerIngridientsStyle from './burger-ingridients.module.css'
-//import IngridientDetails from '../ingredient-details/ingredient-details.jsx'
-import Modal from '../modal/modal'
 
-import { useSelector, useDispatch } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
-import { useAppSelector } from '../../utils/hooks/hook'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { Ingredient } from '../ingredient/ingredient'
 
 const { ingridients__container, ingridients__list, ingridients__tab } = burgerIngridientsStyle
@@ -16,7 +12,7 @@ interface TypesTopping {
 }
 
 function BurgerIngridients() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
   const [current, setCurrent] = React.useState<string>('bun')
 
   const [types] = React.useState<TypesTopping>({
@@ -26,9 +22,6 @@ function BurgerIngridients() {
   })
 
   const ingredients = useAppSelector((state) => state.ingredients.ingredients)
-
-  // const ingredientDataForModal = useSelector((state) => state.ingredients.currentIngridient)
-  // const showModal`IngridientDetails` = useSelector((state) => state.modal.modalIngridientDetail)
 
   const typeRefs = React.useRef<any[]>([])
   const containerRef = React.useRef<null | any>(null)

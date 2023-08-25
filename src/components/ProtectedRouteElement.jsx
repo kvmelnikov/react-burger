@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect } from 'react'
+import React, { FC, useEffect } from 'react'
 import { getCookie, setCookie } from '../utils/cookie'
 import Api from '../utils/api/api'
 import { useAppSelector } from '../utils/hooks/hook'

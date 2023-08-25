@@ -5,28 +5,21 @@ import Modal from '../modal/modal'
 import { Topping } from '../topping/topping'
 import OrderDetails from '../order-details/order-details'
 import { useDrop } from 'react-dnd'
-// import { getOrderNumber } from '../../services/actions/api-action'
-// import { ADD_BUN_TO_BURGER_CONSTRUCTOR, ADD_TOPPING_TO_BURGER_CONSTRUCTOR } from '../../services/actions/burger-action'
-// import { INCREASE_COUNTER_INGREDIENT, DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action'
 import { useLocation, useNavigate } from 'react-router-dom'
-//import { CLOSE_MODAL } from '../../services/actions/modal-action'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
-import { IIngredientDetails } from '../../types/types'
 import {
   addBunToBurgerConstructor,
   addToppingToBurgerConstructor,
   requestOrder,
 } from '../../services/constructor/burger-slice'
 import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
-import { closeModal, showModalIngredientsDetail, showModalOrderDetails } from '../../services/modal/modal-slice'
-import { request } from 'http'
+import { closeModal } from '../../services/modal/modal-slice'
 import { ITopping } from '../../services/constructor/burger-slice'
 const { container, bun, toppings, info } = burgerConstructorStyle
 
 function BurgerConstructor() {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
-  const numberOrder = useAppSelector((state) => state.burger.numberOrder)
   const location = useLocation()
   const showModalOrderDetails = useAppSelector((state) => state.modal.showModalOrderDetails)
   const {

@@ -1,11 +1,8 @@
 import React, { useEffect, FC } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import ingredientDetailsStyles from './ingredient-details.module.css'
-import { useDispatch, useSelector } from 'react-redux'
-// import { GET_INGREDIENT, SET_CURRENT_INGREDIENT } from '../../services/actions/ingridients-action'
 import { useParams } from 'react-router-dom'
-import { IIngredientDetails } from '../../types/types'
-//import { getIngredients } from '../../services/actions/api-action'
+import { useAppDispatch } from '../../utils/hooks/hook'
 
 interface IPropsIngredientsDeatails {
   image_large: string
@@ -24,8 +21,7 @@ export const IngredientDetails: FC<IPropsIngredientsDeatails> = ({
   fat,
   carbohydrates,
 }) => {
-  const dispatch = useDispatch()
-  const { id } = useParams()
+  const dispatch = useAppDispatch()
 
   return (
     <div className={ingredientDetailsStyles.details__container}>

@@ -1,8 +1,5 @@
-import { useDispatch } from 'react-redux'
 import MenuStyle from './profile-menu.module.css'
 import { useNavigate, NavLink, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-// import { RESET_USER_FORM, getUserRequest, logoutUser } from '../../services/actions/form-action'
 import { useAppDispatch } from '../../utils/hooks/hook'
 import { logoutUserRequest } from '../../services/forms/forms-thunks'
 

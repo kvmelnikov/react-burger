@@ -3,8 +3,6 @@ import AppHeader from '../components/app-header/app-header'
 import { Form } from '../components/form/form'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import StyleForm from '../components/form/form.module.css'
-// import { setFormValue } from '../services/actions/form-action'
-
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
 import { setformForgotPassword } from '../services/forms/forms-slice'

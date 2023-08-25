@@ -1,22 +1,11 @@
 import { Input, Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import AppHeader from '../components/app-header/app-header'
-import { Form } from '../components/form/form'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import StyleForm from '../components/form/form.module.css'
-import mainConstructorStyle from './constructor-main.module.css'
-import React, { useEffect } from 'react'
-import ProfileStyle from './profile.module.css'
-
-// import { setFormValue, updateUserRequest } from '../services/actions/form-action'
-import { getCookie } from '../utils/cookie'
+import React from 'react'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { stat } from 'fs'
 import { getUserRequest } from '../services/forms/forms-thunks'
 import { setFormValueProfile } from '../services/forms/forms-slice'
 
 export const ProfileForm = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
 
   const {
     inputs: {
@@ -60,7 +49,6 @@ export const ProfileForm = () => {
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // dispatch(updateUserRequest())
     dispatch(getUserRequest())
   }
 

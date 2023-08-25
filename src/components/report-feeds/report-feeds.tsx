@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux'
 import ReportStyle from './report-feeds.module.css'
-import propTypes from 'prop-types'
 import { FC } from 'react'
 import { IReportFeeds } from '../../types/types'
 
@@ -38,4 +36,3 @@ export const ReportFeeds: FC<IReportFeeds> = ({ statusOrders, total, totalToday 
     </div>
   )
 }
-

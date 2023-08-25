@@ -2,12 +2,9 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import AppHeader from '../components/app-header/app-header'
 import { Form } from '../components/form/form'
 import { Link, Navigate } from 'react-router-dom'
-
 import StyleForm from '../components/form/form.module.css'
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
-import { stat } from 'fs'
 import { resetPassRequest } from '../services/forms/forms-thunks'
 import { setformResetPassword } from '../services/forms/forms-slice'
 

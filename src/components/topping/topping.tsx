@@ -1,13 +1,7 @@
 import { FC, useMemo, useRef } from 'react'
 import toppingStyles from './topping.module.css'
 import { useDrag, useDrop } from 'react-dnd'
-import { useDispatch } from 'react-redux'
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import propTypes from 'prop-types'
-
-// import { INSERT_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action'
-// import { DECREASE_COUNTER_INGREDIENT } from '../../services/actions/ingridients-action'
-// import { DELETE_INGREDIENT_IN_CONSTRUCTOR } from '../../services/actions/burger-action'
 import { useAppDispatch } from '../../utils/hooks/hook'
 import {
   ITopping,
@@ -15,25 +9,15 @@ import {
   insertIngredientInConstructor,
 } from '../../services/constructor/burger-slice'
 import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
-import { IIngredientDetails } from '../../types/types'
 
 export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentIndex, item }) => {
   const dispatch = useAppDispatch()
   const { index } = item
   const dragRef = useRef(null)
-  const dropRef = useRef(null)
-
-  // item.index = index
 
   const [, drag] = useDrag({
     type: 'item',
     item: { index, currentIndex },
-    // collect: (monitor) => {
-    //   const result = {
-    //     isDragging: monitor.isDragging(),
-    //   }
-    //   return result
-    // },
   })
 
   const [, drop] = useDrop({
@@ -57,7 +41,6 @@ export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentI
   const handleDeleteTopping = (e: any, index: number) => {
     if (e.target.parentElement.parentElement.classList.contains('pr-2')) {
       dispatch(deacreaseCounterIngredient(item._id))
-      // dispatch({ type: DELETE_INGREDIENT_IN_CONSTRUCTOR, indx: index })
       dispatch(deleteIngredientInConstructor(index))
     }
   }

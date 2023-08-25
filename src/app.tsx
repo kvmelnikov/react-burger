@@ -4,10 +4,8 @@ import {
   Login,
   ForgotPassword,
   Register,
-  //   // ResetPassword,
   ProfileForm,
   Orders,
-  //   // Order,
   Profile,
   MainB,
   DetailPageIngredient,
@@ -20,14 +18,11 @@ import ModalDetail from './components/modal-detail/modal-detail'
 import { ProtectedRouteElement } from './components/ProtectedRouteElement'
 import { ForgotRouteElement } from './components/ForgotRouteElement'
 import { OnlyUnAuthRoute } from './components/OnlyUnAuthRoute'
-import { useDispatch, useSelector } from 'react-redux'
-import React, { useEffect } from 'react'
-// import { getUserRequest } from './services/actions/form-action'
+import { useEffect } from 'react'
 import { getIngredients } from './services/constructor/constructor-api-slice'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
-import { useAppDispatch, useAppSelector } from './utils/hooks/hook'
+import { useAppDispatch } from './utils/hooks/hook'
 import { getUserRequest } from './services/forms/forms-thunks'
-import { stat } from 'fs'
 import { ModalFeedDetail } from './components/modal-feed-detail/modal-feed-detail'
 
 export default function App() {
@@ -47,10 +42,6 @@ export default function App() {
   let location = useLocation()
 
   const background = location.state && location.state.background
-  const baseUrl = 'https://norma.nomoreparties.space/api/'
-
-  const user = useAppSelector((state) => state.form.formProfile.inputs.name.value)
-  const ingredients = useAppSelector((state) => state.constructorApi.ingredients)
 
   useEffect(() => {
     dispatch(getIngredients())

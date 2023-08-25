@@ -3,15 +3,10 @@ import AppHeader from '../components/app-header/app-header'
 import { Form } from '../components/form/form'
 import StyleForm from '../components/form/form.module.css'
 import React from 'react'
-// import { useSelector, useDispatch } from "react-redux";
 import { setFormValueRegister } from '../services/forms/forms-slice'
-// import { registrationUser } from "../services/actions/form-action";
 import { Link, Navigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../utils/hooks/hook'
 import { getUserRequest } from '../services/forms/forms-thunks'
-
-// const getFormData = (state) => state.form.;
-// const getFormProfile = (state) => state.form.formProfile;
 
 export function Register() {
   const dispatch = useAppDispatch()
@@ -24,11 +19,11 @@ export function Register() {
     },
   } = useAppSelector((state) => state.form.formRegister)
 
-  // const {
-  //   inputs: {
-  //     name: { value: nameUser },
-  //   },
-  // } = useAppSelector(getFormProfile);
+  const {
+    inputs: {
+      name: { value: nameUser },
+    },
+  } = useAppSelector((state) => state.form.formProfile)
 
   const [typePass, setTypePass] = React.useState<'password' | 'text'>('password')
 
@@ -76,9 +71,9 @@ export function Register() {
     dispatch(getUserRequest())
   }
 
-  // if (nameUser) {
-  //   return <Navigate to="/" replace />;
-  // }
+  if (nameUser) {
+    return <Navigate to='/' replace />
+  }
 
   return (
     <>

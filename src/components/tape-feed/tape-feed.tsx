@@ -1,17 +1,13 @@
 import { FeedElement } from '../feed-element/feed-element'
 import TapeFeedStyle from './tape-feed.module.css'
-
-import propTypes from 'prop-types'
-import { Children, FC, useEffect, useMemo } from 'react'
-import { GET_IMAGES } from '../../services/actions/ingridients-action'
-import { useDispatch, useSelector } from 'react-redux'
+import { FC } from 'react'
 import { useAppSelector } from '../../utils/hooks/hook'
 import { IOrrder } from '../../services/feed/feed-slice'
 import { IIngredientDetails } from '../../types/types'
 
 interface ITapeFeedProps {
   feeds: IOrrder[]
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 type TImage = {

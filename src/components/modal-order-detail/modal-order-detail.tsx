@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../modal/modal'
 import { FeedDetail } from '../feed-detail/feed-detail'
-import { getDetailFeed } from '../../services/feed/feed-api-slice'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'

@@ -1,11 +1,8 @@
-import React, { useMemo } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 import Modal from '../modal/modal'
 import { IngredientDetails } from '../ingredient-details/ingredient-details'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { closeModal } from '../../services/modal/modal-slice'
-import { isJSDocReturnTag } from 'typescript'
 
 function ModalDetail() {
   const dispatch = useAppDispatch()

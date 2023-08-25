@@ -1,8 +1,6 @@
-import { DetailedHTMLProps, FC, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import { FC, useMemo } from 'react'
 import Style from './feed-detail.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
-import propTypes from 'prop-types'
 import { IIFeedDetail } from '../../types/types'
 import { useAppDispatch } from '../../utils/hooks/hook'
 

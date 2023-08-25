@@ -8,8 +8,6 @@ import {
   registrationUser,
   resetPassRequest,
 } from './forms-thunks'
-import { stat } from 'fs'
-import { stateForms } from '../reducers/form-reducer'
 
 export const initialState: IFormsState = {
   logoutUser: {

@@ -1,20 +1,12 @@
-import React, { FC, KeyboardEvent } from 'react'
+import { FC } from 'react'
 import modalStyle from './modal.module.css'
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { createPortal } from 'react-dom'
 import ModalOverlay from '../modal-overlay/modal-overlay'
-import { useSelector, useDispatch } from 'react-redux'
-//import { CLOSE_MODAL } from '../../services/actions/modal-action'
-import { useNavigate } from 'react-router-dom'
-import propTypes from 'prop-types'
 import { IModal } from '../../types/types-modal'
 const modalSelector = document.querySelector('#modals')
 
 const Modal: FC<IModal> = (props) => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  // FIXME: TWO BUTTON CLOSE
-
   return createPortal(
     <>
       <ModalOverlay handleCloseModal={props.handleCloseModal} />
