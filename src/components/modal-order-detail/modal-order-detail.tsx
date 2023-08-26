@@ -20,7 +20,6 @@ function ModalOrderDetail() {
 
   useEffect(() => {
     if (params.id) {
-      console.log(params)
       dispatch(getDetaiFeedlRequest({ feeds: orders, id: params.id }))
     }
   }, [])

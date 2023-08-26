@@ -54,10 +54,11 @@ export default function App() {
       <Routes location={background || location}>
         <Route path={home} element={<MainB />}>
           <Route path={home} element={<ConstructorMain />} />
-          <Route path={ingredient} element={<DetailPageIngredient />} />
           <Route path={feed} element={<Feeds />} />
           <Route path={feedDetail} element={<FeedDetailPage />} />
+          <Route path={ingredient} element={<DetailPageIngredient />} />
         </Route>
+
         <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
         <Route path={login} element={<Login />} />
         <Route path={register} element={<Register />} />

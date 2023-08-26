@@ -84,7 +84,6 @@ export const getDetaiFeedlRequest = createAsyncThunk<IResp, IGetDetailData, { re
       method: 'GET',
     })
       .then((res) => {
-        console.log(res)
         if (res.ok) {
           return res.json()
         }
@@ -161,7 +160,6 @@ const feedSlice = createSlice({
         state.succcessDetail = true
         state.failedDetail = false
         state.requestDetail = false
-        console.log(action.payload)
         state.feedDetail = action.payload.order
         state.feedDetailStrucure = action.payload.ingredients
         state.sumIngredients = action.payload.sumIngredients

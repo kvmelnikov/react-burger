@@ -5,13 +5,14 @@ import { IngredientDetails } from '../../components/ingredient-details/ingredien
 import { getIngredients } from '../../services/constructor/constructor-api-slice'
 
 export function DetailPageIngredient() {
+  console.log('DetailPageIngredient')
   const path = useLocation().pathname
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (path !== '/') {
-      dispatch(getIngredients(path.split('/')[2]))
-    }
-  }, [path])
+    // if (path !== '/') {
+    dispatch(getIngredients(path.split('/')[2]))
+    // }
+  }, [])
 
   const ingredientDataForModal = useAppSelector((state) => state.ingredients.currentIngridient)
 

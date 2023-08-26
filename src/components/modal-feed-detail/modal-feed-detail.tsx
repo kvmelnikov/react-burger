@@ -4,7 +4,9 @@ import { FeedDetail } from '../feed-detail/feed-detail'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
-import { closeModal } from '../../services/modal/modal-slice'
+import { closeModal, showModalIngredientsDetail } from '../../services/modal/modal-slice'
+import { wsConnect, wsDisconnect as feedDiconnect } from '../../services/feed/feed-slice'
+import { LIVE_TABLE_SERVER_URL } from '../../pages/main-b/main-b'
 
 export function ModalFeedDetail() {
   const dispatch = useAppDispatch()
@@ -18,8 +20,14 @@ export function ModalFeedDetail() {
   const feeds = useAppSelector((state) => state.feed.feeds)
 
   useEffect(() => {
-    if (params.id) {
+    if (params.id && feeds.length > 0) {
       dispatch(getDetaiFeedlRequest({ feeds: feeds, id: params.id }))
+    }
+  }, [feeds])
+
+  useEffect(() => {
+    if (feeds.length === 0) {
+      dispatch(wsConnect(LIVE_TABLE_SERVER_URL))
     }
   }, [])
 
@@ -46,6 +54,18 @@ export function ModalFeedDetail() {
 
   const content = useMemo(() => {
     if (feedDetail && feedDetailStrucure && showModalIngridientDetails) {
+      return (
+        <Modal handleCloseModal={handleCloseModal} heading=''>
+          <FeedDetail
+            feedDetailFailed={feedDetailFailed}
+            feedDetailRequest={feedDetailRequest}
+            feedDetail={feedDetail}
+            feedDetailStrucure={feedDetailStrucure}
+            sumIngredients={sumIngredients}
+          />
+        </Modal>
+      )
+    } else if (feedDetail && feedDetailStrucure) {
       return (
         <Modal handleCloseModal={handleCloseModal} heading=''>
           <FeedDetail

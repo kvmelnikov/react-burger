@@ -18,10 +18,9 @@ export function FeedDetailPage() {
     if (params.id) {
       dispatch(getDetaiFeedlRequest({ feeds: feeds, id: params.id }))
     }
-  }, [feeds])
+  }, [feedDetail, feedDetailStrucure])
 
   const content = useMemo(() => {
-    console.log(feedDetail, feedDetailStrucure)
     if (feedDetail && feedDetailStrucure) {
       return (
         <FeedDetail
