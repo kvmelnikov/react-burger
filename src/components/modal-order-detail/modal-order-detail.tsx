@@ -5,6 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
 import { closeModal } from '../../services/modal/modal-slice'
+import { LIVE_TABLE_SERVER_URL } from '../../pages/main-b/main-b'
+import { ORDERS_SERVER_URL } from '../../pages/profile/profile'
+import { wsConnect } from '../../services/order/order-slice'
 
 function ModalOrderDetail() {
   const dispatch = useAppDispatch()
@@ -18,10 +21,10 @@ function ModalOrderDetail() {
   const orders = useAppSelector((state) => state.orders.orders)
 
   useEffect(() => {
-    if (params.id) {
+    if (params.id && orders.length > 0) {
       dispatch(getDetaiFeedlRequest({ feeds: orders, id: params.id }))
     }
-  }, [])
+  }, [orders])
 
   const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
 
@@ -45,9 +48,19 @@ function ModalOrderDetail() {
   }, [])
 
   const content = useMemo(() => {
-    console.log(showModalIngridientDetails, feedDetailStrucure, showModalIngridientDetails)
-
     if (feedDetail && feedDetailStrucure && showModalIngridientDetails) {
+      return (
+        <Modal handleCloseModal={handleCloseModal} heading=''>
+          <FeedDetail
+            feedDetailFailed={feedDetailFailed}
+            feedDetailRequest={feedDetailRequest}
+            feedDetail={feedDetail}
+            feedDetailStrucure={feedDetailStrucure}
+            sumIngredients={sumIngredients}
+          />
+        </Modal>
+      )
+    } else if (feedDetail && feedDetailStrucure) {
       return (
         <Modal handleCloseModal={handleCloseModal} heading=''>
           <FeedDetail
@@ -62,7 +75,7 @@ function ModalOrderDetail() {
     } else {
       return <div></div>
     }
-  }, [feedDetail, feedDetailStrucure])
+  }, [feedDetail, feedDetailStrucure, orders])
 
   return content
 }

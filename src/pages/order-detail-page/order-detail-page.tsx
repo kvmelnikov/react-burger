@@ -14,12 +14,12 @@ export function OrderDetailPage() {
   const feedDetailFailed = useAppSelector((state) => state.feed.failedDetail)
   const sumIngredients = useAppSelector((state) => state.feed.sumIngredients)
   const orders = useAppSelector((state) => state.orders.orders)
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      dispatch(getUserRequest())
-    }
-  }, [params])
+  console.log(orders)
+  // useEffect(() => {
+  //   if (localStorage.getItem('accessToken')) {
+  //     dispatch(getUserRequest())
+  //   }
+  // }, [params])
 
   useEffect(() => {
     if (params.id) {

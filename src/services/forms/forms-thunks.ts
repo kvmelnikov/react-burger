@@ -266,7 +266,7 @@ export const getUserRequest = createAsyncThunk<TRegister, void, { rejectValue: s
     }).catch((err) => {
       return thunkAPI.rejectWithValue('Server error')
     })
-    if (response) {
+    if (response.user) {
       return response.user
     } else {
       return thunkAPI.rejectWithValue('Server error')

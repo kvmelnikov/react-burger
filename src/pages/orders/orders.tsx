@@ -3,7 +3,9 @@ import { useAppSelector } from '../../utils/hooks/hook'
 
 export const Orders = () => {
   const orders = useAppSelector((state) => state.orders.orders)
-  const reverseOrders = [...orders].reverse()
+
+  const reverseOrders = orders ? [...orders].reverse() : null
+
   if (reverseOrders) {
     return (
       <>

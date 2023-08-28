@@ -64,7 +64,6 @@ export default function App() {
           <Route path={ingredient} element={<DetailPageIngredient />} />
         </Route>
 
-        <Route path={orderDetail} element={<OrderDetailPage />} />
         <Route path={login} element={<Login />} />
         <Route path={register} element={<Register />} />
         <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />
@@ -72,6 +71,7 @@ export default function App() {
         <Route path={profile} element={<ProtectedRouteElement element={<Profile />} />}>
           <Route path={profile} element={<ProtectedRouteElement element={<ProfileForm />} />} />
           <Route path={orders} element={<ProtectedRouteElement element={<Orders />} />} />
+          <Route path={orderDetail} element={<OrderDetailPage />} />
         </Route>
       </Routes>
 

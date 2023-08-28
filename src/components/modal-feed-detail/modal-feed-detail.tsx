@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
 import { getDetaiFeedlRequest } from '../../services/feed/feed-slice'
 import { closeModal, showModalIngredientsDetail } from '../../services/modal/modal-slice'
 import { wsConnect, wsDisconnect as feedDiconnect } from '../../services/feed/feed-slice'
-import { LIVE_TABLE_SERVER_URL } from '../../pages/main-b/main-b'
 
 export function ModalFeedDetail() {
   const dispatch = useAppDispatch()
@@ -24,12 +23,6 @@ export function ModalFeedDetail() {
       dispatch(getDetaiFeedlRequest({ feeds: feeds, id: params.id }))
     }
   }, [feeds])
-
-  useEffect(() => {
-    if (feeds.length === 0) {
-      dispatch(wsConnect(LIVE_TABLE_SERVER_URL))
-    }
-  }, [])
 
   const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
 
