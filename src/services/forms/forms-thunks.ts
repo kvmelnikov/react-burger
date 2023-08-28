@@ -179,6 +179,7 @@ export const registrationUser = createAsyncThunk<TRegister, void, { rejectValue:
 )
 
 const updateToken = async () => {
+  console.log(localStorage.getItem('refreshToken'))
   return fetch('https://norma.nomoreparties.space/api/auth/token', {
     method: 'POST',
     headers: {
@@ -197,7 +198,7 @@ const updateToken = async () => {
       return Promise.reject(`Ошибка: ${res}`)
     })
     .catch((err) => {
-      return err
+      return Promise.reject(`Ошибка: ${err}`)
     })
 }
 
@@ -214,20 +215,24 @@ const fetchWithRefresh = async (url: string, options: TBody) => {
   try {
     const response = await fetch(url, options)
       .then((res) => {
-        return res.json()
+        if (res.ok) {
+          return res.json()
+        } else {
+          return res.json().then((res) => Promise.reject(res))
+        }
       })
       .catch((err) => {
-        Promise.reject(err)
+        return Promise.reject(err)
       })
 
     if (response.success) {
       return response
     } else {
-      throw new Error(response.message)
+      throw new Error(response)
     }
   } catch (err: any) {
+    const refreshData = await updateToken()
     if (err.message === 'jwt expired') {
-      const refreshData = await updateToken()
       localStorage.setItem('refreshToken', refreshData.refreshToken)
       localStorage.setItem('accessToken', refreshData.accessToken)
       options.headers.authorization = refreshData.accessToken
@@ -258,8 +263,13 @@ export const getUserRequest = createAsyncThunk<TRegister, void, { rejectValue: s
         'Content-Type': 'application/json',
       },
       method: 'GET',
+    }).catch((err) => {
+      return thunkAPI.rejectWithValue('Server error')
     })
-
-    return response.user
+    if (response) {
+      return response.user
+    } else {
+      return thunkAPI.rejectWithValue('Server error')
+    }
   },
 )

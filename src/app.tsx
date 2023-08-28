@@ -20,7 +20,7 @@ import { ForgotRouteElement } from './components/ForgotRouteElement'
 import { useEffect } from 'react'
 import { getIngredients } from './services/constructor/constructor-api-slice'
 import ModalOrderDetail from './components/modal-order-detail/modal-order-detail'
-import { useAppDispatch } from './utils/hooks/hook'
+import { useAppDispatch, useAppSelector } from './utils/hooks/hook'
 import { getUserRequest } from './services/forms/forms-thunks'
 import { ModalFeedDetail } from './components/modal-feed-detail/modal-feed-detail'
 
@@ -39,6 +39,11 @@ export default function App() {
 
   const dispatch = useAppDispatch()
   let location = useLocation()
+  const {
+    inputs: {
+      name: { value: nameUser },
+    },
+  } = useAppSelector((state) => state.form.formProfile)
 
   const background = location.state && location.state.background
 
@@ -59,7 +64,7 @@ export default function App() {
           <Route path={ingredient} element={<DetailPageIngredient />} />
         </Route>
 
-        <Route path={orderDetail} element={<ProtectedRouteElement element={<OrderDetailPage />} />} />
+        <Route path={orderDetail} element={<OrderDetailPage />} />
         <Route path={login} element={<Login />} />
         <Route path={register} element={<Register />} />
         <Route path={forgot_password} element={<ForgotRouteElement element={<ForgotPassword />} />} />

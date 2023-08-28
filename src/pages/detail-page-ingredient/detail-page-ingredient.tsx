@@ -5,7 +5,6 @@ import { IngredientDetails } from '../../components/ingredient-details/ingredien
 import { getIngredients } from '../../services/constructor/constructor-api-slice'
 
 export function DetailPageIngredient() {
-  console.log('DetailPageIngredient')
   const path = useLocation().pathname
   const dispatch = useAppDispatch()
   useEffect(() => {

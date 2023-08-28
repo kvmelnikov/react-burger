@@ -1,9 +1,10 @@
 import { FeedElement } from '../feed-element/feed-element'
 import TapeFeedStyle from './tape-feed.module.css'
-import { FC } from 'react'
-import { useAppSelector } from '../../utils/hooks/hook'
-import { IOrrder } from '../../services/feed/feed-slice'
+import { FC, useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/hook'
+import { IOrrder, wsConnect } from '../../services/feed/feed-slice'
 import { IIngredientDetails } from '../../types/types'
+import { LIVE_TABLE_SERVER_URL } from '../../pages/main-b/main-b'
 
 interface ITapeFeedProps {
   feeds: IOrrder[]
@@ -23,6 +24,11 @@ type TImageAndPrice = {
 export const TapeFeed: FC<ITapeFeedProps> = ({ feeds, children }) => {
   // let imagesAndPrice = []
   const ingredients = useAppSelector((state) => state.ingredients.ingredients)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(wsConnect(LIVE_TABLE_SERVER_URL))
+  }, [])
 
   const getImagesAndTotalPrice = (ingredients: IIngredientDetails[], idsOrder: string[]): TImageAndPrice => {
     const images: TImage[] = []

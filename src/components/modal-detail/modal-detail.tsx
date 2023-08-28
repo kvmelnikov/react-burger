@@ -16,7 +16,6 @@ function ModalDetail() {
   const ingredients = useAppSelector((state) => state.ingredients.ingredients)
 
   const showModalIngridientDetails = useAppSelector((state) => state.modal.modalIngridientDetail)
-  console.log('dfdf')
   const handleCloseModal = () => {
     dispatch(closeModal())
     navigate('/')
@@ -43,9 +42,18 @@ function ModalDetail() {
         </Modal>
       )
     } else if (ingredientDataForModal && !showModalIngridientDetails) {
-      navigate(`/ingredients/${path.split('/')[2]}`)
-
-      return <div></div>
+      return (
+        <Modal handleCloseModal={handleCloseModal} heading='Детали ингридиента'>
+          <IngredientDetails
+            image_large={ingredientDataForModal.image_large}
+            name={ingredientDataForModal.name}
+            calories={ingredientDataForModal.calories}
+            proteins={ingredientDataForModal.proteins}
+            fat={ingredientDataForModal.fat}
+            carbohydrates={ingredientDataForModal.carbohydrates}
+          />
+        </Modal>
+      )
     } else {
       return <div></div>
     }

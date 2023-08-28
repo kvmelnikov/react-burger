@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useMemo } from 'react'
 import { useAppSelector } from '../utils/hooks/hook'
 
 export const ProtectedRouteElement: FC<any | null> = ({ element }) => {
@@ -14,13 +14,13 @@ export const ProtectedRouteElement: FC<any | null> = ({ element }) => {
     failed,
   } = useAppSelector((state) => state.form.formProfile)
 
-  if (request) {
-    return <p>Загрузка...</p>
-  }
+  const content = useMemo(() => {
+    if (failed) {
+      return <Navigate to='/login' state={{ from: location }} />
+    } else if (nameUser) {
+      return element
+    }
+  }, [nameUser, request, failed, location])
 
-  if (failed) {
-    return <Navigate to='/login' state={{ from: location }} />
-  }
-
-  return nameUser ? element : <Navigate to='/login' replace />
+  return content
 }

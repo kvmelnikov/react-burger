@@ -16,7 +16,6 @@ function ModalOrderDetail() {
   const feedDetailFailed = useAppSelector((state) => state.feed.failedDetail)
   const sumIngredients = useAppSelector((state) => state.feed.sumIngredients)
   const orders = useAppSelector((state) => state.orders.orders)
-  console.log(orders, 'orders')
 
   useEffect(() => {
     if (params.id) {
