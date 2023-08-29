@@ -42,8 +42,7 @@ function BurgerIngridients() {
     })
     return currentTab
   }
-  // FIXME: add click to scroll
-  const scrollToType = (e: any) => {
+  const scrollToType = (e: string) => {
     setCurrent(e)
   }
 

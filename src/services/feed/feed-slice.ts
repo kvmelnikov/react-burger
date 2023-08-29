@@ -6,6 +6,7 @@ import { Bundle } from 'typescript'
 import { RootState } from '../store'
 import { stat } from 'fs'
 import { act } from 'react-dom/test-utils'
+import { base_url } from '../../app'
 
 export interface IOrrder {
   _id: string
@@ -49,26 +50,6 @@ interface IGetDetailData {
   id: string
 }
 
-// [
-//   {
-//       "_id": "64e5b37c82e277001bfaa843",
-//       "ingredients": [
-//           "643d69a5c3f7b9001cfa093d",
-//           "643d69a5c3f7b9001cfa0943",
-//           "643d69a5c3f7b9001cfa0942",
-//           "643d69a5c3f7b9001cfa0943",
-//           "643d69a5c3f7b9001cfa093d"
-//       ],
-//       "owner": "6493d2578a4b62001c85fb6b",
-//       "status": "done",
-//       "name": "Space флюоресцентный spicy бургер",
-//       "createdAt": "2023-08-23T07:21:32.619Z",
-//       "updatedAt": "2023-08-23T07:21:32.858Z",
-//       "number": 17385,
-//       "__v": 0
-//   }
-// ]
-
 interface IResp {
   order: IOrrder
   ingredients: IIngredientsFeedDetail[]
@@ -80,7 +61,7 @@ export const getDetaiFeedlRequest = createAsyncThunk<IResp, IGetDetailData, { re
   async (data, thunkAPI) => {
     const elementFeeds = data.feeds.filter((el) => data.id === el._id)
     const orderNumber = elementFeeds[0].number
-    const response = await fetch(`https://norma.nomoreparties.space/api/orders/${orderNumber}`, {
+    const response = await fetch(`${base_url}orders/${orderNumber}`, {
       method: 'GET',
     })
       .then((res) => {

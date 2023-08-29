@@ -23,6 +23,7 @@ export const initialState: IFormsState = {
     },
     request: false,
     failed: false,
+    success: false,
   },
   formForgotPassword: {
     inputs: {
@@ -138,6 +139,7 @@ const formsSlice = createSlice({
       .addCase(getUserRequest.fulfilled, (state, action) => {
         state.formProfile.request = false
         state.formProfile.failed = false
+        state.formProfile.success = true
         state.formProfile.inputs.email.value = action.payload.email
         state.formProfile.inputs.name.value = action.payload.name
       })

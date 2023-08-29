@@ -9,6 +9,7 @@ export function ProfileMenu() {
 
   const onLogOut = () => {
     dispatch(logoutUserRequest())
+    navigate('/')
   }
 
   return (

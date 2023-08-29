@@ -33,7 +33,7 @@ export function ForgotPassword() {
     }
   }, [redirect])
 
-  const onFormChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const onFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setformForgotPassword({

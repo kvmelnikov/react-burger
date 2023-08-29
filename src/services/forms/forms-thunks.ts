@@ -7,6 +7,7 @@ import {
 } from '../../types/types-forms-slice'
 import { RootState } from '../store'
 import thunk from 'redux-thunk'
+import { base_url } from '../../app'
 
 type TUser = {
   name: string
@@ -48,7 +49,7 @@ const createBodyFormRequestReset = (inputs: IInputsResetPassword) => {
 export const resetPassRequest = createAsyncThunk<boolean, void, { rejectValue: string; state: RootState }>(
   'forms/resetPassRequest',
   async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/password-reset/reset', {
+    const response = await fetch(`${base_url}password-reset/reset`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +73,7 @@ export const resetPassRequest = createAsyncThunk<boolean, void, { rejectValue: s
 export const forgotPassRequest = createAsyncThunk<boolean, void, { rejectValue: string; state: RootState }>(
   'forms/forgotPassRequest',
   async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/password-reset', {
+    const response = await fetch(`${base_url}password-reset`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +97,7 @@ export const forgotPassRequest = createAsyncThunk<boolean, void, { rejectValue: 
 export const logoutUserRequest = createAsyncThunk<number, void, { rejectValue: string }>(
   'forms/logoutUserRequest',
   async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/logout', {
+    const response = await fetch(`${base_url}auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -123,7 +124,7 @@ export const logoutUserRequest = createAsyncThunk<number, void, { rejectValue: s
 export const loginUserRequest = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
   'forms/LoginUserRequest',
   async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/login', {
+    const response = await fetch(`${base_url}auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -153,7 +154,7 @@ export const loginUserRequest = createAsyncThunk<TRegister, void, { rejectValue:
 export const registrationUser = createAsyncThunk<TRegister, void, { rejectValue: string; state: RootState }>(
   'forms/registrationUser',
   async (_, thunkAPI) => {
-    const response = await fetch('https://norma.nomoreparties.space/api/auth/register', {
+    const response = await fetch(`${base_url}auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -180,7 +181,7 @@ export const registrationUser = createAsyncThunk<TRegister, void, { rejectValue:
 
 const updateToken = async () => {
   console.log(localStorage.getItem('refreshToken'))
-  return fetch('https://norma.nomoreparties.space/api/auth/token', {
+  return fetch(`${base_url}auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -257,7 +258,7 @@ const fetchWithRefresh = async (url: string, options: TBody) => {
 export const getUserRequest = createAsyncThunk<TRegister, void, { rejectValue: string }>(
   'forms/getUserRequest',
   async function (_, thunkAPI) {
-    const response = await fetchWithRefresh('https://norma.nomoreparties.space/api/auth/user', {
+    const response = await fetchWithRefresh(`${base_url}auth/user`, {
       headers: {
         authorization: `${localStorage.getItem('accessToken')}`,
         'Content-Type': 'application/json',

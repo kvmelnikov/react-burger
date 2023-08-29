@@ -1,9 +1,9 @@
 import FeedElementStyle from './feed-element.module.css'
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link, useLocation } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { FC, MouseEvent } from 'react'
 import { showModalIngredientsDetail } from '../../services/modal/modal-slice'
+import { useAppDispatch } from '../../utils/hooks/hook'
 
 type TImage = {
   src: string
@@ -21,8 +21,8 @@ interface IFeedElement {
 
 export const FeedElement: FC<IFeedElement> = ({ images, createdAt, number, name, totalPrice, id }) => {
   let location = useLocation()
-  const dispatch = useDispatch()
-  const hanldleOpenModalIngridientDetails = (event: MouseEvent<HTMLElement>) => {
+  const dispatch = useAppDispatch()
+  const hanldleOpenModalIngridientDetails = (event: React.SyntheticEvent<HTMLElement>) => {
     dispatch(showModalIngredientsDetail())
   }
 

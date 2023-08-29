@@ -1,13 +1,16 @@
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { IIngredientDetails } from '../../types/types'
 import { RootState } from '../store'
-import { v4 as uuidv4 } from 'uuid'
-import { stat } from 'fs'
 import { showModalOrderDetails } from '../modal/modal-slice'
-import { constants } from 'buffer'
+import { base_url } from '../../app'
 
 export interface ITopping extends IIngredientDetails {
   index: number
+  uuid: string
+}
+
+export interface IActionAddTopping {
+  ingerdient: ITopping
   uuid: string
 }
 
@@ -48,7 +51,8 @@ export const requestOrder = createAsyncThunk<
   const accessToken = localStorage.getItem('accessToken')
   const prepareIngredients = makeCheckout(ingredients)
   thunkAPI.dispatch(showModalOrderDetails())
-  const response = await fetch(`https://norma.nomoreparties.space/api/orders?token=${accessToken?.split(' ')[1]}`, {
+
+  const response = await fetch(`${base_url}orders?token=${accessToken?.split(' ')[1]}`, {
     method: 'POST',
     headers: {
       authorization: `${localStorage.getItem('accessToken')}`,
@@ -66,7 +70,7 @@ export const requestOrder = createAsyncThunk<
       }
     })
     .catch((err) => thunkAPI.rejectWithValue('Server error'))
-  console.log(response)
+
   return response.order.number
 })
 
@@ -87,6 +91,7 @@ const burgerSlice = createSlice({
   reducers: {
     insertIngredientInConstructor: (state, action: PayloadAction<IinsertPayload>) => {
       const newArray = [...state.ingridientsForConstructor.toppings]
+
       newArray.splice(action.payload.dragIndex, 0, newArray.splice(action.payload.hoverIndex, 1)[0])
       state.ingridientsForConstructor.toppings = newArray
       return state
@@ -102,16 +107,9 @@ const burgerSlice = createSlice({
       state.ingridientsForConstructor.toppings = newArray
       return state
     },
-    addToppingToBurgerConstructor: (state, action: PayloadAction<ITopping>) => {
-      //
-      // const lengthCurrentToppings = state.ingridientsForConstructor.toppings.length
-      // if (lengthCurrentToppings > 0) {
-      //   newTopping.index = lengthCurrentToppings + 1
-      // } else {
-      //   newTopping.index = 0
-      // }
-      const newTopping = { ...action.payload }
-      // newTopping.uuid = uuidv4()
+    addToppingToBurgerConstructor: (state, action: PayloadAction<IActionAddTopping>) => {
+      const newTopping = { ...action.payload.ingerdient }
+      newTopping.uuid = action.payload.uuid
       state.ingridientsForConstructor.toppings.push(newTopping)
       return state
     },

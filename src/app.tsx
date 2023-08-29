@@ -85,3 +85,5 @@ export default function App() {
     </>
   )
 }
+
+export const base_url = 'https://norma.nomoreparties.space/api/'

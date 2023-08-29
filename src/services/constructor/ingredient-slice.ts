@@ -37,6 +37,13 @@ const IngredientSlice = createSlice({
       })
       return state
     },
+    increaseCounterIngerident: (state, action: PayloadAction<string>) => {
+      let modificedIngredients = [...state.ingredients]
+      state.ingredients = modificedIngredients.map((ingredient) => {
+        return ingredient._id === action.payload ? { ...ingredient, count: ++ingredient.count } : ingredient
+      })
+      return state
+    },
     clearCountIngredients: (state, action: PayloadAction<string>) => {
       const modificedIngredients = [...state.ingredients]
       state.ingredients = modificedIngredients.map((ingredient) => {
@@ -49,6 +56,11 @@ const IngredientSlice = createSlice({
   },
 })
 
-export const { setIngredients, setCurrentIngredient, deacreaseCounterIngredient, clearCountIngredients } =
-  IngredientSlice.actions
+export const {
+  setIngredients,
+  increaseCounterIngerident,
+  setCurrentIngredient,
+  deacreaseCounterIngredient,
+  clearCountIngredients,
+} = IngredientSlice.actions
 export default IngredientSlice.reducer

@@ -2,13 +2,14 @@ import { AnyAction, PayloadAction, createAsyncThunk, createSlice } from '@reduxj
 import { IIngredientDetails } from '../../types/types'
 import { RootState } from '../store'
 import { setCurrentIngredient, setIngredients } from './ingredient-slice'
+import { base_url } from '../../app'
 
 export const getIngredients = createAsyncThunk<
   IIngredientDetails[],
   string | undefined,
   { rejectValue: string; state: RootState }
 >('constructorApi/getIngredients', async (id, thunkAPI) => {
-  const response = await fetch('https://norma.nomoreparties.space/api/ingredients', {
+  const response = await fetch(`${base_url}ingredients`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

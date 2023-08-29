@@ -15,7 +15,7 @@ export const ProfileForm = () => {
     },
   } = useAppSelector((state) => state.form.formProfile)
 
-  const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueProfile({
@@ -26,7 +26,7 @@ export const ProfileForm = () => {
     )
   }
 
-  const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueProfile({
@@ -36,7 +36,7 @@ export const ProfileForm = () => {
       }),
     )
   }
-  const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueProfile({

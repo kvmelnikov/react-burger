@@ -31,7 +31,7 @@ export function ResetPassword() {
     })
   }
 
-  const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setformResetPassword({
@@ -42,7 +42,7 @@ export function ResetPassword() {
     )
   }
 
-  const onChangeToken = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeToken = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
 
     dispatch(

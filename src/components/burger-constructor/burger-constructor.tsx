@@ -12,9 +12,11 @@ import {
   addToppingToBurgerConstructor,
   requestOrder,
 } from '../../services/constructor/burger-slice'
-import { deacreaseCounterIngredient } from '../../services/constructor/ingredient-slice'
+import { deacreaseCounterIngredient, increaseCounterIngerident } from '../../services/constructor/ingredient-slice'
 import { closeModal } from '../../services/modal/modal-slice'
 import { ITopping } from '../../services/constructor/burger-slice'
+import { v4 as uuidv4 } from 'uuid'
+
 const { container, bun, toppings, info } = burgerConstructorStyle
 
 function BurgerConstructor() {
@@ -36,12 +38,14 @@ function BurgerConstructor() {
     drop(ingredient: ITopping[]) {
       if (ingredient[0].type === 'bun') {
         dispatch(addBunToBurgerConstructor(ingredient[0]))
+        dispatch(increaseCounterIngerident(ingredient[0]._id))
 
         if (ingredientsConstructor.bun) {
           dispatch(deacreaseCounterIngredient(ingredientsConstructor.bun._id))
         }
       } else {
-        dispatch(addToppingToBurgerConstructor(ingredient[0]))
+        dispatch(addToppingToBurgerConstructor({ ingerdient: ingredient[0], uuid: uuidv4() }))
+        dispatch(increaseCounterIngerident(ingredient[0]._id))
       }
     },
   })
@@ -142,7 +146,7 @@ function BurgerConstructor() {
           <ul className={`${toppings}`}>
             {ingredientsConstructor.toppings ? (
               ingredientsConstructor.toppings.map((topping, indx) => {
-                return <Topping key={indx} currentIndex={indx} item={topping} {...topping} />
+                return <Topping key={topping.uuid} currentIndex={indx} item={topping} {...topping} />
               })
             ) : (
               <div></div>

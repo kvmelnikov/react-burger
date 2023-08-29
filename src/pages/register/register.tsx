@@ -33,7 +33,7 @@ export function Register() {
     })
   }
 
-  const onChangeEmail = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
@@ -44,7 +44,7 @@ export function Register() {
     )
   }
 
-  const onChangePass = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangePass = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
@@ -55,7 +55,7 @@ export function Register() {
     )
   }
 
-  const onChangeName = (e: React.FormEvent<HTMLInputElement>) => {
+  const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement
     dispatch(
       setFormValueRegister({
@@ -65,7 +65,6 @@ export function Register() {
       }),
     )
   }
-
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     dispatch(getUserRequest())

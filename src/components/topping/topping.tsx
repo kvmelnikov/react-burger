@@ -38,8 +38,8 @@ export const Topping: FC<{ currentIndex: number; item: ITopping }> = ({ currentI
 
   drag(drop(dragRef))
 
-  const handleDeleteTopping = (e: any, index: number) => {
-    if (e.target.parentElement.parentElement.classList.contains('pr-2')) {
+  const handleDeleteTopping = (e: React.SyntheticEvent<HTMLElement>, index: number) => {
+    if (e.target.toString().split(' ')[1] === 'SVGPathElement]') {
       dispatch(deacreaseCounterIngredient(item._id))
       dispatch(deleteIngredientInConstructor(index))
     }

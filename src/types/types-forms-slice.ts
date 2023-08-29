@@ -26,6 +26,7 @@ interface Ilogout {
 
 interface IFormProfile extends Ilogout {
   inputs: IInputsFormProfile
+  success: boolean
 }
 
 interface IformForgotPassword extends Ilogout {
